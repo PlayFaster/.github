@@ -3,7 +3,7 @@
 # Called by each integration repo's validate.yaml via workflow_call.
 # Inputs parameterise the component path and coverage badge gist per project.
 
-name: Validate
+name: "Validate (Shared)"
 
 on:
   workflow_call:
@@ -21,7 +21,7 @@ on:
         required: true
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.repository }}
   cancel-in-progress: true
 
 env:
