@@ -37,12 +37,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: Hassfest Validation
-        uses: home-assistant/actions/hassfest@master
+        # Branch @master
+        uses: home-assistant/actions/hassfest@f6f29a7ee3fa0eccadf3620a7b9ee00ab54ec03b
 
   # Job 2: Official HACS metadata validation.
   hacs_val:
@@ -50,12 +52,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: HACS Validation
-        uses: hacs/action@main
+        # Branch @main
+        uses: hacs/action@dcb30e72781db3f207d5236b861172774ab0b485
         with:
           category: integration
 
@@ -65,12 +69,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        # Tag @v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.14"
 
@@ -93,12 +99,14 @@ jobs:
       pull-requests: write # Required for creating/updating coverage PR comments
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        # Tag @v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.14"
           cache: "pip"
@@ -117,8 +125,9 @@ jobs:
             tests/
 
       - name: Pytest coverage comment
-        id: coverageComment
-        uses: MishaKav/pytest-coverage-comment@main
+        id: coverageComment # Added ID to access the badge output
+        # Branch @main
+        uses: MishaKav/pytest-coverage-comment@a01708271d42c5703d489b13eb503ba47c01e82a
         with:
           pytest-xml-coverage-path: ./coverage.xml
           title: Coverage Report
@@ -132,11 +141,14 @@ jobs:
         id: extract_cov
         shell: bash
         run: |
+          # This pulls the TOTAL percentage from the coverage report
+          # and saves it as an environment variable
           COVERAGE=$(coverage report | grep TOTAL | awk '{print $NF}' | tr -d '%')
           echo "PERCENTAGE=$COVERAGE" >> $GITHUB_OUTPUT
 
       - name: Update Coverage Badge Gist
-        uses: schneegans/dynamic-badges-action@v1.7.0
+        # Tag @v1.7.0
+        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: ${{ inputs.gist_id }}
@@ -153,12 +165,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        # Tag @v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.14"
 
@@ -174,7 +188,8 @@ jobs:
             "$COMPONENT_PATH"/manifest.json
 
       - name: YAML Check
-        uses: ibiqlik/action-yamllint@v3
+        # Tag @v3
+        uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c
         with:
           file_or_dir: .
           config_data: "{extends: relaxed, rules: {line-length: {max: 120}}}"
@@ -187,7 +202,8 @@ jobs:
           prettier --config .validate/.prettierrc.js --check "**/*.{md,json,yaml,yml}"
 
       - name: Check README Links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        # Tag @v1
+        uses: gaurav-nelson/github-action-markdown-link-check@5c5dfc0ac2e225883c0e5f03a85311ec2830d368
         with:
           base-branch: main
           file-path: README.md
@@ -198,12 +214,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: Run Codespell
-        uses: codespell-project/actions-codespell@v2
+        # Tag @v2
+        uses: codespell-project/actions-codespell@406322ec52dd7b488e48c1c4b82e2a8b3a1bf630
 
   # Job 7: GitHub Actions workflow security audit.
   # Known findings exist — step is non-blocking until resolved.
@@ -212,7 +230,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
@@ -230,12 +249,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
         with:
           persist-credentials: false
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        # Tag @v5
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
         with:
           python-version: "3.14"
 
