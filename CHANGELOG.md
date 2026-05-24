@@ -2,13 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.4] - 2026-05-24
+
+### Changed
+
+- **DependaBot**: Bump  zizmor from 1.24.1 to 1.25.2
+
 ## [1.0.3] - 2026-05-24
 
 ### Changed
 
 - **Continue on Error**: This was ON for MyPy and ZizMor. Now OFF, errors will be flagged and stop.
-- **Dependabot**: Bump codespell-project/actions-codespell from 2.1 to 2.2
-- **Dependabot**: Bump schneegans/dynamic-badges-action from 1.7.0 to 1.8.0
+- **DependaBot**: Bump codespell-project/actions-codespell from 2.1 to 2.2
+- **DependaBot**: Bump schneegans/dynamic-badges-action from 1.7.0 to 1.8.0
 
 ## [1.0.2] - 2026-05-09
 
