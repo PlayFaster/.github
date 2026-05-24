@@ -147,8 +147,8 @@ jobs:
           echo "PERCENTAGE=$COVERAGE" >> $GITHUB_OUTPUT
 
       - name: Update Coverage Badge Gist
-        # Tag @v1.7.0
-        uses: schneegans/dynamic-badges-action@e9a478b16159b4d31420099ba146cdc50f134483
+        # Tag @v1.8.0
+        uses: schneegans/dynamic-badges-action@0e50b8bad39e7e1afd3e4e9c2b7dd145fad07501
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: ${{ inputs.gist_id }}
@@ -220,8 +220,8 @@ jobs:
           persist-credentials: false
 
       - name: Run Codespell
-        # Tag @v2
-        uses: codespell-project/actions-codespell@406322ec52dd7b488e48c1c4b82e2a8b3a1bf630
+        # Tag @v2.2
+        uses: codespell-project/actions-codespell@8f01853be192eb0f849a5c7d721450e7a467c579
 
   # Job 7: GitHub Actions workflow security audit.
   # Known findings exist — step is non-blocking until resolved.
@@ -239,7 +239,7 @@ jobs:
         run: pip install zizmor==1.24.1
 
       - name: Run Zizmor
-        continue-on-error: true
+        continue-on-error: false
         run: zizmor --pedantic .github/
 
   # Job 8: Python type checking.
@@ -266,5 +266,5 @@ jobs:
           pip install -r .validate/requirements_test.txt
 
       - name: Run Mypy
-        continue-on-error: true
+        continue-on-error: false
         run: mypy custom_components/
