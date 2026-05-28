@@ -81,7 +81,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff
+        run: pip install ruff==0.15.12
 
       - name: Run Ruff Check
         run: ruff check .
@@ -178,7 +178,7 @@ jobs:
 
       - name: HACS Schema Check
         run: |
-          pip install check-jsonschema
+          pip install check-jsonschema==0.37.2
           check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
 
       - name: HA Manifest Schema Check
@@ -262,7 +262,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mypy
+          pip install mypy==2.1.0
           pip install -r .validate/requirements_test.txt
 
       - name: Run Mypy
