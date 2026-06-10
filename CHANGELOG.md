@@ -2,11 +2,29 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.7] - 2026-06-10 - Release
+
+### Changed
+
+- **DependaBot**: Bumped HASSFest
+
+## [1.0.6] - 2026-06-10 - UNreleasedUNreleased
+
+### Changed
+
+- **DependaBot**: Bumped Ruff from 0.15.12 to 0.15.15
+
+## [1.0.5] - 2026-05-27 - UNreleased
+
+### Changed
+
+- **Pins**: Pinned versions for ruff, mypy and jsonschema. UNclear whether they should be deployed. For review.
+
 ## [1.0.4] - 2026-05-24
 
 ### Changed
 
-- **DependaBot**: Bump  zizmor from 1.24.1 to 1.25.2
+- **DependaBot**: Bump zizmor from 1.24.1 to 1.25.2
 
 ## [1.0.3] - 2026-05-24
 
