@@ -81,7 +81,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.15.12
+        run: pip install ruff==0.15.15
 
       - name: Run Ruff Check
         run: ruff check .

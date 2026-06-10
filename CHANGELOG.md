@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.6] - 2026-06-10 - Release
+
+### Changed
+
+- **DependaBot**: Bumped Ruff from 0.15.12 to 0.15.15
+
 ## [1.0.5] - 2026-05-27 - UNreleased
 
 ### Changed
