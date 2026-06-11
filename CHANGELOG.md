@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.8] - 2026-06-11 - Release
+
+### Changed
+
+- **DependaBot**: Bumped HASSFest correctly
+
 ## [1.0.7] - 2026-06-10 - Release
 
 ### Changed
