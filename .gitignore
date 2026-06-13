@@ -21,9 +21,12 @@ coverage.xml
 # Home Assistant
 .storage/
 testing_config/
+errors/
+*.log
 *.db
 *.db-shm
 *.db-wal
+**/token.txt
 
 # OS
 .DS_Store
