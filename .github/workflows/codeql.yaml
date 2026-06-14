@@ -1,0 +1,38 @@
+---
+# Reusable CodeQL analysis workflow for PlayFaster Python integrations.
+# Called by each integration repo's codeql.yml via workflow_call.
+
+name: "CodeQL (Shared)"
+
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: "CodeQL Analysis (Python)"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+
+    steps:
+      - name: Checkout Repository
+        # Tag @v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
+        with:
+          persist-credentials: false
+
+      - name: Initialize CodeQL
+        # Tag @v3
+        uses: github/codeql-action/init@dd903d2e4f5405488e5ef1422510ee31c8b32357
+        with:
+          languages: python
+
+      - name: Perform CodeQL Analysis
+        # Tag @v3
+        uses: github/codeql-action/analyze@dd903d2e4f5405488e5ef1422510ee31c8b32357
+        with:
+          category: "/language:python"
