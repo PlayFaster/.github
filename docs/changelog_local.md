@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.3] - 2026-06-14 - Release
+
+### Changed
+
+- **CodeQL**: Clarified CodeQL permissions, required for ZizMor
+
 ## [1.1.2] - 2026-06-14 - Release
 
 ### Changed

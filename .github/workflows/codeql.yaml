@@ -15,8 +15,8 @@ jobs:
     name: "CodeQL Analysis (Python)"
     runs-on: ubuntu-latest
     permissions:
-      contents: read
-      security-events: write
+      contents: read # Required to checkout the repository
+      security-events: write # Required to upload CodeQL SARIF results to GitHub Security
 
     steps:
       - name: Checkout Repository
