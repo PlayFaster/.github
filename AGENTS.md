@@ -57,7 +57,7 @@ The test job installs from `.validate/requirements_test.txt` (in the calling rep
 The file integrity job reads schema and formatter config from `.validate/` in the calling repo:
 - `.validate/hacs_schema.json` — HACS manifest schema
 - `.validate/ha_manifest_schema.json` — HA manifest schema
-- `.validate/.prettierrc.js` — Prettier config (covers `*.md`, `*.json`, `*.yaml`, `*.yml`)
+- `.validate/.prettierrc.json` — Prettier config (covers `*.md`, `*.json`, `*.yaml`, `*.yml`)
 
 ### `zizmor` Scope
 
