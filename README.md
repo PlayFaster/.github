@@ -57,7 +57,7 @@ jobs:
 >
 > - `requirements_test.txt` — test dependencies
 > - `hacs_schema.json` and `ha_manifest_schema.json` — JSON schemas for the file integrity job
-> - `.prettierrc.js` — Prettier config covering `*.md`, `*.json`, `*.yaml`, `*.yml`
+> - `.prettierrc.json` — Prettier config covering `*.md`, `*.json`, `*.yaml`, `*.yml`
 
 ## ✅ Validation Jobs
 

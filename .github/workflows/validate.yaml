@@ -196,10 +196,8 @@ jobs:
 
       - name: Prettier Format Check
         run: |
-          npm install -g prettier@3.6.2 prettier-plugin-sort-json@4.2.0
-          export NODE_PATH=$(npm root -g)
-          ln -s "$(npm root -g)" /node_modules || true
-          prettier --config .validate/.prettierrc.json --check "**/*.{md,json,yaml,yml}"
+          npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0
+          npx prettier --config .validate/.prettierrc.json --check "**/*.{md,json,yaml,yml}"
 
       - name: Check README Links
         # Tag @v1

@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.1] - 2026-06-14 - Release
+
+### Changed
+
+- **Validation Config**: Fixed use of .prettierrc.json
+
 ## [1.1.0] - 2026-06-14 - Release
 
 ### Changed
