@@ -64,6 +64,41 @@ The file integrity job reads schema and formatter config from `.validate/` in th
 
 Zizmor audits `.github/` in the calling repo with `--pedantic`. It runs `continue-on-error: false` but is non-blocking at the suite level — known findings exist pending resolution.
 
+## Local Development (Windows Host)
+
+This repo has no devcontainer. Local validation runs on the Windows host via VS Code tasks.
+
+### Setup (once after cloning)
+
+Run the **Initial Setup** VS Code task, or manually:
+
+```powershell
+npm install   # installs prettier + prettier-plugin-sort-json into node_modules/
+```
+
+### Available Tasks
+
+Run via **Terminal → Run Task** in VS Code:
+
+| Task                          | What it does                                  |
+| :---------------------------- | :-------------------------------------------- |
+| **Validate All**              | Runs all validate tasks in sequence           |
+| `Validate: Ruff Lint`         | Ruff lint (exits cleanly on non-Python repos) |
+| `Validate: Ruff Format Check` | Ruff format check                             |
+| `Validate: Prettier Check`    | Prettier check — md, json, yaml               |
+| `Validate: Markdown Style`    | markdownlint check                            |
+| `Validate: YAML Style`        | yamllint check                                |
+| `Validate: Codespell`         | Spell check                                   |
+| **Format All**                | Runs all format/fix tasks in sequence         |
+
+### Config Files
+
+All tool configs live in `.validate/` and are managed by `sync_projects.ps1` in the monorepo root (`home-assistant/`). Do not edit them directly here — edit the source in `shared/SharedNotes/validate-configs/` and re-run the sync script.
+
+### Source
+
+Tasks and configs are sourced from `shared/SharedNotes/validate-configs/host-tooling/`. See `host-tooling/what_this_is_for.md` for details.
+
 ## Dependabot
 
 `dependabot.yml` monitors `github-actions`, `pip`, and `pre-commit` ecosystems weekly with a 7-day cooldown between updates.
