@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.9] - 2026-06-14 - Release
+
+### Changed
+
+- **DependaBot**: Bumped HASSFest Sha to latest
+- **DependaBot**: Bumped HACS Sha to Latest (v6.0.3)
+- **DependaBot**: Bumped Ruff from 0.15.12 to 0.15.16
+- **Documentation**: Updated README
+- **.gitignore**: Multiple updates to .gitignore
+
+### Added
+
+- **License**: Added Apache 2.0 License
+- **AGENTS.md**: Added AGENTS.md to repo root.
+- **ChangeLog_Local**: Added Local ChangeLog for detailed history
+
 ## [1.0.9-dev2] - 2026-06-13 - Unreleased
 
 ### Changed
@@ -13,7 +29,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Documentation**: Updated README
-- **.gitignore**: Various updates to .gitignore for Obsidian and Claude
+- **.gitignore**: Multiple updates to .gitignore for Obsidian, Code Artifacts and Agent artifacts, incl. general, recommanded and forward looking adds
 
 ### Added
 
