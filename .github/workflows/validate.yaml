@@ -199,7 +199,7 @@ jobs:
           npm install -g prettier@3.6.2 prettier-plugin-sort-json@4.2.0
           export NODE_PATH=$(npm root -g)
           ln -s "$(npm root -g)" /node_modules || true
-          prettier --config .validate/.prettierrc.js --check "**/*.{md,json,yaml,yml}"
+          prettier --config .validate/.prettierrc.json --check "**/*.{md,json,yaml,yml}"
 
       - name: Check README Links
         # Tag @v1
@@ -207,6 +207,7 @@ jobs:
         with:
           base-branch: main
           file-path: README.md
+          config-file: .validate/.mlc_config.json
 
   # Job 6: Spell checking.
   codespell:
