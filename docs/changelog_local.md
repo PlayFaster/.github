@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.4-dev2] - 2026-06-15 - Unreleased
+
+### Changed
+
+- **Formatting**: Applied newly added formatting fixes (via tasks.json) to repo files.
+
+## [1.1.4-dev1] - 2026-06-15 - Unreleased
+
+### Added
+
+- **Validation**: Added local tasks.json, via Shared system, for Ruff, Prettier, Codespell and Markdown Lint validation and formatting.
+
 ## [1.1.3] - 2026-06-14 - Release
 
 ### Changed
