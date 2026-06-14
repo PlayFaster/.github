@@ -18,6 +18,25 @@ All notable changes to this project will be documented in this file.
 - **AGENTS.md**: Added AGENTS.md to repo root.
 - **ChangeLog_Local**: Added Local ChangeLog for detailed history
 
+## [1.0.9-dev2] - 2026-06-13 - Unreleased
+
+### Changed
+
+- **DependaBot**: Bumped Ruff from 0.15.12 to 0.15.16
+
+## [1.0.9-dev1] - 2026-06-12 - Unreleased
+
+### Changed
+
+- **Documentation**: Updated README
+- **.gitignore**: Multiple updates to .gitignore for Obsidian, Code Artifacts and Agent artifacts, incl. general, recommanded and forward looking adds
+
+### Added
+
+- **License**: Added Apache 2.0 License
+- **CLAUDE.md**: Added Claude.md to repo root.
+- **ChangeLog_Local**: Added Local ChangeLog for detailed history
+
 ## [1.0.8] - 2026-06-11 - Release
 
 ### Changed
