@@ -1,5 +1,4 @@
 {
-  "version": "2.0.0",
   "tasks": [
     {
       "label": "Initial Setup",
@@ -182,5 +181,6 @@
         "reveal": "always"
       }
     }
-  ]
+  ],
+  "version": "2.0.0"
 }

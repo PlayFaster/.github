@@ -54,7 +54,7 @@ All notable changes to this project will be documented in this file.
 ### Changed
 
 - **Documentation**: Updated README
-- **.gitignore**: Multiple updates to .gitignore for Obsidian, Code Artifacts and Agent artifacts, incl. general, recommanded and forward looking adds
+- **.gitignore**: Multiple updates to .gitignore for Obsidian, Code Artifacts and Agent artifacts, incl. general, recommended and forward looking adds
 
 ### Added
 

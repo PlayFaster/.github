@@ -21,16 +21,16 @@ Runs the full validation suite for a Home Assistant custom integration. Called b
 
 ### **Inputs**
 
-| Input | Required | Description |
-| :-- | :-- | :-- |
-| `component_name` | Yes | Component directory name (e.g., `wifi_ssid_monitor`) |
-| `gist_id` | Yes | Gist ID for the dynamic coverage badge |
+| Input            | Required | Description                                          |
+| :--------------- | :------- | :--------------------------------------------------- |
+| `component_name` | Yes      | Component directory name (e.g., `wifi_ssid_monitor`) |
+| `gist_id`        | Yes      | Gist ID for the dynamic coverage badge               |
 
 ### **Secrets**
 
-| Secret | Required | Description |
-| :-- | :-- | :-- |
-| `GIST_SECRET` | Yes | GitHub token with gist write access |
+| Secret        | Required | Description                         |
+| :------------ | :------- | :---------------------------------- |
+| `GIST_SECRET` | Yes      | GitHub token with gist write access |
 
 ### **Usage**
 
