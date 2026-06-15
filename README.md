@@ -34,9 +34,9 @@ Project stubs always call `validate.yaml` — the internal split is invisible to
 
 ### **Secrets**
 
-| Secret | Required | Description |
-| :-- | :-- | :-- |
-| `GIST_SECRET` | No | GitHub token with gist write access — integration only |
+| Secret        | Required | Description                                            |
+| :------------ | :------- | :----------------------------------------------------- |
+| `GIST_SECRET` | No       | GitHub token with gist write access — integration only |
 
 Pass via `secrets: inherit` from the calling stub.
 
@@ -80,8 +80,7 @@ jobs:
 > - `.prettierrc.json` — Prettier config covering `*.md`, `*.json`, `*.yaml`, `*.yml`
 > - `.mlc_config.json` — markdown-link-check config
 >
-> Integration repos also need `requirements_test.txt` and a root `pyproject.toml` with `[tool.codespell]`.
-> Theme repos need a root `pyproject.toml` with `[tool.codespell]`.
+> Integration repos also need `requirements_test.txt` and a root `pyproject.toml` with `[tool.codespell]`. Theme repos need a root `pyproject.toml` with `[tool.codespell]`.
 
 ## ✅ Validation Jobs
 
