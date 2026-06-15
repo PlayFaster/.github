@@ -1,4 +1,5 @@
 [tool.ruff]
+extend = ".validate/pyproject_local.toml"
 target-version = "py313"
 line-length = 88
 
@@ -22,3 +23,7 @@ ignore = [
     "D203", # Conflict with D211 (HA prefers no blank line before class)
     "D213", # Conflict with D212 (HA prefers summary on first line)
 ]
+
+[tool.codespell]
+skip = ".git,.reports,node_modules,.validate,ProjNotes"
+ignore-words-list = "hass"

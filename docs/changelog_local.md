@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.2] - 2026-06-15 - Release
+
+### Added
+
+- **Local Zizmor**: Added local Zizmor audit which flagged several issues requiring permissions changes or clarifications.
+
+### Changed
+
+- **Permissions**: Added explicit `permissions: contents: read` at workflow level to both `validate.yaml` and `validate-specific.yaml`. Added job-level `permissions: contents: read` to all 9 jobs in `validate-specific.yaml`; `test_val` additionally declares `pull-requests: write` (required by `MishaKav/pytest-coverage-comment` for posting PR comments). The `specific` job in `validate.yaml` declares `contents: read, pull-requests: write` to pass that permission through to `test_val`. Eliminates all zizmor `excessive-permissions` and `undocumented-permissions` findings on the shared workflows.
+
+## [2.0.1] - 2026-06-15 - Release
+
+### Changed
+
+- **Permissions**: Removed workflow-level `permissions: contents: read` from `validate-specific.yaml` and the job-level `permissions` block from `test_val`. Permissions now flow through unchanged from the calling stub. The previous declarations caused a parse-time rejection by GitHub Actions for the theme stub chain (`test_val`'s `contents: write` request exceeded the theme stub's `contents: read` grant), and silently downgraded integration stubs' `contents: write` to `contents: read` before `test_val` tried to re-escalate it. [avoids zizmor failures]
+- **Secrets — integration stubs**: `secrets: inherit` replaced with explicit `secrets: GIST_SECRET: ${{ secrets.GIST_SECRET }}` in `validate.yaml` (master) and all five integration stubs. Resolves zizmor `secrets-inherit` audit warning (High confidence). Reverts the broad `secrets: inherit` pattern introduced in v2.0.0.
+- **Secrets — theme stub**: `secrets: inherit` removed entirely. The theme has no secrets to pass; `GIST_SECRET` is integration-only and marked `required: false` in the shared workflow.
+
 ## [2.0.0] - 2026-06-15 - Release
 
 ### Added

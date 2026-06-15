@@ -12,7 +12,7 @@ This is the `PlayFaster/.github` shared repository — it holds reusable GitHub 
 
 Validation is split across two files:
 
-- **`validate.yaml`** — master entry point. Called by every project stub. Accepts all inputs and delegates immediately to `validate-specific.yaml` via `secrets: inherit`.
+- **`validate.yaml`** — master entry point. Called by every project stub. Accepts all inputs and delegates immediately to `validate-specific.yaml`.
 - **`validate-specific.yaml`** — contains all 9 jobs. A `category` input (`integration` or `theme`) gates which jobs run.
 
 Project stubs always call `validate.yaml`. The internal split is invisible to callers.
@@ -27,7 +27,7 @@ Project stubs always call `validate.yaml`. The internal split is invisible to ca
 
 ### Secrets
 
-`GIST_SECRET` (GitHub token with gist write access) — optional, required only for integration projects running `test_val`. Pass via `secrets: inherit` from the calling stub.
+`GIST_SECRET` (GitHub token with gist write access) — optional, required only for integration projects running `test_val`. Integration stubs pass it explicitly; theme stubs pass no secrets (none are needed).
 
 ### Job Summary
 
@@ -49,7 +49,9 @@ All `uses:` references are pinned to a full SHA commit hash (not a tag). The bra
 
 ### Calling Repo `permissions`
 
-Integration stubs must declare elevated permissions — `test_val` needs them to update the Gist badge and post PR comments. Theme stubs need only `contents: read`.
+The shared workflows declare `permissions: contents: read` at workflow level. Each job in `validate-specific.yaml` has an explicit job-level block: `contents: read` for all jobs, `contents: read, pull-requests: write` for `test_val` (required by `MishaKav/pytest-coverage-comment`). The `specific` job in `validate.yaml` declares `contents: read, pull-requests: write` to pass that permission through to `test_val`.
+
+Integration stubs must declare `pull-requests: write` at job level so the permission reaches `test_val` through the call chain. The `contents: write` currently present in integration stubs is harmless but unnecessary — the Gist badge update uses `GIST_SECRET` (a PAT), not the GITHUB_TOKEN. Theme stubs require no permissions block.
 
 **Integration:**
 
@@ -57,15 +59,16 @@ Integration stubs must declare elevated permissions — `test_val` needs them to
 jobs:
   validate:
     permissions:
-      contents: write # Required by test_val for coverage badge gist update
-      pull-requests: write # Required by test_val for PR comments
+      contents: write # Not needed — gist badge uses GIST_SECRET PAT; can be removed in a future stub update
+      pull-requests: write # Required by test_val for PR comments (pytest-coverage-comment)
     # Branch @main v2.0.0
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: integration
       component_name: wifi_ssid_monitor
       gist_id: <your-gist-id>
-    secrets: inherit
+    secrets:
+      GIST_SECRET: ${{ secrets.GIST_SECRET }}
 ```
 
 **Theme:**
@@ -77,7 +80,6 @@ jobs:
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme
-    secrets: inherit
 ```
 
 ### `test_val` Dependencies
@@ -127,6 +129,7 @@ Run via **Terminal → Run Task** in VS Code:
 | `Validate: Markdown Style`    | markdownlint check                            |
 | `Validate: YAML Style`        | yamllint check                                |
 | `Validate: Codespell`         | Spell check                                   |
+| `Validate: Zizmor`            | GitHub Actions workflow security audit        |
 | **Format All**                | Runs all format/fix tasks in sequence         |
 
 ### Config Files

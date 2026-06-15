@@ -27,8 +27,14 @@ name: "Validate (Shared)"
       GIST_SECRET:
         required: false
 
+permissions:
+  contents: read
+
 jobs:
   specific:
+    permissions:
+      contents: read
+      pull-requests: write # pytest-coverage-comment posts PR comments on test_val
     uses: ./.github/workflows/validate-specific.yaml
     with:
       category: ${{ inputs.category }}

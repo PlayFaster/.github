@@ -38,7 +38,7 @@ Project stubs always call `validate.yaml` — the internal split is invisible to
 | :------------ | :------- | :----------------------------------------------------- |
 | `GIST_SECRET` | No       | GitHub token with gist write access — integration only |
 
-Pass via `secrets: inherit` from the calling stub.
+Integration stubs pass `GIST_SECRET` explicitly. Theme stubs pass no secrets.
 
 ### **Usage — Integration**
 
@@ -48,15 +48,16 @@ Pin to a full commit SHA for immutability — tags can be moved, but a SHA is pe
 jobs:
   validate:
     permissions:
-      contents: write # Required by test_val for coverage badge gist update
-      pull-requests: write # Required by test_val for PR comments
+      contents: write # Not needed — gist badge uses GIST_SECRET PAT; can be removed in a future stub update
+      pull-requests: write # Required by test_val for PR comments (pytest-coverage-comment)
     # Branch @main v2.0.0
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: integration
       component_name: wifi_ssid_monitor
       gist_id: <your-gist-id>
-    secrets: inherit
+    secrets:
+      GIST_SECRET: ${{ secrets.GIST_SECRET }}
 ```
 
 ### **Usage — Theme**
@@ -68,7 +69,6 @@ jobs:
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme
-    secrets: inherit
 ```
 
 > [!NOTE]
