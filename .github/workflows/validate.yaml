@@ -34,4 +34,5 @@ jobs:
       category: ${{ inputs.category }}
       component_name: ${{ inputs.component_name }}
       gist_id: ${{ inputs.gist_id }}
-    secrets: inherit
+    secrets:
+      GIST_SECRET: ${{ secrets.GIST_SECRET }}

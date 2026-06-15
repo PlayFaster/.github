@@ -27,9 +27,6 @@ name: "Validate (Specific)"
       GIST_SECRET:
         required: false
 
-permissions:
-  contents: read
-
 env:
   COMPONENT_PATH: custom_components/${{ inputs.component_name }}
 
@@ -119,9 +116,6 @@ jobs:
     name: "Tests & Coverage"
     if: ${{ inputs.category == 'integration' }}
     runs-on: ubuntu-latest
-    permissions:
-      contents: write # Required for updating the coverage badge in README
-      pull-requests: write # Required for creating/updating coverage PR comments
     steps:
       - name: Checkout Repository
         # Tag @v4
