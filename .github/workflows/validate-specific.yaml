@@ -128,7 +128,6 @@ jobs:
     if: ${{ inputs.category == 'integration' }}
     permissions:
       contents: read
-      pull-requests: write # pytest-coverage-comment posts PR comments
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -152,23 +151,8 @@ jobs:
       - name: Run tests
         run: |
           pytest --cov="$COMPONENT_PATH" \
-            --cov-report=xml \
             --cov-report=term-missing \
-            --junitxml=pytest.xml \
             tests/
-
-      - name: Pytest coverage comment
-        id: coverageComment
-        # Branch @main
-        uses: MishaKav/pytest-coverage-comment@a01708271d42c5703d489b13eb503ba47c01e82a
-        with:
-          pytest-xml-coverage-path: ./coverage.xml
-          title: Coverage Report
-          badge-title: Coverage
-          hide-badge: false
-          hide-comment: false
-          create-new-comment: false
-          junitxml-path: ./pytest.xml
 
       - name: Extract Coverage Percentage
         id: extract_cov
