@@ -13,7 +13,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with ruff ruff check --config .validate/pyproject.toml --exit-zero . | tee .reports/ruff_lint.txt",
+      "command": "mkdir -Force .reports; uv run --with ruff ruff check --exit-zero . | tee .reports/ruff_lint.txt",
       "group": "build",
       "label": "Validate: Ruff Lint",
       "presentation": {
@@ -25,7 +25,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with ruff ruff format --config .validate/pyproject.toml --check . | tee .reports/ruff_format_status.txt; exit 0",
+      "command": "mkdir -Force .reports; uv run --with ruff ruff format --check . | tee .reports/ruff_format_status.txt; exit 0",
       "group": "build",
       "label": "Validate: Ruff Format Check",
       "presentation": {
@@ -73,9 +73,21 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with codespell codespell --skip=\"*.ffs_*,*.ffs_db,*.ffs_lock,.git,.venv,.ruff_cache,.reports,*.log,*.code-workspace,node_modules,.validate\" --ignore-words-list=\"hass\" . | tee .reports/codespell.txt; exit 0",
+      "command": "mkdir -Force .reports; uv run --with codespell codespell . | tee .reports/codespell.txt; exit 0",
       "group": "build",
       "label": "Validate: Codespell",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "mkdir -Force .reports; uv run --with zizmor zizmor --pedantic .github/ | tee .reports/zizmor_audit.txt; exit 0",
+      "group": "build",
+      "label": "Validate: Zizmor",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
@@ -91,7 +103,8 @@
         "Validate: Prettier Check",
         "Validate: Markdown Style",
         "Validate: YAML Style",
-        "Validate: Codespell"
+        "Validate: Codespell",
+        "Validate: Zizmor"
       ],
       "dependsOrder": "sequence",
       "group": {
@@ -108,7 +121,7 @@
       "type": "shell"
     },
     {
-      "command": "uv run --with ruff ruff check --config .validate/pyproject.toml --fix .; exit 0",
+      "command": "uv run --with ruff ruff check --fix .; exit 0",
       "label": "Format: Apply Ruff Lint Fix",
       "presentation": {
         "clear": true,
@@ -119,7 +132,7 @@
       "type": "shell"
     },
     {
-      "command": "uv run --with ruff ruff format --config .validate/pyproject.toml .; exit 0",
+      "command": "uv run --with ruff ruff format .; exit 0",
       "label": "Format: Apply Ruff Format",
       "presentation": {
         "clear": true,
@@ -141,7 +154,7 @@
       "type": "shell"
     },
     {
-      "command": "uv run --with codespell codespell -w --skip=\"*.ffs_*,*.ffs_db,*.ffs_lock,.git,.venv,.ruff_cache,.reports,*.log,*.code-workspace,node_modules,.validate\" --ignore-words-list=\"hass\" .; exit 0",
+      "command": "uv run --with codespell codespell -w .; exit 0",
       "label": "Format: Apply Codespell",
       "presentation": {
         "clear": true,

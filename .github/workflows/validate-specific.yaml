@@ -27,6 +27,9 @@ name: "Validate (Specific)"
       GIST_SECRET:
         required: false
 
+permissions:
+  contents: read
+
 env:
   COMPONENT_PATH: custom_components/${{ inputs.component_name }}
 
@@ -34,6 +37,8 @@ jobs:
   # Job 1: GitHub Actions workflow security audit.
   zizmor:
     name: "Zizmor (Workflow Security)"
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -53,6 +58,8 @@ jobs:
   hassfest:
     name: "HA Hassfest"
     if: ${{ inputs.category == 'integration' }}
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -69,6 +76,8 @@ jobs:
   # category is passed through directly — 'integration' or 'theme'.
   hacs_val:
     name: "HACS Check"
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -87,6 +96,8 @@ jobs:
   py_val:
     name: "Python Lint (Ruff)"
     if: ${{ inputs.category == 'integration' }}
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -115,6 +126,9 @@ jobs:
   test_val:
     name: "Tests & Coverage"
     if: ${{ inputs.category == 'integration' }}
+    permissions:
+      contents: read
+      pull-requests: write # pytest-coverage-comment posts PR comments
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -180,6 +194,8 @@ jobs:
   # HA Manifest Schema Check runs for integration only.
   file_val:
     name: "File Integrity"
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -230,6 +246,8 @@ jobs:
   # Both project types auto-discover codespell config from pyproject.toml [tool.codespell].
   codespell:
     name: "Codespell"
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -246,6 +264,8 @@ jobs:
   mypy_val:
     name: "Python Types (Mypy)"
     if: ${{ inputs.category == 'integration' }}
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -274,6 +294,8 @@ jobs:
   structure_val:
     name: "Structure Check"
     if: ${{ inputs.category == 'theme' }}
+    permissions:
+      contents: read
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
