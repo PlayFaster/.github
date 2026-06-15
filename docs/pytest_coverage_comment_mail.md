@@ -78,7 +78,7 @@ In every integration stub — `validate` job:
 ```yaml
 validate:
   permissions:
-    contents: write      # commit comments on push events
+    contents: write # commit comments on push events
     pull-requests: write # PR comments
 ```
 
