@@ -13,7 +13,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with ruff ruff check --exit-zero . | tee .reports/ruff_lint.txt",
+      "command": "mkdir -Force .reports; uv run --with ruff ruff check --exit-zero . | tee .reports/ruff_lint.txt; Write-Host; if (Select-String -Quiet 'All checks passed' .reports/ruff_lint.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Ruff Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint: FAILED' -ForegroundColor Red }",
       "group": "build",
       "label": "Validate: Ruff Lint",
       "presentation": {
@@ -25,7 +25,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with ruff ruff format --check . | tee .reports/ruff_format_status.txt; exit 0",
+      "command": "mkdir -Force .reports; uv run --with ruff ruff format --check . | tee .reports/ruff_format_status.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  Ruff Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Ruff Format Check",
       "presentation": {
@@ -37,7 +37,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; npx prettier --config .validate/.prettierrc.json --check \"**/*.md\" \"**/*.json\" \"**/*.yaml\" \"!.validate/**\" \"!node_modules/**\" | tee .reports/prettier_check.txt; exit 0",
+      "command": "mkdir -Force .reports; npx prettier --config .validate/.prettierrc.json --check \"**/*.md\" \"**/*.json\" \"**/*.yaml\" \"!.validate/**\" \"!node_modules/**\" | tee .reports/prettier_check.txt; Write-Host; if (Select-String -Quiet 'Prettier code style' .reports/prettier_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prettier: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Prettier Check",
       "presentation": {
@@ -49,7 +49,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; npx --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore \"**/*.md\" 2>&1 | tee .reports/markdown_lint.txt; exit 0",
+      "command": "mkdir -Force .reports; npx --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore \"**/*.md\" 2>&1 | tee .reports/markdown_lint.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  Markdown Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Markdown Lint: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Markdown Style",
       "presentation": {
@@ -61,7 +61,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with yamllint yamllint -c .validate/.yamllint . | tee .reports/yaml_lint.txt; exit 0",
+      "command": "mkdir -Force .reports; uv run --with yamllint yamllint -c .validate/.yamllint . | tee .reports/yaml_lint.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  YAML Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  YAML Lint: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: YAML Style",
       "presentation": {
@@ -73,7 +73,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with codespell codespell . | tee .reports/codespell.txt; exit 0",
+      "command": "mkdir -Force .reports; uv run --with codespell codespell . | tee .reports/codespell.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  Codespell: PASSED' -ForegroundColor Green } else { Write-Host '✖  Codespell: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Codespell",
       "presentation": {
@@ -85,7 +85,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with zizmor zizmor --pedantic .github/ | tee .reports/zizmor_audit.txt; exit 0",
+      "command": "mkdir -Force .reports; if (Test-Path .github) { uv run --with zizmor zizmor --pedantic .github/ | tee .reports/zizmor_audit.txt } else { Set-Content .reports/zizmor_audit.txt 'Skipped: no .github/ workflows'; Write-Host 'Skipped: no .github/ workflows' -ForegroundColor Yellow }; exit 0",
       "group": "build",
       "label": "Validate: Zizmor",
       "presentation": {

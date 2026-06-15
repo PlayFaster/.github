@@ -25,5 +25,5 @@ ignore = [
 ]
 
 [tool.codespell]
-skip = ".git,.reports,node_modules,.validate,ProjNotes"
+skip = ".git,.reports,node_modules,.validate,ProjNotes,.venv,.ruff_cache,.pytest_cache,.mypy_cache,.storage,.notes,.shared,.obsidian,.claude,build,dist,htmlcov,errors,local_only,router_probe,ignore_files,loc_only,.comp,*.log,*.db,*.db-shm,*.db-wal,*.ffs_*,*.gptcache,*.code-workspace"
 ignore-words-list = "hass"
