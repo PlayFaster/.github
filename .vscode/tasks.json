@@ -1,93 +1,90 @@
 {
   "tasks": [
     {
-      "label": "Initial Setup",
-      "type": "shell",
       "command": "npm install",
-      "problemMatcher": [],
+      "group": "none",
+      "label": "Initial Setup",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "none"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate: Ruff Lint",
-      "type": "shell",
       "command": "mkdir -Force .reports; uv run --with ruff ruff check --config .validate/pyproject.toml --exit-zero . | tee .reports/ruff_lint.txt",
-      "problemMatcher": [],
+      "group": "build",
+      "label": "Validate: Ruff Lint",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "build"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate: Ruff Format Check",
-      "type": "shell",
       "command": "mkdir -Force .reports; uv run --with ruff ruff format --config .validate/pyproject.toml --check . | tee .reports/ruff_format_status.txt; exit 0",
-      "problemMatcher": [],
+      "group": "build",
+      "label": "Validate: Ruff Format Check",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "build"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate: Prettier Check",
-      "type": "shell",
       "command": "mkdir -Force .reports; npx prettier --config .validate/.prettierrc.json --check \"**/*.md\" \"**/*.json\" \"**/*.yaml\" \"!.validate/**\" \"!node_modules/**\" | tee .reports/prettier_check.txt; exit 0",
-      "problemMatcher": [],
+      "group": "build",
+      "label": "Validate: Prettier Check",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "build"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate: Markdown Style",
-      "type": "shell",
       "command": "mkdir -Force .reports; npx --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore \"**/*.md\" 2>&1 | tee .reports/markdown_lint.txt; exit 0",
-      "problemMatcher": [],
+      "group": "build",
+      "label": "Validate: Markdown Style",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "build"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate: YAML Style",
-      "type": "shell",
       "command": "mkdir -Force .reports; uv run --with yamllint yamllint -c .validate/.yamllint . | tee .reports/yaml_lint.txt; exit 0",
-      "problemMatcher": [],
+      "group": "build",
+      "label": "Validate: YAML Style",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "build"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate: Codespell",
-      "type": "shell",
       "command": "mkdir -Force .reports; uv run --with codespell codespell --skip=\"*.ffs_*,*.ffs_db,*.ffs_lock,.git,.venv,.ruff_cache,.reports,*.log,*.code-workspace,node_modules,.validate\" --ignore-words-list=\"hass\" . | tee .reports/codespell.txt; exit 0",
-      "problemMatcher": [],
+      "group": "build",
+      "label": "Validate: Codespell",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
       },
-      "group": "build"
+      "problemMatcher": [],
+      "type": "shell"
     },
     {
-      "label": "Validate All",
-      "type": "shell",
-      "dependsOrder": "sequence",
       "dependsOn": [
         "Validate: Ruff Lint",
         "Validate: Ruff Format Check",
@@ -96,76 +93,76 @@
         "Validate: YAML Style",
         "Validate: Codespell"
       ],
-      "problemMatcher": [],
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated",
-        "reveal": "always"
-      }
-    },
-    {
-      "label": "Format: Apply Ruff Lint Fix",
-      "type": "shell",
-      "command": "uv run --with ruff ruff check --config .validate/pyproject.toml --fix .; exit 0",
-      "problemMatcher": [],
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated",
-        "reveal": "always"
-      }
-    },
-    {
-      "label": "Format: Apply Ruff Format",
-      "type": "shell",
-      "command": "uv run --with ruff ruff format --config .validate/pyproject.toml .; exit 0",
-      "problemMatcher": [],
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated",
-        "reveal": "always"
-      }
-    },
-    {
-      "label": "Format: Apply Prettier",
-      "type": "shell",
-      "command": "npx prettier --config .validate/.prettierrc.json --write \"**/*.md\" \"**/*.json\" \"**/*.yaml\" \"!.validate/**\" \"!node_modules/**\"; exit 0",
-      "problemMatcher": [],
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated",
-        "reveal": "always"
-      }
-    },
-    {
-      "label": "Format: Apply Codespell",
-      "type": "shell",
-      "command": "uv run --with codespell codespell -w --skip=\"*.ffs_*,*.ffs_db,*.ffs_lock,.git,.venv,.ruff_cache,.reports,*.log,*.code-workspace,node_modules,.validate\" --ignore-words-list=\"hass\" .; exit 0",
-      "problemMatcher": [],
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated",
-        "reveal": "always"
-      }
-    },
-    {
-      "label": "Format: Apply Markdownlint",
-      "type": "shell",
-      "command": "npx --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore --fix \"**/*.md\"; exit 0",
-      "problemMatcher": [],
-      "presentation": {
-        "clear": true,
-        "panel": "dedicated",
-        "reveal": "always"
-      }
-    },
-    {
-      "label": "Format All",
-      "type": "shell",
       "dependsOrder": "sequence",
+      "group": {
+        "isDefault": true,
+        "kind": "build"
+      },
+      "label": "Validate All",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run --with ruff ruff check --config .validate/pyproject.toml --fix .; exit 0",
+      "label": "Format: Apply Ruff Lint Fix",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run --with ruff ruff format --config .validate/pyproject.toml .; exit 0",
+      "label": "Format: Apply Ruff Format",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "npx prettier --config .validate/.prettierrc.json --write \"**/*.md\" \"**/*.json\" \"**/*.yaml\" \"!.validate/**\" \"!node_modules/**\"; exit 0",
+      "label": "Format: Apply Prettier",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run --with codespell codespell -w --skip=\"*.ffs_*,*.ffs_db,*.ffs_lock,.git,.venv,.ruff_cache,.reports,*.log,*.code-workspace,node_modules,.validate\" --ignore-words-list=\"hass\" .; exit 0",
+      "label": "Format: Apply Codespell",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "npx --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore --fix \"**/*.md\"; exit 0",
+      "label": "Format: Apply Markdownlint",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "dependsOn": [
         "Format: Apply Ruff Lint Fix",
         "Format: Apply Ruff Format",
@@ -173,13 +170,16 @@
         "Format: Apply Codespell",
         "Format: Apply Markdownlint"
       ],
-      "problemMatcher": [],
+      "dependsOrder": "sequence",
       "group": "none",
+      "label": "Format All",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
         "reveal": "always"
-      }
+      },
+      "problemMatcher": [],
+      "type": "shell"
     }
   ],
   "version": "2.0.0"

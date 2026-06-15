@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2026-06-15 - Release
+
+### Added
+
+- **`validate-specific.yaml`**: New workflow containing all 9 category-controlled jobs (`zizmor`, `hassfest`, `hacs_val`, `py_val`, `test_val`, `file_val`, `codespell`, `mypy_val`, `structure_val`).
+- **Theme support**: `hacs_val` passes `category` input through to the HACS action. `structure_val` runs for theme projects only. `hassfest`, `py_val`, `test_val`, `mypy_val` run for integration only. `file_val`, `codespell`, `zizmor` run for all.
+- **`category` input**: New optional input (default: `integration`) on `validate.yaml` and `validate-specific.yaml` to control which jobs run per project type.
+
+### Changed
+
+- **Workflow architecture**: Split single `validate.yaml` into two-file architecture — `validate.yaml` (master entry point) and `validate-specific.yaml` (all jobs). Project stubs continue to call `validate.yaml` only.
+- **`component_name` and `gist_id` inputs**: Changed from required to optional (default `""`).
+- **Secrets**: Changed from explicit `GIST_SECRET` secret declaration to `secrets: inherit` pattern. All project stubs updated accordingly.
+- **YAML check**: Switched from inline `config_data: "{extends: relaxed}"` to `config_file: .validate/.yamllint` — aligns CI with local devcontainer validation.
+- **Codespell**: Both project types now auto-discover config from `pyproject.toml [tool.codespell]`; removed `path_to_config_file` conditional.
+- **Zizmor**: Now blocking (`continue-on-error: false`).
+- **Mypy**: Now blocking (`continue-on-error: false`).
+- **Integration stubs** (`ha-huawei-lte`, `ha-tplink-router-5g-monitor`): Migrated from standalone job definitions to shared workflow stubs.
+
 ## [1.1.4-dev2] - 2026-06-15 - Unreleased
 
 ### Changed
