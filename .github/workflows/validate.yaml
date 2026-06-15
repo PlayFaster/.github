@@ -1,269 +1,37 @@
 ---
-# Reusable validation workflow for PlayFaster Home Assistant integrations.
-# Called by each integration repo's validate.yaml via workflow_call.
-# Inputs parameterise the component path and coverage badge gist per project.
+# Master validation entry point for PlayFaster Home Assistant projects.
+# Calls validate-common and validate-specific in parallel.
+# Each project's validate.yaml stub calls this workflow via workflow_call.
 
 name: "Validate (Shared)"
 
-on:
+"on":
   workflow_call:
     inputs:
+      category:
+        required: false
+        type: string
+        default: "integration"
+        description: "Project type: 'integration' or 'theme'"
       component_name:
-        required: true
+        required: false
         type: string
-        description: "Custom component directory name (e.g., wifi_ssid_monitor)"
+        default: ""
+        description: "Custom component directory name (integration only)"
       gist_id:
-        required: true
+        required: false
         type: string
-        description: "Gist ID for the dynamic coverage badge"
+        default: ""
+        description: "Gist ID for the dynamic coverage badge (integration only)"
     secrets:
       GIST_SECRET:
-        required: true
-
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ github.repository }}
-  cancel-in-progress: true
-
-env:
-  COMPONENT_PATH: custom_components/${{ inputs.component_name }}
-
-permissions:
-  contents: read
+        required: false
 
 jobs:
-  # Job 1: Official Home Assistant HASSfest validation.
-  hassfest:
-    name: "HA Hassfest"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Hassfest Validation
-        # Branch @master
-        uses: home-assistant/actions/hassfest@e91ad1948e57189485b9c1ad608af0c303946f89
-
-  # Job 2: Official HACS metadata validation.
-  hacs_val:
-    name: "HACS Check"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: HACS Validation
-        # Branch @main
-        uses: hacs/action@1ebf01c408f29afcb6406bd431bc98fd8cbb15aa
-        with:
-          category: integration
-
-  # Job 3: Python quality check via Ruff.
-  py_val:
-    name: "Python Lint (Ruff)"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        # Tag @v5
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
-        with:
-          python-version: "3.14"
-
-      - name: Install Ruff
-        run: pip install ruff==0.15.16
-
-      - name: Run Ruff Check
-        run: ruff check .
-
-      - name: Run Ruff Format
-        run: ruff format --check .
-
-  # Job 4: Pytest and Dynamic Coverage Badge.
-  # Runs all unit tests and updates the README badge automatically.
-  test_val:
-    name: "Tests & Coverage"
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write # Required for updating the coverage badge in README
-      pull-requests: write # Required for creating/updating coverage PR comments
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        # Tag @v5
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
-        with:
-          python-version: "3.14"
-          cache: "pip"
-
-      - name: Install dependencies
-        run: |
-          pip install -r .validate/requirements_test.txt
-          pip install .
-
-      - name: Run tests
-        run: |
-          pytest --cov="$COMPONENT_PATH" \
-            --cov-report=xml \
-            --cov-report=term-missing \
-            --junitxml=pytest.xml \
-            tests/
-
-      - name: Pytest coverage comment
-        id: coverageComment # Added ID to access the badge output
-        # Branch @main
-        uses: MishaKav/pytest-coverage-comment@a01708271d42c5703d489b13eb503ba47c01e82a
-        with:
-          pytest-xml-coverage-path: ./coverage.xml
-          title: Coverage Report
-          badge-title: Coverage
-          hide-badge: false
-          hide-comment: false
-          create-new-comment: false
-          junitxml-path: ./pytest.xml
-
-      - name: Extract Coverage Percentage
-        id: extract_cov
-        shell: bash
-        run: |
-          # This pulls the TOTAL percentage from the coverage report
-          # and saves it as an environment variable
-          COVERAGE=$(coverage report | grep TOTAL | awk '{print $NF}' | tr -d '%')
-          echo "PERCENTAGE=$COVERAGE" >> $GITHUB_OUTPUT
-
-      - name: Update Coverage Badge Gist
-        # Tag @v1.8.0
-        uses: schneegans/dynamic-badges-action@0e50b8bad39e7e1afd3e4e9c2b7dd145fad07501
-        with:
-          auth: ${{ secrets.GIST_SECRET }}
-          gistID: ${{ inputs.gist_id }}
-          filename: coverage.json
-          label: Coverage
-          message: ${{ steps.extract_cov.outputs.PERCENTAGE }}%
-          valColorRange: ${{ steps.extract_cov.outputs.PERCENTAGE }}
-          maxColorRange: 100
-          minColorRange: 0
-
-  # Job 5: File-level integrity (JSON, YAML, Markdown, Prettier, and HA manifest schema).
-  file_val:
-    name: "File Integrity"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        # Tag @v5
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
-        with:
-          python-version: "3.14"
-
-      - name: HACS Schema Check
-        run: |
-          pip install check-jsonschema==0.37.2
-          check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
-
-      - name: HA Manifest Schema Check
-        run: |
-          check-jsonschema \
-            --schemafile .validate/ha_manifest_schema.json \
-            "$COMPONENT_PATH"/manifest.json
-
-      - name: YAML Check
-        # Tag @v3
-        uses: ibiqlik/action-yamllint@2576378a8e339169678f9939646ee3ee325e845c
-        with:
-          file_or_dir: .
-          config_data: "{extends: relaxed, rules: {line-length: {max: 120}}}"
-
-      - name: Prettier Format Check
-        run: |
-          npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0
-          npx prettier --config .validate/.prettierrc.json --check "**/*.{md,json,yaml,yml}"
-
-      - name: Check README Links
-        # Tag @v1
-        uses: gaurav-nelson/github-action-markdown-link-check@5c5dfc0ac2e225883c0e5f03a85311ec2830d368
-        with:
-          base-branch: main
-          file-path: README.md
-          config-file: .validate/.mlc_config.json
-
-  # Job 6: Spell checking.
-  codespell:
-    name: "Codespell"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Run Codespell
-        # Tag @v2.2
-        uses: codespell-project/actions-codespell@8f01853be192eb0f849a5c7d721450e7a467c579
-
-  # Job 7: GitHub Actions workflow security audit.
-  # Known findings exist — step is non-blocking until resolved.
-  zizmor:
-    name: "Zizmor (Workflow Security)"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Install Zizmor
-        run: pip install zizmor==1.25.2
-
-      - name: Run Zizmor
-        continue-on-error: false
-        run: zizmor --pedantic .github/
-
-  # Job 8: Python type checking.
-  # Annotation work outstanding — step is non-blocking until resolved.
-  mypy_val:
-    name: "Python Types (Mypy)"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Repository
-        # Tag @v4
-        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5
-        with:
-          persist-credentials: false
-
-      - name: Set up Python
-        # Tag @v5
-        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
-        with:
-          python-version: "3.14"
-
-      - name: Install dependencies
-        run: |
-          pip install mypy==2.1.0
-          pip install -r .validate/requirements_test.txt
-
-      - name: Run Mypy
-        continue-on-error: false
-        run: mypy custom_components/
+  specific:
+    uses: ./.github/workflows/validate-specific.yaml
+    with:
+      category: ${{ inputs.category }}
+      component_name: ${{ inputs.component_name }}
+      gist_id: ${{ inputs.gist_id }}
+    secrets: inherit

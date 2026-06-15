@@ -4,7 +4,7 @@
 
 name: "CodeQL (Shared)"
 
-on:
+"on":
   workflow_call:
 
 permissions:
