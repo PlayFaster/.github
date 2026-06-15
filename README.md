@@ -38,7 +38,7 @@ Project stubs always call `validate.yaml` — the internal split is invisible to
 | :------------ | :------- | :----------------------------------------------------- |
 | `GIST_SECRET` | No       | GitHub token with gist write access — integration only |
 
-Pass via `secrets: inherit` from the calling stub.
+Integration stubs pass `GIST_SECRET` explicitly. Theme stubs pass no secrets.
 
 ### **Usage — Integration**
 
@@ -56,7 +56,8 @@ jobs:
       category: integration
       component_name: wifi_ssid_monitor
       gist_id: <your-gist-id>
-    secrets: inherit
+    secrets:
+      GIST_SECRET: ${{ secrets.GIST_SECRET }}
 ```
 
 ### **Usage — Theme**
@@ -68,7 +69,6 @@ jobs:
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme
-    secrets: inherit
 ```
 
 > [!NOTE]

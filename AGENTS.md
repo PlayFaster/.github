@@ -12,7 +12,7 @@ This is the `PlayFaster/.github` shared repository — it holds reusable GitHub 
 
 Validation is split across two files:
 
-- **`validate.yaml`** — master entry point. Called by every project stub. Accepts all inputs and delegates immediately to `validate-specific.yaml` via `secrets: inherit`.
+- **`validate.yaml`** — master entry point. Called by every project stub. Accepts all inputs and delegates immediately to `validate-specific.yaml`.
 - **`validate-specific.yaml`** — contains all 9 jobs. A `category` input (`integration` or `theme`) gates which jobs run.
 
 Project stubs always call `validate.yaml`. The internal split is invisible to callers.
@@ -27,7 +27,7 @@ Project stubs always call `validate.yaml`. The internal split is invisible to ca
 
 ### Secrets
 
-`GIST_SECRET` (GitHub token with gist write access) — optional, required only for integration projects running `test_val`. Pass via `secrets: inherit` from the calling stub.
+`GIST_SECRET` (GitHub token with gist write access) — optional, required only for integration projects running `test_val`. Integration stubs pass it explicitly; theme stubs pass no secrets (none are needed).
 
 ### Job Summary
 
@@ -65,7 +65,8 @@ jobs:
       category: integration
       component_name: wifi_ssid_monitor
       gist_id: <your-gist-id>
-    secrets: inherit
+    secrets:
+      GIST_SECRET: ${{ secrets.GIST_SECRET }}
 ```
 
 **Theme:**
@@ -77,7 +78,6 @@ jobs:
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme
-    secrets: inherit
 ```
 
 ### `test_val` Dependencies
