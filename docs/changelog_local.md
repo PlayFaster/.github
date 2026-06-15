@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.3] - 2026-06-15 - Release
+
+### Removed
+
+- **Coverage Report**: Removed the coverage report as it required extra permissions and is separate to the coverage badge, which is what is really required.
+- **`MishaKav/pytest-coverage-comment`**: Removed from `test_val`. This action posted a formatted coverage report as a PR/commit comment using the GITHUB_TOKEN, requiring `pull-requests: write` through the entire call chain and generating commit comment emails on push events. The Gist-backed README badge (`schneegans/dynamic-badges-action`) is unaffected and continues to work. See `docs/pytest_coverage_comment_mail.md` for re-enablement details.
+- **`--cov-report=xml` and `--junitxml=pytest.xml`** from the pytest command — these flags only existed to feed `pytest-coverage-comment`.
+
 ## [2.0.2] - 2026-06-15 - Release
 
 ### Added

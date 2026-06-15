@@ -49,19 +49,16 @@ All `uses:` references are pinned to a full SHA commit hash (not a tag). The bra
 
 ### Calling Repo `permissions`
 
-The shared workflows declare `permissions: contents: read` at workflow level. Each job in `validate-specific.yaml` has an explicit job-level block: `contents: read` for all jobs, `contents: read, pull-requests: write` for `test_val` (required by `MishaKav/pytest-coverage-comment`). The `specific` job in `validate.yaml` declares `contents: read, pull-requests: write` to pass that permission through to `test_val`.
+The shared workflows declare `permissions: contents: read` at workflow level. All jobs in `validate-specific.yaml` have explicit job-level `permissions: contents: read`. No job requires write access — the Gist badge update in `test_val` uses `GIST_SECRET` (a PAT), not the GITHUB_TOKEN.
 
-Integration stubs must declare `pull-requests: write` at job level so the permission reaches `test_val` through the call chain. The `contents: write` currently present in integration stubs is harmless but unnecessary — the Gist badge update uses `GIST_SECRET` (a PAT), not the GITHUB_TOKEN. Theme stubs require no permissions block.
+Integration stubs require no job-level permissions block — the workflow-level `permissions: contents: read` is sufficient. Theme stubs are the same.
 
 **Integration:**
 
 ```yaml
 jobs:
   validate:
-    permissions:
-      contents: write # Not needed — gist badge uses GIST_SECRET PAT; can be removed in a future stub update
-      pull-requests: write # Required by test_val for PR comments (pytest-coverage-comment)
-    # Branch @main v2.0.0
+    # Branch @main v2.0.2
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: integration
