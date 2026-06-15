@@ -48,8 +48,8 @@ Pin to a full commit SHA for immutability — tags can be moved, but a SHA is pe
 jobs:
   validate:
     permissions:
-      contents: write # Required by test_val for coverage badge gist update
-      pull-requests: write # Required by test_val for PR comments
+      contents: write # Not needed — gist badge uses GIST_SECRET PAT; can be removed in a future stub update
+      pull-requests: write # Required by test_val for PR comments (pytest-coverage-comment)
     # Branch @main v2.0.0
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
