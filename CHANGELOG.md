@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.3] - 2026-06-15 - Release
 
+### Changed
+
+- **Permissions simplified**: Removing `MishaKav/pytest-coverage-comment` eliminated the need for `pull-requests: write` across the entire call chain. `test_val` now declares only `contents: read`. The `specific` job in `validate.yaml` likewise reverts to `contents: read` only. All 5 integration stubs no longer need a job-level permissions block — the workflow-level `permissions: contents: read` is sufficient.
+
 ### Removed
 
 - **Coverage Report**: Removed the coverage report as it required extra permissions and is separate to the coverage badge, which is what is really required.
