@@ -1,29 +1,6 @@
 [tool.ruff]
-extend = ".validate/pyproject_local.toml"
-target-version = "py313"
-line-length = 88
-
-[tool.ruff.lint]
-select = [
-    "B",     # flake8-bugbear
-    "E",     # pycodestyle error
-    "F",     # Pyflakes
-    "I",     # isort
-    "UP",    # pyupgrade
-    "W",     # pycodestyle warning
-    "N",     # pep8-naming
-    "D",     # pydocstyle
-    "ASYNC", # flake8-async
-    "RUF",   # Ruff-specific rules
-    "SIM",   # flake8-simplify
-    "T20",   # flake8-print (forbids print statements)
-]
-
-ignore = [
-    "D203", # Conflict with D211 (HA prefers no blank line before class)
-    "D213", # Conflict with D212 (HA prefers summary on first line)
-]
+extend = ".validate/pyproject_common.toml"
 
 [tool.codespell]
-skip = ".git,.reports,node_modules,.validate,ProjNotes,.venv,.ruff_cache,.pytest_cache,.mypy_cache,.storage,.notes,.shared,.obsidian,.claude,build,dist,htmlcov,errors,local_only,router_probe,ignore_files,loc_only,.comp,*.log,*.db,*.db-shm,*.db-wal,*.ffs_*,*.gptcache,*.code-workspace"
+skip = ".git,.reports,node_modules,.validate,.venv,.ruff_cache,.gptcache,*.log,*.db,*.db-shm,*.db-wal,*.ffs_*,*.code-workspace"
 ignore-words-list = "hass"
