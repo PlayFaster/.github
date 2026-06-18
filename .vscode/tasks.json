@@ -13,7 +13,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with ruff ruff check --exit-zero . | tee .reports/ruff_lint.txt; Write-Host; if (Select-String -Quiet 'All checks passed' .reports/ruff_lint.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Ruff Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint: FAILED' -ForegroundColor Red }",
+      "command": "mkdir -Force .reports; uv run --with ruff ruff check --config pyproject.toml --exit-zero . | tee .reports/ruff_lint.txt; Write-Host; if (Select-String -Quiet 'All checks passed' .reports/ruff_lint.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Ruff Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint: FAILED' -ForegroundColor Red }",
       "group": "build",
       "label": "Validate: Ruff Lint",
       "presentation": {
@@ -25,7 +25,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with ruff ruff format --check . | tee .reports/ruff_format_status.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  Ruff Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports; uv run --with ruff ruff format --config pyproject.toml --check . | tee .reports/ruff_format_status.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  Ruff Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Ruff Format Check",
       "presentation": {
@@ -121,7 +121,7 @@
       "type": "shell"
     },
     {
-      "command": "uv run --with ruff ruff check --fix .; exit 0",
+      "command": "uv run --with ruff ruff check --config pyproject.toml --fix .; exit 0",
       "label": "Format: Apply Ruff Lint Fix",
       "presentation": {
         "clear": true,
@@ -132,7 +132,7 @@
       "type": "shell"
     },
     {
-      "command": "uv run --with ruff ruff format .; exit 0",
+      "command": "uv run --with ruff ruff format --config pyproject.toml .; exit 0",
       "label": "Format: Apply Ruff Format",
       "presentation": {
         "clear": true,
