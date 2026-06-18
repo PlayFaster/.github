@@ -14,6 +14,12 @@ All notable changes to this project will be documented in this file.
 
 - **Tasks.json Color Coding**: Improved local CI tasks.json with color coded output for Validate tasks e.g. "Passed" in Green.
 
+## [2.0.4-dev1] - 2026-06-15 - Unreleased
+
+### Changed
+
+- **Documentation**: Updated doc files.
+
 ## [2.0.3] - 2026-06-15 - Release
 
 ### Changed
