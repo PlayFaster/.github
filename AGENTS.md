@@ -131,11 +131,11 @@ Run via **Terminal → Run Task** in VS Code:
 
 ### Config Files
 
-All tool configs live in `.validate/` and are managed by `sync_projects.ps1` in the monorepo root (`home-assistant/`). Do not edit them directly here — edit the source in `shared/SharedNotes/validate-configs/` and re-run the sync script.
+All tool configs live in `.validate/` and are managed by `sync_projects.ps1` in the monorepo root (`home-assistant/`). Do not edit them directly here — edit the source in `dev-workbench/workbench/lint/` (or the appropriate subfolder) and re-run the sync script.
 
 ### Source
 
-Tasks and configs are sourced from `shared/SharedNotes/validate-configs/host-tooling/`. See `host-tooling/what_this_is_for.md` for details.
+Tasks and configs are sourced from `dev-workbench/host-tooling/`. See `dev-workbench/host-tooling/what_this_is_for.md` for details.
 
 ## Dependabot
 
