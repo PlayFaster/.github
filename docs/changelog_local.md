@@ -2,13 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.4-dev2] - 2026-06-18 - Unreleased
+## [2.0.4-dev3] - 2026-06-18 - Unreleased
 
 ### Changed
 
 - **Host Tooling Alignment**: Updated the Host Tooling alignment/sync, removed per repo differences.
 
-## [2.0.4-dev1] - 2026-06-15 - Unreleased
+## [2.0.4-dev2] - 2026-06-15 - Unreleased
 
 ### Added
 
