@@ -62,7 +62,7 @@ jobs:
 ```yaml
 jobs:
   validate:
-    # Branch @main v2.0.0
+    # Branch @main v2.0.3
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme

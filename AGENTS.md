@@ -37,7 +37,7 @@ Project stubs always call `validate.yaml`. The internal split is invisible to ca
 | `hassfest` | `home-assistant/actions/hassfest` | Integration | Yes |
 | `hacs_val` | `hacs/action` (category passed through) | All | Yes |
 | `py_val` | Ruff `0.15.16` | Integration | Yes |
-| `test_val` | pytest + `MishaKav/pytest-coverage-comment` + `schneegans/dynamic-badges-action` | Integration | Yes |
+| `test_val` | pytest + `schneegans/dynamic-badges-action` (Gist coverage badge) | Integration | Yes |
 | `file_val` | `check-jsonschema`, `ibiqlik/action-yamllint`, Prettier `3.6.2`, `gaurav-nelson/github-action-markdown-link-check` | All | Yes |
 | `codespell` | `codespell-project/actions-codespell` | All | Yes |
 | `mypy_val` | Mypy `2.1.0` | Integration | Yes |
@@ -73,7 +73,7 @@ jobs:
 ```yaml
 jobs:
   validate:
-    # Branch @main v2.0.0
+    # Branch @main v2.0.3
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme
@@ -81,7 +81,7 @@ jobs:
 
 ### `test_val` Dependencies
 
-The test job installs from `.validate/requirements_test.txt` (in the calling repo) and runs `pip install .`. Coverage is measured against `custom_components/<component_name>/` and reported via PR comment and a Gist-backed badge.
+The test job installs from `.validate/requirements_test.txt` (in the calling repo) and runs `pip install .`. Coverage is measured against `custom_components/<component_name>/` and reported via a Gist-backed badge.
 
 ### `file_val` Config Files
 
@@ -131,11 +131,11 @@ Run via **Terminal → Run Task** in VS Code:
 
 ### Config Files
 
-All tool configs live in `.validate/` and are managed by `sync_projects.ps1` in the monorepo root (`home-assistant/`). Do not edit them directly here — edit the source in `shared/SharedNotes/validate-configs/` and re-run the sync script.
+All tool configs live in `.validate/` and are managed by `sync_projects.ps1` in the monorepo root (`home-assistant/`). Do not edit them directly here — edit the source in `dev-workbench/workbench/lint/` (or the appropriate subfolder) and re-run the sync script.
 
 ### Source
 
-Tasks and configs are sourced from `shared/SharedNotes/validate-configs/host-tooling/`. See `host-tooling/what_this_is_for.md` for details.
+Tasks and configs are sourced from `dev-workbench/host-tooling/`. See `dev-workbench/host-tooling/what_this_is_for.md` for details.
 
 ## Dependabot
 

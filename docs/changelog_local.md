@@ -2,7 +2,41 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.4-dev5] - 2026-06-20 - Unreleased
+
+### Added
+
+- **Validate-Self**: Added a Standard validation category for basic validation, and validate-self.yaml to run this internally on this repo.
+
+## [2.0.4-dev4] - 2026-06-20 - Unreleased
+
+### Changed
+
+- **Dependabot**: Bump CodeQL from 3.36.2 to 4.36.2 (PR #27)
+
+## [2.0.4-dev3] - 2026-06-18 - Unreleased
+
+### Changed
+
+- **Host Tooling Alignment**: Updated the Host Tooling alignment/sync, removed per repo differences.
+
+## [2.0.4-dev2] - 2026-06-15 - Unreleased
+
+### Added
+
+- **Tasks.json Color Coding**: Improved local CI tasks.json with color coded output for Validate tasks e.g. "Passed" in Green.
+
+## [2.0.4-dev1] - 2026-06-15 - Unreleased
+
+### Changed
+
+- **Documentation**: Updated doc files.
+
 ## [2.0.3] - 2026-06-15 - Release
+
+### Changed
+
+- **Permissions simplified**: Removing `MishaKav/pytest-coverage-comment` eliminated the need for `pull-requests: write` across the entire call chain. `test_val` now declares only `contents: read`. The `specific` job in `validate.yaml` likewise reverts to `contents: read` only. All 5 integration stubs no longer need a job-level permissions block — the workflow-level `permissions: contents: read` is sufficient.
 
 ### Removed
 

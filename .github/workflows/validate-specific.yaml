@@ -12,7 +12,7 @@ name: "Validate (Specific)"
         required: false
         type: string
         default: "integration"
-        description: "Project type: 'integration' or 'theme'"
+        description: "Project type: 'integration', 'theme' or 'standard'"
       component_name:
         required: false
         type: string
@@ -76,6 +76,7 @@ jobs:
   # category is passed through directly — 'integration' or 'theme'.
   hacs_val:
     name: "HACS Check"
+    if: ${{ inputs.category != 'standard' }}
     permissions:
       contents: read
     runs-on: ubuntu-latest
@@ -195,6 +196,7 @@ jobs:
           python-version: "3.14"
 
       - name: HACS Schema Check
+        if: ${{ inputs.category != 'standard' }}
         run: |
           pip install check-jsonschema==0.37.2
           check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
