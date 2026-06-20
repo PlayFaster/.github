@@ -1,0 +1,29 @@
+---
+# Self-validation workflow for the .github repository.
+# Runs on push, pull_request, and weekly schedule to validate the repo itself.
+
+name: "Validate Self"
+
+"on":
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
+  schedule:
+    # Weekly run at midnight on Sundays
+    - cron: "0 0 * * 0"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: "Self Validation"
+    uses: ./.github/workflows/validate.yaml
+    with:
+      category: standard

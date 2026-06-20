@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.4-dev5] - 2026-06-20 - Unreleased
+
+### Added
+
+- **Validate-Self**: Added a Standard validation category for basic validation, and validate-self.yaml to run this internally on this repo.
+
 ## [2.0.4-dev4] - 2026-06-20 - Unreleased
 
 ### Changed
