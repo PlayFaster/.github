@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.4] - 2026-06-20 - Release
+
+### Added
+
+- **Validate-Self**: Added a Standard validation category for basic validation, and validate-self.yaml to run this internally on this repo.
+
+### Changed
+
+- **Dependabot**: Bump CodeQL from 3.36.2 to 4.36.2 (PR #27)
+
 ## [2.0.3] - 2026-06-15 - Release
 
 ### Changed
