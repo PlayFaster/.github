@@ -97,6 +97,30 @@
       "type": "shell"
     },
     {
+      "command": "if (Test-Path tests) { uv run pytest } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
+      "group": "build",
+      "label": "Validate: Run Pytest",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "mkdir -Force .reports; if (Test-Path tests) { uv run pytest --cov=workbench --cov-report=term-missing --cov-report=html:.reports/htmlcov --cov-report=xml:.reports/coverage.xml } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
+      "group": "build",
+      "label": "Validate: Pytest Coverage",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "dependsOn": [
         "Validate: Ruff Lint",
         "Validate: Ruff Format Check",
@@ -104,7 +128,9 @@
         "Validate: Markdown Style",
         "Validate: YAML Style",
         "Validate: Codespell",
-        "Validate: Zizmor"
+        "Validate: Zizmor",
+        "Validate: Run Pytest",
+        "Validate: Pytest Coverage"
       ],
       "dependsOrder": "sequence",
       "group": {

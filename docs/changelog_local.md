@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.4-dev4] - 2026-06-20 - Unreleased
+
+### Changed
+
+- **Dependabot**: Bump CodeQL from 3.36.2 to 4.36.2 (PR #27)
+
 ## [2.0.4-dev3] - 2026-06-18 - Unreleased
 
 ### Changed
