@@ -13,7 +13,7 @@ This is the `PlayFaster/.github` shared repository — it holds reusable GitHub 
 Validation is split across two files:
 
 - **`validate.yaml`** — master entry point. Called by every project stub. Accepts all inputs and delegates immediately to `validate-specific.yaml`.
-- **`validate-specific.yaml`** — contains all 9 jobs. A `category` input (`integration` or `theme`) gates which jobs run.
+- **`validate-specific.yaml`** — contains all 9 jobs. A `category` input (`integration`, `theme`, or `standard`) gates which jobs run.
 
 Project stubs always call `validate.yaml`. The internal split is invisible to callers.
 
@@ -21,7 +21,7 @@ Project stubs always call `validate.yaml`. The internal split is invisible to ca
 
 | Input | Required | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `category` | No | `integration` | Project type: `integration` or `theme` |
+| `category` | No | `integration` | Project type: `integration`, `theme`, or `standard` |
 | `component_name` | No | `""` | `custom_components/` subdirectory name (integration only) |
 | `gist_id` | No | `""` | Gist ID for the dynamic coverage badge (integration only) |
 
@@ -35,10 +35,10 @@ Project stubs always call `validate.yaml`. The internal split is invisible to ca
 | :-- | :-- | :-- | :-- |
 | `zizmor` | Zizmor `1.25.2` | All | Yes |
 | `hassfest` | `home-assistant/actions/hassfest` | Integration | Yes |
-| `hacs_val` | `hacs/action` (category passed through) | All | Yes |
+| `hacs_val` | `hacs/action` (category passed through) | Integration, Theme | Yes |
 | `py_val` | Ruff `0.15.16` | Integration | Yes |
 | `test_val` | pytest + `schneegans/dynamic-badges-action` (Gist coverage badge) | Integration | Yes |
-| `file_val` | `check-jsonschema`, `ibiqlik/action-yamllint`, Prettier `3.6.2`, `gaurav-nelson/github-action-markdown-link-check` | All | Yes |
+| `file_val` | `check-jsonschema`, `ibiqlik/action-yamllint`, Prettier `3.6.2`, `gaurav-nelson/github-action-markdown-link-check` | All (HACS/HA schema checks skipped for standard) | Yes |
 | `codespell` | `codespell-project/actions-codespell` | All | Yes |
 | `mypy_val` | Mypy `2.1.0` | Integration | Yes |
 | `structure_val` | bash theme directory check | Theme | Yes |
@@ -77,6 +77,16 @@ jobs:
     uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
     with:
       category: theme
+```
+
+**Standard / Self-Validation:**
+
+```yaml
+jobs:
+  validate:
+    uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
+    with:
+      category: standard
 ```
 
 ### `test_val` Dependencies
