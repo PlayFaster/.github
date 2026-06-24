@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.5-dev3] - 2026-06-22 - Unreleased
+
+### Added
+
+- **zizmor ignore adhoc-packages**: Added "# zizmor: ignore[adhoc-packages]" to .github/workflows/validate-specific.yaml to ignore low risk Zizmor issue "ad-hoc installation of packages / installs a package outside of a lockfile", flagged for "npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0". Explored other options, but to change this to an action with a pinned SHA would work for Prettier but not for prettier-plugin-sort-json which is Home Assistant specific.
+
+### Changed
+
+- **Bump**: Bumped Ruff from 0.15.16 to 0.15.17
+
 ## [2.0.5-dev2] - 2026-06-22 - Unreleased
 
 ### Changed
