@@ -70,7 +70,7 @@ jobs:
 
       - name: Hassfest Validation
         # Branch @master
-        uses: home-assistant/actions/hassfest@e91ad1948e57189485b9c1ad608af0c303946f89
+        uses: home-assistant/actions/hassfest@f4ca6f671bd429efb108c0f2fa0ae8af0215986c
 
   # Job 3: Official HACS metadata validation.
   # category is passed through directly — 'integration' or 'theme'.
