@@ -1,4 +1,3 @@
----
 # Reusable CodeQL analysis workflow for PlayFaster Python integrations.
 # Called by each integration repo's codeql.yml via workflow_call.
 

@@ -1,4 +1,3 @@
----
 # Self-validation workflow for the .github repository.
 # Runs on push, pull_request, and weekly schedule to validate the repo itself.
 

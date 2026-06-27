@@ -61,7 +61,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; uv run --with yamllint yamllint -c .validate/.yamllint . | tee .reports/yaml_lint.txt; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  YAML Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  YAML Lint: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports; $null = git rev-parse --is-inside-work-tree 2>$null; if ($LASTEXITCODE -eq 0) { $f = git ls-files -- '*.yaml' '*.yml' 2>$null; if ($f) { uv run --with yamllint yamllint -c .validate/.yamllint $f | tee .reports/yaml_lint.txt } else { Set-Content .reports/yaml_lint.txt ''; Write-Host 'No tracked YAML files.' } } else { uv run --with yamllint yamllint -c .validate/.yamllint . | tee .reports/yaml_lint.txt }; $ec = $LASTEXITCODE; Write-Host; if ($ec -eq 0) { Write-Host '✔  YAML Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  YAML Lint: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: YAML Style",
       "presentation": {

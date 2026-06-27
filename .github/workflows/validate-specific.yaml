@@ -1,4 +1,3 @@
----
 # Project-type-specific validation jobs.
 # Called by validate.yaml (master) via workflow_call.
 # The category input controls which jobs run: 'integration' or 'theme'.
