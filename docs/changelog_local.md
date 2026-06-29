@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.5-dev5] - 2026-06-29 - Unreleased
+
+### Changed
+
+- **Validate Bump**: Bumped Ruff from 0.15.17 to 0.15.18
+
 ## [2.0.5-dev4] - 2026-06-27 - YAML Lint - Unreleased
 
 ### Summary
