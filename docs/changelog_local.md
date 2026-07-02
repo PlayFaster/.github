@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.6-dev1] - 2026-07-02 - Unreleased
+
+### Bumps
+
+- **Dependabot Bump**: Bump Setup-Python via SHA from v6.2.0 to v6.3.0 (PR #6)
+
 ## [2.0.5] - 2026-07-02 - Release
 
 ### Changed
