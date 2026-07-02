@@ -15,6 +15,9 @@ All notable changes to this project will be documented in this file.
 
 - **Validate Bump**: Bumped Ruff from 0.15.16 to 0.15.19
 - **Validate Bump**: Bumped check-jsonschema from 0.37.2 to 0.37.4
+- **Dependabot Bump**: Bump HASSfest Master via SHA (PR #29)
+- **Dependabot Bump**: Bump Checkout from v4.3.1 to v7.0.0 via SHA (PR #30)
+- **Dependabot Bump**: Bump Setup-Python via SHA from v5.6.0 to v6.2.0 (PR #6)
 
 ### Added
 
