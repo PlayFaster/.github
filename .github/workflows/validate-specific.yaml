@@ -113,7 +113,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.15.18
+        run: pip install ruff==0.15.19
 
       - name: Run Ruff Check
         run: ruff check .
@@ -197,7 +197,7 @@ jobs:
       - name: HACS Schema Check
         if: ${{ inputs.category != 'standard' }}
         run: |
-          pip install check-jsonschema==0.37.2
+          pip install check-jsonschema==0.37.4
           check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
 
       - name: HA Manifest Schema Check

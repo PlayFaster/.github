@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.5-dev6] - 2026-07-02 - Unreleased
+
+### Changed
+
+- **Validate Bump**: Bumped Ruff from 0.15.18 to 0.15.19
+- **Validate Bump**: Bumped check-jsonschema from 0.37.2 to 0.37.4
+
 ## [2.0.5-dev5] - 2026-06-29 - Unreleased
 
 ### Changed
