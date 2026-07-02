@@ -1,4 +1,3 @@
----
 # Master validation entry point for PlayFaster Home Assistant projects.
 # Calls validate-common and validate-specific in parallel.
 # Each project's validate.yaml stub calls this workflow via workflow_call.

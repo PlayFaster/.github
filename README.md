@@ -28,7 +28,7 @@ Project stubs always call `validate.yaml` — the internal split is invisible to
 
 | Input | Required | Default | Description |
 | :-- | :-- | :-- | :-- |
-| `category` | No | `integration` | Project type: `integration` or `theme` |
+| `category` | No | `integration` | Project type: `integration`, `theme`, or `standard` |
 | `component_name` | No | `""` | Component directory name (e.g., `wifi_ssid_monitor`) — integration only |
 | `gist_id` | No | `""` | Gist ID for the dynamic coverage badge — integration only |
 
@@ -68,9 +68,21 @@ jobs:
       category: theme
 ```
 
+### **Usage — Standard (Self-Validation)**
+
+Used for basic validation of non-Home-Assistant repositories (such as the `.github` repository itself):
+
+```yaml
+jobs:
+  validate:
+    uses: PlayFaster/.github/.github/workflows/validate.yaml@<sha>
+    with:
+      category: standard
+```
+
 > [!NOTE]
 >
-> The calling repo must supply a `.validate/` directory containing:
+> For integration and theme categories, the calling repo must supply a `.validate/` directory containing:
 >
 > - `hacs_schema.json` and `ha_manifest_schema.json` — JSON schemas for the file integrity job
 > - `.yamllint` — YAML lint rules
@@ -85,10 +97,10 @@ jobs:
 | :-- | :-- | :-- | :-- |
 | `zizmor` | Zizmor `1.25.2` (workflow security audit) | All | Yes |
 | `hassfest` | `home-assistant/actions/hassfest` | Integration | Yes |
-| `hacs_val` | `hacs/action` (category passed through) | All | Yes |
+| `hacs_val` | `hacs/action` (category passed through) | Integration, Theme | Yes |
 | `py_val` | Ruff `0.15.16` | Integration | Yes |
 | `test_val` | pytest + coverage badge (Gist) | Integration | Yes |
-| `file_val` | check-jsonschema, yamllint, Prettier `3.6.2`, markdown-link-check | All | Yes |
+| `file_val` | check-jsonschema, yamllint, Prettier `3.6.2`, markdown-link-check | All (HACS/HA schema checks skipped for standard) | Yes |
 | `codespell` | `codespell-project/actions-codespell` | All | Yes |
 | `mypy_val` | Mypy `2.1.0` | Integration | Yes |
 | `structure_val` | Theme directory structure check | Theme | Yes |

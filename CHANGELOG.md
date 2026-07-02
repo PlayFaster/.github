@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.5] - 2026-07-02 - Release
+
+### Changed
+
+- **YAML Lint**: Added "document-start: disable" to .yamllint rule file, to stop warns/fails for "no --- at document start", which brings it in line with Home Assistant.
+- **YAML Files**: Updated YAML files to remove any "---" document starts added.
+- **Doc Update**: Updated README and AGENTS with note on the self-validation
+- **gitignore**: Updated .gitignore file (scratch folder)
+
+### Bumps
+
+- **Validate Bump**: Bumped Ruff from 0.15.16 to 0.15.19
+- **Validate Bump**: Bumped check-jsonschema from 0.37.2 to 0.37.4
+- **Dependabot Bump**: Bump HASSfest Master via SHA (PR #29)
+- **Dependabot Bump**: Bump Checkout from v4.3.1 to v7.0.0 via SHA (PR #30)
+- **Dependabot Bump**: Bump Setup-Python via SHA from v5.6.0 to v6.2.0 (PR #6)
+
+### Added
+
+- **zizmor ignore adhoc-packages**: Added "# zizmor: ignore[adhoc-packages]" to .github/workflows/validate-specific.yaml to ignore low risk Zizmor issue "ad-hoc installation of packages / installs a package outside of a lockfile", flagged for "npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0". Explored other options, but to change this to an action with a pinned SHA would work for Prettier but not for prettier-plugin-sort-json which is Home Assistant specific.
+
 ## [2.0.4] - 2026-06-20 - Release
 
 ### Added

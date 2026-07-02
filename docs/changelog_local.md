@@ -2,6 +2,84 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.5] - 2026-07-02 - Release
+
+### Changed
+
+- **YAML Lint**: Added "document-start: disable" to .yamllint rule file, to stop warns/fails for "no --- at document start", which brings it in line with Home Assistant.
+- **YAML Files**: Updated YAML files to remove any "---" document starts added.
+- **Doc Update**: Updated README and AGENTS with note on the self-validation
+- **gitignore**: Updated .gitignore file (scratch folder)
+
+### Bumps
+
+- **Validate Bump**: Bumped Ruff from 0.15.16 to 0.15.19
+- **Validate Bump**: Bumped check-jsonschema from 0.37.2 to 0.37.4
+- **Dependabot Bump**: Bump HASSfest Master via SHA (PR #29)
+- **Dependabot Bump**: Bump Checkout from v4.3.1 to v7.0.0 via SHA (PR #30)
+- **Dependabot Bump**: Bump Setup-Python via SHA from v5.6.0 to v6.2.0 (PR #6)
+
+### Added
+
+- **zizmor ignore adhoc-packages**: Added "# zizmor: ignore[adhoc-packages]" to .github/workflows/validate-specific.yaml to ignore low risk Zizmor issue "ad-hoc installation of packages / installs a package outside of a lockfile", flagged for "npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0". Explored other options, but to change this to an action with a pinned SHA would work for Prettier but not for prettier-plugin-sort-json which is Home Assistant specific.
+
+## [2.0.5-dev6] - 2026-07-02 - Unreleased
+
+### Changed
+
+- **Validate Bump**: Bumped Ruff from 0.15.18 to 0.15.19
+- **Validate Bump**: Bumped check-jsonschema from 0.37.2 to 0.37.4
+
+## [2.0.5-dev5] - 2026-06-29 - Unreleased
+
+### Changed
+
+- **Validate Bump**: Bumped Ruff from 0.15.17 to 0.15.18
+
+## [2.0.5-dev4] - 2026-06-27 - YAML Lint - Unreleased
+
+### Summary
+
+- **All about YAML Lint**: Multiple YAML Lint local validation warns/fails in the ha-dev-pf stub repo highlighted some shortcomings with YAML Lint implementation. Updated to avoid need for "---" at the top of every YAML file, which is a YAML standard, but NOT the HA standard. Also updated to only run on git tracked files (avoids linting devcon files for example).
+
+### Changed
+
+- **YAML Lint**: Added "document-start: disable" to .yamllint rule file, to stop warns/fails for "no --- at document start", which brings it in line with Home Assistant.
+- **YAML Files**: Updated YAML files to remove any "---" document starts added.
+- **Tasks.json**: Updated tasks.json, via hosts-tooling so that YAML-Lint only runs on git tracked files.
+
+## [2.0.5-dev3] - 2026-06-22 - Unreleased
+
+### Added
+
+- **zizmor ignore adhoc-packages**: Added "# zizmor: ignore[adhoc-packages]" to .github/workflows/validate-specific.yaml to ignore low risk Zizmor issue "ad-hoc installation of packages / installs a package outside of a lockfile", flagged for "npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0". Explored other options, but to change this to an action with a pinned SHA would work for Prettier but not for prettier-plugin-sort-json which is Home Assistant specific.
+
+### Changed
+
+- **Bump**: Bumped Ruff from 0.15.16 to 0.15.17
+
+## [2.0.5-dev2] - 2026-06-22 - Unreleased
+
+### Changed
+
+- **Doc Update**: Updated README and AGENTS with note on the self-validation
+
+## [2.0.5-dev1] - 2026-06-22 - Unreleased
+
+### Changed
+
+- **gitignore**: Updated .gitignore file (scratch folder)
+
+## [2.0.4] - 2026-06-20 - Release
+
+### Added
+
+- **Validate-Self**: Added a Standard validation category for basic validation, and validate-self.yaml to run this internally on this repo.
+
+### Changed
+
+- **Dependabot**: Bump CodeQL from 3.36.2 to 4.36.2 (PR #27)
+
 ## [2.0.4-dev5] - 2026-06-20 - Unreleased
 
 ### Added
