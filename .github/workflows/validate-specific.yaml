@@ -107,13 +107,13 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v6.2.0
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        # Tag @v6.3.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.15.19
+        run: pip install ruff==0.15.20
 
       - name: Run Ruff Check
         run: ruff check .
@@ -137,8 +137,8 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v6.2.0
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        # Tag @v6.3.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.14"
           cache: "pip"
@@ -189,8 +189,8 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v6.2.0
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        # Tag @v6.3.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.14"
 
@@ -261,8 +261,8 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v6.2.0
-        uses: actions/setup-python@a309ff8b426b58ec0e2a45f0f869d46889d02405
+        # Tag @v6.3.0
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
         with:
           python-version: "3.14"
 

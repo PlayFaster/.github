@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.6-dev3] - 2026-07-06 - Unreleased
+
+### Changed
+
+- **Ruff Checks Extended**: As of shared CI Dev-workbench v2.2.1, Ruff checks have been extended to align with Home Assistant. This involves INcluding a wide range of checks and then EXcluding several items because of the wider range.
+
+## [2.0.6-dev2] - 2026-07-03 - Unreleased
+
+### Bumps
+
+- **Validate Bump**: Update Ruff from 0.15.19 to 0.15.20
+
+## [2.0.6-dev1] - 2026-07-02 - Unreleased
+
+### Bumps
+
+- **Dependabot Bump**: Bump Setup-Python via SHA from v6.2.0 to v6.3.0 (PR #6)
+
 ## [2.0.5] - 2026-07-02 - Release
 
 ### Changed
