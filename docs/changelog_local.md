@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.7-dev1] - 2026-07-09 - Unreleased
+
+### Changed
+
+- **Sync Updated**: Updated (refactored) the Shared CI sync script and added PowerShell Linting. NO effect on this repo, but did push files.
+
+## [2.0.6] - 2026-07-06 - Release
+
+### Changed
+
+- **Ruff Checks Extended**: As of shared CI Dev-workbench v2.2.1, Ruff checks have been extended to align with Home Assistant. This involves INcluding a wide range of checks and then EXcluding several items because of the wider range.
+
+### Bumps
+
+- **Validate Bump**: Update Ruff from 0.15.19 to 0.15.20
+- **Dependabot Bump**: Bump Setup-Python via SHA from v6.2.0 to v6.3.0 (PR #6)
+
 ## [2.0.6-dev3] - 2026-07-06 - Unreleased
 
 ### Changed
