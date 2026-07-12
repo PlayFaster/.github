@@ -109,7 +109,7 @@ All `uses:` references are pinned to a full SHA. The human-readable tag is noted
 
 ## 🔄 Dependabot
 
-Monitors `github-actions`, `pip`, and `pre-commit` ecosystems on a **weekly** schedule with a 7-day cooldown between updates.
+Monitors `github-actions`, `pip`, and `pre-commit` ecosystems on a **weekly** schedule with a 7-day cool-down between updates.
 
 ## 📄 License
 

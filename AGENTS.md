@@ -149,4 +149,4 @@ Tasks and configs are sourced from `dev-workbench/host-tooling/`. See `dev-workb
 
 ## Dependabot
 
-`dependabot.yml` monitors `github-actions`, `pip`, and `pre-commit` ecosystems weekly with a 7-day cooldown between updates.
+`dependabot.yml` monitors `github-actions`, `pip`, and `pre-commit` ecosystems weekly with a 7-day cool-down between updates.
