@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.7-dev4] - 2026-07-17 - Unreleased - Bump Ruff
+
+### Bumps
+
+- **Validate Bump**: Update Ruff from 0.15.20 to 0.15.21
+
 ## [2.0.7-dev2] - 2026-07-12 - Unreleased - Dependabot Bump CodeQL
 
 ### Changed
