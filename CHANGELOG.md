@@ -1,6 +1,8 @@
-# Changelog
+# Changelog .github Repo
 
 All notable changes to this project will be documented in this file.
+
+---
 
 ## [2.0.6] - 2026-07-06 - Release
 

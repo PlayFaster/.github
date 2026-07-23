@@ -1,6 +1,14 @@
-# Changelog
+# Internal Detailed Changelog: .github Repo
 
-All notable changes to this project will be documented in this file.
+All changes to this project will be documented in this file. This is the detailed changelog, to include non user facing changes and intra-release changes.
+
+---
+
+## [2.0.7-dev5] - 2026-07-23 - Unreleased - No Complex Emoji
+
+### Changed
+
+- **Docs**: Updated AGENTS.md to clarify the complex two-character emojis should not be used in README or similar files as it can cause issues with markdown lint and github link formatting.
 
 ## [2.0.7-dev4] - 2026-07-17 - Unreleased - Bump Ruff
 
