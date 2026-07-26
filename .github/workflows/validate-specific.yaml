@@ -41,8 +41,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -62,14 +62,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
       - name: Hassfest Validation
         # Branch @master
-        uses: home-assistant/actions/hassfest@f4ca6f671bd429efb108c0f2fa0ae8af0215986c
+        uses: home-assistant/actions/hassfest@e3fb68ebda13d88a0d695082f471ba2c83d025fb
 
   # Job 3: Official HACS metadata validation.
   # category is passed through directly — 'integration' or 'theme'.
@@ -81,8 +81,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -101,8 +101,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -131,8 +131,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -162,8 +162,8 @@ jobs:
           echo "PERCENTAGE=$COVERAGE" >> $GITHUB_OUTPUT
 
       - name: Update Coverage Badge Gist
-        # Tag @v1.8.0
-        uses: schneegans/dynamic-badges-action@0e50b8bad39e7e1afd3e4e9c2b7dd145fad07501
+        # Tag @v1.9.0
+        uses: schneegans/dynamic-badges-action@28b0fa8bdeb46170ac397105ece0c1fe58f68910
         with:
           auth: ${{ secrets.GIST_SECRET }}
           gistID: ${{ inputs.gist_id }}
@@ -183,8 +183,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -237,8 +237,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -255,8 +255,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 
@@ -285,8 +285,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-        # Tag @v7.0.0
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
         with:
           persist-credentials: false
 

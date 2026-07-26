@@ -4,6 +4,33 @@ All changes to this project will be documented in this file. This is the detaile
 
 ---
 
+## [2.0.7] - 2026-07-26 - Release
+
+### Changed
+
+- **Docs**: Updated AGENTS.md to clarify the complex two-character emojis should not be used in README or similar files as it can cause issues with markdown lint and github link formatting.
+- **Sync Updated**: Updated (refactored) the Shared CI sync script and added PowerShell Linting. NO effect on this repo, but did push files.
+
+### Bumps
+
+- **#42**: Bump home-assistant/actions/hassfest from f4ca6f671bd429efb108c0f2fa0ae8af0215986c to e3fb68ebda13d88a0d695082f471ba2c83d025fb
+- **#41**: Bump actions/checkout from 7.0.0 to 7.0.1
+- **#40**: Bump github/codeql-action/analyze from 4.36.2 to 4.37.1
+- **#39**: Bump github/codeql-action/init from 4.36.2 to 4.37.1
+- **#36**: Bump schneegans/dynamic-badges-action from 1.8.0 to 1.9.0
+- **Validate Bump**: Update Ruff from 0.15.20 to 0.15.21
+- **Dependabot**: Bump CodeQL from 4.36.2 to 4.36.3 (PR #34 #35)
+
+## [2.0.7-dev6] - 2026-07-26 - Unreleased - Dependabot Bumps
+
+### Bumps
+
+- **#42**: Bump home-assistant/actions/hassfest from f4ca6f671bd429efb108c0f2fa0ae8af0215986c to e3fb68ebda13d88a0d695082f471ba2c83d025fb
+- **#41**: Bump actions/checkout from 7.0.0 to 7.0.1
+- **#40**: Bump github/codeql-action/analyze from 4.36.2 to 4.37.1
+- **#39**: Bump github/codeql-action/init from 4.36.2 to 4.37.1
+- **#36**: Bump schneegans/dynamic-badges-action from 1.8.0 to 1.9.0
+
 ## [2.0.7-dev5] - 2026-07-23 - Unreleased - No Complex Emoji
 
 ### Changed
@@ -18,7 +45,7 @@ All changes to this project will be documented in this file. This is the detaile
 
 ## [2.0.7-dev2] - 2026-07-12 - Unreleased - Dependabot Bump CodeQL
 
-### Changed
+### Bumps
 
 - **Dependabot**: Bump CodeQL from 4.36.2 to 4.36.3 (PR #34 #35)
 
