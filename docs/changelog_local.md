@@ -4,6 +4,12 @@ All changes to this project will be documented in this file. This is the detaile
 
 ---
 
+## [2.0.8-dev2] - 2026-07-26 - Unreleased - Bump Ruff
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.15.21 to 0.15.21
+
 ## [2.0.8-dev1] - 2026-07-26 - Unreleased - README and AGENTS
 
 ### Changed
