@@ -10,6 +10,8 @@ Shared GitHub configuration for **PlayFaster Home Assistant projects** — reusa
   - [📋 Table of Contents](#-table-of-contents)
   - [🔧 Reusable Workflows](#-reusable-workflows)
   - [✅ Validation Jobs](#-validation-jobs)
+    - [Pinning](#pinning)
+  - [🧩 Other Workflows](#-other-workflows)
   - [🔄 Dependabot](#-dependabot)
   - [📄 License](#-license)
 
@@ -95,17 +97,34 @@ jobs:
 
 | Job | Tool | Category | Blocking |
 | :-- | :-- | :-- | :-- |
-| `zizmor` | Zizmor `1.25.2` (workflow security audit) | All | Yes |
+| `zizmor` | Zizmor (workflow security audit) | All | Yes |
 | `hassfest` | `home-assistant/actions/hassfest` | Integration | Yes |
 | `hacs_val` | `hacs/action` (category passed through) | Integration, Theme | Yes |
-| `py_val` | Ruff `0.15.16` | Integration | Yes |
+| `py_val` | Ruff | Integration | Yes |
 | `test_val` | pytest + coverage badge (Gist) | Integration | Yes |
-| `file_val` | check-jsonschema, yamllint, Prettier `3.6.2`, markdown-link-check | All (HACS/HA schema checks skipped for standard) | Yes |
+| `file_val` | check-jsonschema, yamllint, Prettier, markdown-link-check | All (HACS/HA schema checks skipped for standard) | Yes |
 | `codespell` | `codespell-project/actions-codespell` | All | Yes |
-| `mypy_val` | Mypy `2.1.0` | Integration | Yes |
+| `mypy_val` | Mypy | Integration | Yes |
 | `structure_val` | Theme directory structure check | Theme | Yes |
 
-All `uses:` references are pinned to a full SHA. The human-readable tag is noted in a comment on the preceding line.
+### Pinning
+
+Every `uses:` reference is pinned to a full commit SHA, with the human-readable version in a comment on the preceding line (`# Tag @v7.0.1`, or `# Branch @main v2.0.2` for stubs referencing this repo).
+
+Every pip-installed tool and npm package is likewise pinned to an exact version (`ruff==n.nn.nn`, `prettier@n.n.n`, and so on) inside `validate-specific.yaml`. **Those pins are not repeated here** — that file is the single source of truth, and duplicating version numbers into the docs only creates a second place to update on every bump. To read the current set:
+
+```bash
+grep -n "pip install \|npm install " .github/workflows/validate-specific.yaml
+```
+
+## 🧩 Other Workflows
+
+Besides the validation pair, this repo ships:
+
+| Workflow | Trigger | Purpose |
+| :-- | :-- | :-- |
+| `codeql.yaml` | `workflow_call` | Reusable CodeQL analysis (Python) for integration repos, called by each repo's own `codeql.yml`. Separate entry point — not reached via `validate.yaml`. Its `analyze` job needs `security-events: write` to upload SARIF results; every validation job is read-only. |
+| `validate-self.yaml` | push (main, dev), pull_request, weekly cron | Validates this repository itself by calling the local `validate.yaml` with `category: standard`. |
 
 ## 🔄 Dependabot
 

@@ -4,6 +4,14 @@ All changes to this project will be documented in this file. This is the detaile
 
 ---
 
+## [2.0.8-dev1] - 2026-07-26 - Unreleased - README and AGENTS
+
+### Changed
+
+- **Docs**: Updated README.md and AGENTS.md to bring them into sync and remove reference to inactive projects.
+
+---
+
 ## [2.0.7] - 2026-07-26 - Release
 
 ### Changed
