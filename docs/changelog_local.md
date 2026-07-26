@@ -8,7 +8,7 @@ All changes to this project will be documented in this file. This is the detaile
 
 ### Bumps
 
-- **Validate Bump**: Update `ruff` from 0.15.21 to 0.15.21
+- **Validate Bump**: Update `ruff` from 0.15.21 to 0.15.22
 
 ## [2.0.8-dev1] - 2026-07-26 - Unreleased - README and AGENTS
 
