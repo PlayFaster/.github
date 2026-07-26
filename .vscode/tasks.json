@@ -97,6 +97,18 @@
       "type": "shell"
     },
     {
+      "command": "mkdir -Force .reports; $ps = @(git ls-files -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host 'Skipped: no PowerShell files' -ForegroundColor Yellow; Set-Content .reports/psscriptanalyzer.txt 'Skipped: no PowerShell files'; exit 0 }; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $r = $ps | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Settings .validate/PSScriptAnalyzerSettings.psd1 }; ($r | Format-Table -AutoSize | Out-String) | Tee-Object .reports/psscriptanalyzer.txt; Write-Host; if ($r) { Write-Host '✖  PSScriptAnalyzer: FAILED' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: PASSED' -ForegroundColor Green }; exit 0",
+      "group": "build",
+      "label": "Validate: PSScriptAnalyzer",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "command": "if (Test-Path tests) { uv run pytest } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
       "group": "build",
       "label": "Validate: Run Pytest",
@@ -129,6 +141,7 @@
         "Validate: YAML Style",
         "Validate: Codespell",
         "Validate: Zizmor",
+        "Validate: PSScriptAnalyzer",
         "Validate: Run Pytest",
         "Validate: Pytest Coverage"
       ],
@@ -202,12 +215,24 @@
       "type": "shell"
     },
     {
+      "command": "$ps = @(git ls-files -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host 'Skipped: no PowerShell files' -ForegroundColor Yellow; exit 0 }; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $ps | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Settings .validate/PSScriptAnalyzerSettings.psd1 -Fix -ExcludeRule PSUseSingularNouns,PSUseApprovedVerbs | Out-Null; Write-Host ('  fixed: ' + $_) -ForegroundColor Green }; Write-Host '✔  PSScriptAnalyzer: formatting applied (naming fixes are report-only — rename manually)' -ForegroundColor Green; exit 0",
+      "label": "Format: Apply PSScriptAnalyzer",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "dependsOn": [
         "Format: Apply Ruff Lint Fix",
         "Format: Apply Ruff Format",
         "Format: Apply Prettier",
         "Format: Apply Codespell",
-        "Format: Apply Markdownlint"
+        "Format: Apply Markdownlint",
+        "Format: Apply PSScriptAnalyzer"
       ],
       "dependsOrder": "sequence",
       "group": "none",
