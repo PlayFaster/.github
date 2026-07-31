@@ -4,6 +4,13 @@ All changes to this project will be documented in this file. This is the detaile
 
 ---
 
+## [2.0.8-dev3] - 2026-07-30 - Unreleased - Bump Ruff Zizmor
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.15.22 to 0.16.0
+- **Validate Bump**: Update `zizmor` from 1.25.2 to 1.28.0
+
 ## [2.0.8-dev2] - 2026-07-26 - Unreleased - Bump Ruff
 
 ### Bumps

@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.8] - 2026-08-01 - Release
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.15.21 to 0.16.0
+- **Validate Bump**: Update `zizmor` from 1.25.2 to 1.28.0
+
+### Changed
+
+- **Docs**: Updated README.md and AGENTS.md to bring them into sync and remove reference to inactive projects.
+
 ## [2.0.7] - 2026-07-26 - Release
 
 ### Changed
