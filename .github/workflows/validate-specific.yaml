@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Zizmor
-        run: pip install zizmor==1.25.2
+        run: pip install zizmor==1.28.0
 
       - name: Run Zizmor
         continue-on-error: false
@@ -113,7 +113,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.15.21
+        run: pip install ruff==0.16.0
 
       - name: Run Ruff Check
         run: ruff check .
