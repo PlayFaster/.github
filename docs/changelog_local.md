@@ -5,7 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
-  - [\[2.0.8-dev4\] - 2026-08-02 - Changelog\_Local Table of Contents](#208-dev4---2026-08-02---changelog_local-table-of-contents)
+  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog\_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
   - [\[2.0.8\] - 2026-08-01 - Release - Docs CI Bumps Ruff Zizmor](#208---2026-08-01---release---docs-ci-bumps-ruff-zizmor)
   - [\[2.0.8-dev3\] - 2026-07-30 - CI Bump Ruff Zizmor](#208-dev3---2026-07-30---ci-bump-ruff-zizmor)
   - [\[2.0.8-dev2\] - 2026-07-26 - CI Bump Ruff](#208-dev2---2026-07-26---ci-bump-ruff)
@@ -51,7 +51,7 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.6\] - 2026-06-10 - CI Bump Ruff](#106---2026-06-10---ci-bump-ruff)
   - [\[1.0.5\] - 2026-05-27 - CI Pins](#105---2026-05-27---ci-pins)
   - [\[1.0.4\] - 2026-05-24 - CI Bump Zizmor](#104---2026-05-24---ci-bump-zizmor)
-  - [\[1.0.3\] - 2026-05-24 -  Continue on Error OFF CI Bumps](#103---2026-05-24----continue-on-error-off-ci-bumps)
+  - [\[1.0.3\] - 2026-05-24 - Continue on Error OFF CI Bumps](#103---2026-05-24---continue-on-error-off-ci-bumps)
   - [\[1.0.2\] - 2026-05-09- From Tags to SHA Hashes](#102---2026-05-09--from-tags-to-sha-hashes)
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
@@ -435,7 +435,7 @@ All changes to this project will be documented in this file. This is the detaile
 
 - **DependaBot**: Bump zizmor from 1.24.1 to 1.25.2
 
-## [1.0.3] - 2026-05-24 -  Continue on Error OFF CI Bumps
+## [1.0.3] - 2026-05-24 - Continue on Error OFF CI Bumps
 
 ### Changed
 
