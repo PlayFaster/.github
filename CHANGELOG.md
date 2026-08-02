@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.9] - 2026-08-02 - Release
+
+### Dependabot Bumps
+
+- Bump github/codeql-action/analyze from 4.37.1 to 4.37.3 - #48
+- Bump home-assistant/actions/hassfest from e3fb68ebda13d88a0d695082f471ba2c83d025fb to ab22029681aa532bfe7de5774a9972d67bfbd2c0 - #47
+- Bump github/codeql-action/init from 4.37.1 to 4.37.3 - #46
+- Bump actions/setup-python from 6.3.0 to 7.0.0 - #45
+
+### Changed
+
+- **`changelog_local` ToC**: Added table of contents to `changelog_local` (top-of-file) and to the end of `CHANGELOG` and updated release headers in `changelog_local` for readability.
+
 ## [2.0.8] - 2026-08-01 - Release
 
 ### Bumps
@@ -219,6 +232,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.9\] - 2026-08-02 - Release](#209---2026-08-02---release)
   - [\[2.0.8\] - 2026-08-01 - Release](#208---2026-08-01---release)
   - [\[2.0.7\] - 2026-07-26 - Release](#207---2026-07-26---release)
   - [\[2.0.6\] - 2026-07-06 - Release](#206---2026-07-06---release)
