@@ -174,7 +174,7 @@ All notable changes to this project will be documented in this file.
 
 - **DependaBot**: Bumped HASSFest
 
-## [1.0.6] - 2026-06-10 - UNreleasedUNreleased
+## [1.0.6] - 2026-06-10 - UNreleased
 
 ### Changed
 
@@ -217,3 +217,27 @@ All notable changes to this project will be documented in this file.
 ### Format
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+- [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.8\] - 2026-08-01 - Release](#208---2026-08-01---release)
+  - [\[2.0.7\] - 2026-07-26 - Release](#207---2026-07-26---release)
+  - [\[2.0.6\] - 2026-07-06 - Release](#206---2026-07-06---release)
+  - [\[2.0.5\] - 2026-07-02 - Release](#205---2026-07-02---release)
+  - [\[2.0.4\] - 2026-06-20 - Release](#204---2026-06-20---release)
+  - [\[2.0.3\] - 2026-06-15 - Release](#203---2026-06-15---release)
+  - [\[2.0.2\] - 2026-06-15 - Release](#202---2026-06-15---release)
+  - [\[2.0.1\] - 2026-06-15 - Release](#201---2026-06-15---release)
+  - [\[2.0.0\] - 2026-06-15 - Release](#200---2026-06-15---release)
+  - [\[1.1.3\] - 2026-06-14 - Release](#113---2026-06-14---release)
+  - [\[1.1.2\] - 2026-06-14 - Release](#112---2026-06-14---release)
+  - [\[1.1.1\] - 2026-06-14 - Release](#111---2026-06-14---release)
+  - [\[1.1.0\] - 2026-06-14 - Release](#110---2026-06-14---release)
+  - [\[1.0.9\] - 2026-06-14 - Release](#109---2026-06-14---release)
+  - [\[1.0.8\] - 2026-06-11 - Release](#108---2026-06-11---release)
+  - [\[1.0.7\] - 2026-06-10 - Release](#107---2026-06-10---release)
+  - [\[1.0.6\] - 2026-06-10 - UNreleased](#106---2026-06-10---unreleased)
+  - [\[1.0.5\] - 2026-05-27 - UNreleased](#105---2026-05-27---unreleased)
+  - [\[1.0.4\] - 2026-05-24](#104---2026-05-24)
+  - [\[1.0.3\] - 2026-05-24](#103---2026-05-24)
+  - [\[1.0.2\] - 2026-05-09](#102---2026-05-09)
+  - [\[1.0.1\] - 2026-05-09](#101---2026-05-09)
