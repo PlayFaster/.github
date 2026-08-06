@@ -109,9 +109,9 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path tests) { uv run pytest } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
+      "command": "mkdir -Force .reports; if (Test-Path tests) { uv run pytest --cov=workbench --cov-branch --cov-report=term-missing --cov-report=html:.reports/htmlcov --cov-report=xml:.reports/coverage.xml } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
       "group": "build",
-      "label": "Validate: Run Pytest",
+      "label": "Validate: Pytest Coverage",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
@@ -121,9 +121,9 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; if (Test-Path tests) { uv run pytest --cov=workbench --cov-report=term-missing --cov-report=html:.reports/htmlcov --cov-report=xml:.reports/coverage.xml } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
+      "command": "if (Test-Path scripts/check_prompts.py) { mkdir -Force .reports; uv run python scripts/check_prompts.py | tee .reports/prompt_check.txt; Write-Host; if (Select-String -Quiet 'Prompt Check: PASSED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prompt Check: PASSED' -ForegroundColor Green } elseif (Select-String -Quiet 'Prompt Check: SKIPPED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '–  Prompt Check: SKIPPED' -ForegroundColor Yellow } else { Write-Host '✖  Prompt Check: FAILED' -ForegroundColor Red } } else { Write-Host 'Skipped: no scripts/check_prompts.py' -ForegroundColor Yellow }; exit 0",
       "group": "build",
-      "label": "Validate: Pytest Coverage",
+      "label": "Env: Check Shared Prompts",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
@@ -142,8 +142,8 @@
         "Validate: Codespell",
         "Validate: Zizmor",
         "Validate: PSScriptAnalyzer",
-        "Validate: Run Pytest",
-        "Validate: Pytest Coverage"
+        "Validate: Pytest Coverage",
+        "Env: Check Shared Prompts"
       ],
       "dependsOrder": "sequence",
       "group": {

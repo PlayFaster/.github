@@ -5,10 +5,11 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
-  - [\[2.0.10\] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments](#2010---2026-08-04---local-ci-sync-add-do-not-edit-comments)
+  - [\[2.0.10-dev2\] - 2026-08-06 - Tasks.json; .gitignore](#2010-dev2---2026-08-06---tasksjson-gitignore)
+  - [\[2.0.10-dev1\] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments](#2010-dev1---2026-08-04---local-ci-sync-add-do-not-edit-comments)
   - [\[2.0.9\] - 2026-08-02 - Release - Changelog ToC Dependabot Bumps CodeQL Python HASSFest](#209---2026-08-02---release---changelog-toc-dependabot-bumps-codeql-python-hassfest)
   - [\[2.0.9-dev2\] - 2026-08-02 - Dependabot Bumps to CodeQL Python HASSFest](#209-dev2---2026-08-02---dependabot-bumps-to-codeql-python-hassfest)
-  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog\_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
+  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
   - [\[2.0.8\] - 2026-08-01 - Release - Docs CI Bumps Ruff Zizmor](#208---2026-08-01---release---docs-ci-bumps-ruff-zizmor)
   - [\[2.0.8-dev3\] - 2026-07-30 - CI Bump Ruff Zizmor](#208-dev3---2026-07-30---ci-bump-ruff-zizmor)
   - [\[2.0.8-dev2\] - 2026-07-26 - CI Bump Ruff](#208-dev2---2026-07-26---ci-bump-ruff)
@@ -60,11 +61,21 @@ All changes to this project will be documented in this file. This is the detaile
 
 ---
 
-## [2.0.10] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments
+## [2.0.10-dev2] - 2026-08-06 - Tasks.json; .gitignore
 
 ### Changed
 
-- **Local CI**: Local CI sync for `.validate\pyproject_common.toml` to add in-line comments to prevent local editing of sync shared files.
+- **Local CI**: These changes do not directly impact this repo but are shared/sync changes.
+  - `.gitignore`: Updated to add `mutants/`for `mutmut` testing.
+  - `tasks.json`: Updated to include branch coverage for `pytest` coverage.
+
+## [2.0.10-dev1] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments
+
+### Changed
+
+- **Local CI**: These changes do not directly impact this repo but are shared/sync changes.
+  - Local CI sync for `.validate\pyproject_common.toml` to add in-line comments to prevent local editing of sync shared files.
+  - Updated with latest HA `ruff` inclusions and exclusions.
 
 ## [2.0.9] - 2026-08-02 - Release - Changelog ToC Dependabot Bumps CodeQL Python HASSFest
 
