@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.11-dev1\] - 2026-08-07 - Bump `ruff`](#2011-dev1---2026-08-07---bump-ruff)
   - [\[2.0.10\] - 2026-08-07 - Release - `release.yaml` to Add zips](#2010---2026-08-07---release---releaseyaml-to-add-zips)
   - [\[2.0.10-dev3\] - 2026-08-07 - Shared Release Workflow HACS Zip](#2010-dev3---2026-08-07---shared-release-workflow-hacs-zip)
   - [\[2.0.10-dev2\] - 2026-08-06 - Tasks.json; .gitignore](#2010-dev2---2026-08-06---tasksjson-gitignore)
@@ -62,6 +63,12 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.11-dev1] - 2026-08-07 - Bump `ruff`
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.16.0 to 0.16.1
 
 ## [2.0.10] - 2026-08-07 - Release - `release.yaml` to Add zips
 
