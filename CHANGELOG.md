@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.10] - 2026-08-07 - Release
+
+### Added
+
+- **Release Workflow**: New shared `release.yaml` packages an integration's `custom_components/<name>/` directory into a zip and attaches it to a published GitHub release, so HACS downloads one release asset instead of individual files. This makes GitHub's asset `download_count` a usable install signal — with per-file downloads there was nothing to count. Called via `workflow_call` with `component_name` and `tag`; the asset defaults to `<component_name>.zip`. It refuses to publish if `manifest.json` disagrees with the release tag, or if `hacs.json` is not configured for zip releases.
+
+### Action Required
+
+- **Consuming projects must opt in** — nothing changes until they do. Add a `release.yaml` stub triggered on `release: [published]`, grant that job `contents: write` (every other shared workflow needs only `contents: read`, so this block is easy to forget and the run fails without it), and add `zip_release: true` and `filename` to `hacs.json`. No new secret is needed; the automatic `GITHUB_TOKEN` covers it. Releases published before opting in are unaffected and keep installing normally.
+
+### Changed
+
+- **Local CI**: Shared sync changes with no effect on this repo's own validation — `.validate/pyproject_common.toml` gained in-line comments warning against local edits of synced files plus the latest HA `ruff` inclusions and exclusions, `.gitignore` now ignores `mutants/` for `mutmut`, and `tasks.json` reports branch coverage for `pytest`.
+
 ## [2.0.9] - 2026-08-02 - Release
 
 ### Dependabot Bumps
@@ -232,6 +246,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.10\] - 2026-08-07 - Release](#2010---2026-08-07---release)
   - [\[2.0.9\] - 2026-08-02 - Release](#209---2026-08-02---release)
   - [\[2.0.8\] - 2026-08-01 - Release](#208---2026-08-01---release)
   - [\[2.0.7\] - 2026-07-26 - Release](#207---2026-07-26---release)
