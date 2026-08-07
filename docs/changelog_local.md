@@ -5,6 +5,10 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.10\] - 2026-08-07 - Release - `release.yaml` to Add zips](#2010---2026-08-07---release---releaseyaml-to-add-zips)
+  - [\[2.0.10-dev3\] - 2026-08-07 - Shared Release Workflow HACS Zip](#2010-dev3---2026-08-07---shared-release-workflow-hacs-zip)
+  - [\[2.0.10-dev2\] - 2026-08-06 - Tasks.json; .gitignore](#2010-dev2---2026-08-06---tasksjson-gitignore)
+  - [\[2.0.10-dev1\] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments](#2010-dev1---2026-08-04---local-ci-sync-add-do-not-edit-comments)
   - [\[2.0.9\] - 2026-08-02 - Release - Changelog ToC Dependabot Bumps CodeQL Python HASSFest](#209---2026-08-02---release---changelog-toc-dependabot-bumps-codeql-python-hassfest)
   - [\[2.0.9-dev2\] - 2026-08-02 - Dependabot Bumps to CodeQL Python HASSFest](#209-dev2---2026-08-02---dependabot-bumps-to-codeql-python-hassfest)
   - [\[2.0.9-dev1\] - 2026-08-02 - Changelog_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
@@ -58,6 +62,54 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.10] - 2026-08-07 - Release - `release.yaml` to Add zips
+
+### Added
+
+- **Release Workflow**: New shared `release.yaml` packages an integration's `custom_components/<name>/` directory into a zip and attaches it to a published GitHub release, so HACS downloads one release asset instead of individual files. This makes GitHub's asset `download_count` a usable install signal — with per-file downloads there was nothing to count. Called via `workflow_call` with `component_name` and `tag`; the asset defaults to `<component_name>.zip`. It refuses to publish if `manifest.json` disagrees with the release tag, or if `hacs.json` is not configured for zip releases.
+
+### Action Required
+
+- **Consuming projects must opt in** — nothing changes until they do. Add a `release.yaml` stub triggered on `release: [published]`, grant that job `contents: write` (every other shared workflow needs only `contents: read`, so this block is easy to forget and the run fails without it), and add `zip_release: true` and `filename` to `hacs.json`. No new secret is needed; the automatic `GITHUB_TOKEN` covers it. Releases published before opting in are unaffected and keep installing normally.
+
+### Changed
+
+- **Local CI**: Shared sync changes with no effect on this repo's own validation — `.validate/pyproject_common.toml` gained in-line comments warning against local edits of synced files plus the latest HA `ruff` inclusions and exclusions, `.gitignore` now ignores `mutants/` for `mutmut`, and `tasks.json` reports branch coverage for `pytest`.
+
+## [2.0.10-dev3] - 2026-08-07 - Shared Release Workflow HACS Zip
+
+### Added
+
+- **`release.yaml`**: New shared reusable workflow (`workflow_call`) that builds a HACS-compatible zip of an integration's custom component and attaches it to a published GitHub release. Added because a release asset's `download_count` is the only download signal GitHub exposes — a per-file HACS download is invisible, which is why install counts read zero.
+  - **Inputs**: `component_name` (required), `tag` (required), `asset_name` (optional, defaults to `<component_name>.zip`).
+  - **Permissions**: workflow-level `contents: read`; the single `zip_release` job declares `contents: write` to upload the asset. This is the first shared workflow that requires more than read, so calling stubs must grant `contents: write` at job level — a called workflow can never exceed the caller job's grant.
+  - **Token**: uses the automatic `secrets.GITHUB_TOKEN`, which reaches a called workflow without being declared under `secrets:` or passed via `secrets: inherit`. No new secret is required; this is unrelated to `GIST_SECRET`, which is a real PAT because it touches a Gist outside the repo.
+  - **Archive layout**: zips from inside `custom_components/<component_name>/` so `manifest.json` sits at the archive root. HACS runs `zip_file.extractall(content.path.local)` directly into `custom_components/<domain>/`, so a nested top-level folder would produce a broken install.
+  - **Guards**: fails if `manifest.json` version does not equal the tag minus a leading `v`; fails if `hacs.json` lacks `zip_release: true` or its `filename` does not match the asset name; asserts `manifest.json` is at the archive root before uploading. The `hacs.json` guard matters because that misconfiguration fails silently — HACS falls back to per-file download and the asset is never requested.
+  - **Conventions**: `actions/checkout` pinned by SHA with a `# Tag @v7.0.1` comment and `persist-credentials: false`; no `${{ }}` interpolation inside `run:` blocks (all values arrive via `env:`) so `zizmor --pedantic` stays clean.
+
+### Notes
+
+- **Consumer requirements**: a calling project adds a `release.yaml` stub triggered on `release: [published]` and adds `zip_release: true` plus `filename` to `hacs.json`. `hide_default_branch: true` should already be set, otherwise users can install from the default branch and bypass the asset entirely.
+- **Existing tags are unaffected**: HACS fetches `hacs.json` per-ref (`raw.githubusercontent.com/{repo}/{target_version}/hacs.json`), so releases cut before the switch keep installing by per-file download and continue to work. Backfilling zips onto old releases is pointless — those tags' manifests never instruct HACS to look for an asset.
+- **First zip release re-downloads for every current user**, since HACS treats it as an update. That produces a one-off count roughly equal to the live install base; afterwards the number tracks update velocity, not installs.
+
+## [2.0.10-dev2] - 2026-08-06 - Tasks.json; .gitignore
+
+### Changed
+
+- **Local CI**: These changes do not directly impact this repo but are shared/sync changes.
+  - `.gitignore`: Updated to add `mutants/`for `mutmut` testing.
+  - `tasks.json`: Updated to include branch coverage for `pytest` coverage.
+
+## [2.0.10-dev1] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments
+
+### Changed
+
+- **Local CI**: These changes do not directly impact this repo but are shared/sync changes.
+  - Local CI sync for `.validate\pyproject_common.toml` to add in-line comments to prevent local editing of sync shared files.
+  - Updated with latest HA `ruff` inclusions and exclusions.
 
 ## [2.0.9] - 2026-08-02 - Release - Changelog ToC Dependabot Bumps CodeQL Python HASSFest
 

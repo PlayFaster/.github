@@ -1,0 +1,107 @@
+# Shared release workflow for PlayFaster Home Assistant integrations.
+# Builds a HACS-compatible zip of the custom component and attaches it to an
+# already-published GitHub release. Each project's release.yaml stub calls this
+# workflow via workflow_call on `release: [published]`.
+#
+# HACS extracts the asset directly into custom_components/<domain>/ (see
+# hacs/integration base.py: zip_file.extractall(self.content.path.local)), so the
+# archive must contain the component files at its ROOT — no leading directory.
+
+name: "Release (Shared)"
+
+"on":
+  workflow_call:
+    inputs:
+      component_name:
+        required: true
+        type: string
+        description: "Custom component directory name under custom_components/"
+      tag:
+        required: true
+        type: string
+        description: "Release tag the asset is attached to (e.g. v2.0.2)"
+      asset_name:
+        required: false
+        type: string
+        default: ""
+        description:
+          "Asset filename. Defaults to <component_name>.zip. Must match `filename` in
+          hacs.json."
+
+permissions:
+  contents: read
+
+jobs:
+  zip_release:
+    name: "Build & Attach HACS Zip"
+    permissions:
+      contents: write # Required to upload the zip asset onto the release
+    runs-on: ubuntu-latest
+    env:
+      COMPONENT_NAME: ${{ inputs.component_name }}
+      RELEASE_TAG: ${{ inputs.tag }}
+      ASSET_NAME: ${{ inputs.asset_name }}
+    steps:
+      - name: Checkout Repository
+        # Tag @v7.0.1
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          # Build from the tagged tree, not the default branch.
+          ref: ${{ inputs.tag }}
+          persist-credentials: false
+
+      - name: Resolve Asset Name
+        run: |
+          if [ -z "$ASSET_NAME" ]; then
+            echo "ASSET_NAME=${COMPONENT_NAME}.zip" >> "$GITHUB_ENV"
+          fi
+
+      - name: Verify Manifest Version Matches Tag
+        # A mismatch here is the classic HACS bug: the store shows the tag, but the
+        # integration reports a different version in the device/diagnostics panel.
+        run: |
+          MANIFEST="custom_components/${COMPONENT_NAME}/manifest.json"
+          MANIFEST_VERSION="$(jq -r '.version' "$MANIFEST")"
+          EXPECTED="${RELEASE_TAG#v}"
+          if [ "$MANIFEST_VERSION" != "$EXPECTED" ]; then
+            echo "::error file=${MANIFEST}::manifest.json version '${MANIFEST_VERSION}' does not match release tag '${RELEASE_TAG}'"
+            exit 1
+          fi
+          echo "Version $MANIFEST_VERSION matches tag $RELEASE_TAG"
+
+      - name: Verify hacs.json Zip Configuration
+        # hacs.json is read from the tag, so a stale/absent zip_release here means
+        # HACS silently falls back to a per-file download and the asset is never hit.
+        run: |
+          if [ "$(jq -r '.zip_release' hacs.json)" != "true" ]; then
+            echo "::error file=hacs.json::zip_release must be true to publish a zip release"
+            exit 1
+          fi
+          HACS_FILENAME="$(jq -r '.filename' hacs.json)"
+          if [ "$HACS_FILENAME" != "$ASSET_NAME" ]; then
+            echo "::error file=hacs.json::filename '${HACS_FILENAME}' does not match the asset name '${ASSET_NAME}'"
+            exit 1
+          fi
+
+      - name: Build Component Zip
+        # -X drops uid/gid/timestamp extras so the archive is byte-stable for a
+        # given tree. Contents are zipped from inside the component directory.
+        run: |
+          cd "custom_components/${COMPONENT_NAME}"
+          zip -r -X "${RUNNER_TEMP}/${ASSET_NAME}" . \
+            -x '*.pyc' '__pycache__/*' '*/__pycache__/*'
+
+      - name: Verify Zip Layout
+        # manifest.json must sit at the archive root or HACS produces a broken install.
+        run: |
+          if ! unzip -Z1 "${RUNNER_TEMP}/${ASSET_NAME}" | grep -qx 'manifest.json'; then
+            echo "::error::manifest.json is not at the root of ${ASSET_NAME}"
+            exit 1
+          fi
+          unzip -Z1 "${RUNNER_TEMP}/${ASSET_NAME}"
+
+      - name: Attach Zip to Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+        run: gh release upload "$RELEASE_TAG" "${RUNNER_TEMP}/${ASSET_NAME}" --clobber
