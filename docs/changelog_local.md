@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.11\] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema](#2011---2026-08-14---release---ci-bumps-zizmor-mypy-ruff-jsonschema)
   - [\[2.0.11-dev2\] - 2026-08-14 - CI Bumps Zizmor MyPy JSONSchema PHACC; AGENTS.md](#2011-dev2---2026-08-14---ci-bumps-zizmor-mypy-jsonschema-phacc-agentsmd)
   - [\[2.0.11-dev1\] - 2026-08-07 - Bump `ruff`](#2011-dev1---2026-08-07---bump-ruff)
   - [\[2.0.10\] - 2026-08-07 - Release - `release.yaml` to Add zips](#2010---2026-08-07---release---releaseyaml-to-add-zips)
@@ -64,6 +65,15 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.11] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.28.0 to 1.29.0
+- **Validate Bump**: Update `mypy` from 2.1.0 to 2.3.0
+- **Validate Bump**: Update `ruff` from 0.16.0 to 0.16.1
+- **Validate Bump**: Update `check-jsonschema` from 0.37.4 to 0.38.0
 
 ## [2.0.11-dev2] - 2026-08-14 - CI Bumps Zizmor MyPy JSONSchema PHACC; AGENTS.md
 
