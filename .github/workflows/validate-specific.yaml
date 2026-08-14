@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Zizmor
-        run: pip install zizmor==1.28.0
+        run: pip install zizmor==1.29.0
 
       - name: Run Zizmor
         continue-on-error: false
@@ -197,7 +197,7 @@ jobs:
       - name: HACS Schema Check
         if: ${{ inputs.category != 'standard' }}
         run: |
-          pip install check-jsonschema==0.37.4
+          pip install check-jsonschema==0.38.0
           check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
 
       - name: HA Manifest Schema Check
@@ -268,7 +268,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mypy==2.1.0
+          pip install mypy==2.3.0
           pip install -r .validate/requirements_test.txt
 
       - name: Run Mypy
