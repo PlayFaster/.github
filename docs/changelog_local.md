@@ -74,11 +74,21 @@ All changes to this project will be documented in this file. This is the detaile
 
 - **Validate Bump**: Update `ruff` from 0.16.1 to 0.16.2
 
+### Dependabot Bumps
+
+- Bump codeql from 4.37.3 to 4.37.6 #54 #55
+- Bump hassfest from ab22029681aa532bfe7de5774a9972d67bfbd2c0 to a7c616ce81ccda50150bf1595786c71b1883fabb #51
+
 ## [2.0.12-dev1] - 2026-08-16 - Release - CI Bump ruff
 
 ### Bumps
 
 - **Validate Bump**: Update `ruff` from 0.16.1 to 0.16.2
+
+### Dependabot Bumps
+
+- Bump codeql from 4.37.3 to 4.37.6 #54 #55
+- Bump hassfest from ab22029681aa532bfe7de5774a9972d67bfbd2c0 to a7c616ce81ccda50150bf1595786c71b1883fabb #51
 
 ## [2.0.11] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema
 
