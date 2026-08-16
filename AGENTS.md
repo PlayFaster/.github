@@ -1,5 +1,7 @@
 # AGENTS.md
 
+> [!CAUTION] **Never run `git checkout`, `git restore`, `git reset`, `git stash` or `git clean`. Ask first, every time — no exceptions, whoever's changes you think they are.** Reading git (`status`, `diff`, `log`, `show`) is always fine. Full rule and the incident behind it: [`.shared/dev_std/agent_conventions.md`](.shared/dev_std/agent_conventions.md).
+
 This file provides guidance to AI coding agents when working with code in this repository.
 
 ## Purpose
@@ -182,7 +184,7 @@ All tool configs live in `.validate/` and are managed by `sync_projects.ps1` in 
 
 ### Source
 
-Tasks and configs are sourced from `dev-workbench/host-tooling/`. See `dev-workbench/host-tooling/what_this_is_for.md` for details.
+Tasks and configs are sourced from `dev-workbench/host-tooling/`. See `dev-workbench/host-tooling/host_tooling_process.md` for details.
 
 ## Dependabot
 
