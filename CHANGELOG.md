@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [2.0.12] - 2026-08-16 - Release - CI Bump ruff
+## [2.0.12] - 2026-08-16 - Release - CI Bump ruff codeql hassfest
 
 ### Bumps
 
@@ -266,7 +266,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
-  - [\[2.0.12\] - 2026-08-16 - Release - CI Bump ruff](#2012---2026-08-16---release---ci-bump-ruff)
+  - [\[2.0.12\] - 2026-08-16 - Release - CI Bump ruff codeql hassfest](#2012---2026-08-16---release---ci-bump-ruff-codeql-hassfest)
   - [\[2.0.11\] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema](#2011---2026-08-14---release---ci-bumps-zizmor-mypy-ruff-jsonschema)
   - [\[2.0.10\] - 2026-08-07 - Release - Zip Releases](#2010---2026-08-07---release---zip-releases)
   - [\[2.0.9\] - 2026-08-02 - Release](#209---2026-08-02---release)
