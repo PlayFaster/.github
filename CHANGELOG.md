@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.14-dev2] - 2026-08-18 - Shared Sync Update Does Not Impact This Project
+
+### Changed
+
+- **Host Tooling**: Updated via shared sync. Does not affect this repo, but changes are brought over via shared sync.
+  - **`tasks.json`**: Added `Env: Check Prompt Cadence`, `Env: Check Sensor Manifest` Tasks to `Validate All`, to check last used dates of shared prompts, and to validate project sensors versus HA. Updated to ensure `pytest` & coverage run on all `script/` and `workbench/` .py files.
+  - Compacted the comments section on some tool config files. Retain key info (e.g. do not edit copies of shared sync files, go to source), but more readable.
+
 ## [2.0.12] - 2026-08-16 - Release - CI Bump ruff codeql hassfest
 
 ### Bumps
@@ -266,6 +274,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.14-dev2\] - 2026-08-18 - Shared Sync Update Does Not Impact This Project](#2014-dev2---2026-08-18---shared-sync-update-does-not-impact-this-project)
   - [\[2.0.12\] - 2026-08-16 - Release - CI Bump ruff codeql hassfest](#2012---2026-08-16---release---ci-bump-ruff-codeql-hassfest)
   - [\[2.0.11\] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema](#2011---2026-08-14---release---ci-bumps-zizmor-mypy-ruff-jsonschema)
   - [\[2.0.10\] - 2026-08-07 - Release - Zip Releases](#2010---2026-08-07---release---zip-releases)
