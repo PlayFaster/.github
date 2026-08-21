@@ -5,6 +5,9 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
+  - [\[2.0.14-dev3\] - 2026-08-21 - CI Bump ruff](#2014-dev3---2026-08-21---ci-bump-ruff)
+  - [\[2.0.14-dev2\] - 2026-08-18 - Shared Sync Update Does Not Impact This Project](#2014-dev2---2026-08-18---shared-sync-update-does-not-impact-this-project)
   - [\[2.0.12\] - 2026-08-16 - Release - CI Bump ruff codeql hassfest](#2012---2026-08-16---release---ci-bump-ruff-codeql-hassfest)
   - [\[2.0.12-dev1\] - 2026-08-16 - Release - CI Bump ruff codeql hassfest](#2012-dev1---2026-08-16---release---ci-bump-ruff-codeql-hassfest)
   - [\[2.0.11\] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema](#2011---2026-08-14---release---ci-bumps-zizmor-mypy-ruff-jsonschema)
@@ -67,6 +70,32 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.14] - 2026-08-21 - Release - CI Bump ruff
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.16.2 to 0.16.3
+
+## [2.0.14-dev3] - 2026-08-21 - CI Bump ruff
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.16.2 to 0.16.3
+
+### Changed
+
+- **Host Tooling**: Updated via shared sync. Does not affect this repo, but changes are brought over via shared sync.
+  - **`tasks.json`**: Updated for Sensor Manifest Tasks
+  - **`pyproject.toml`**: Updated to remove uv no python warnings
+
+## [2.0.14-dev2] - 2026-08-18 - Shared Sync Update Does Not Impact This Project
+
+### Changed
+
+- **Host Tooling**: Updated via shared sync. Does not affect this repo, but changes are brought over via shared sync.
+  - **`tasks.json`**: Added `Env: Check Prompt Cadence`, `Env: Check Sensor Manifest` Tasks to `Validate All`, to check last used dates of shared prompts, and to validate project sensors versus HA. Updated to ensure `pytest` & coverage run on all `script/` and `workbench/` .py files.
+  - Compacted the comments section on some tool config files. Retain key info (e.g. do not edit copies of shared sync files, go to source), but more readable.
 
 ## [2.0.12] - 2026-08-16 - Release - CI Bump ruff codeql hassfest
 
