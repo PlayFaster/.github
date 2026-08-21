@@ -1,21 +1,7 @@
 # PSScriptAnalyzer settings for host-tooling PowerShell scripts.
-# Source of truth: host-tooling/common/.validate/ ; deployed to each host repo's
-# .validate/ by sync_projects.ps1 (Sync-HostRepo, Pass 2). Consumed by the
-# 'Validate: PSScriptAnalyzer' (report) and 'Format: Apply PSScriptAnalyzer'
-# (-Fix) VS Code tasks.
-#
-# Keeps the default rule set (approved verbs, unused vars, BOM, singular nouns,
-# trailing whitespace, etc.) and ADDS the opt-in code-formatting rules for full
-# reflow (indentation, brace placement, whitespace, casing). Only
-# PSAvoidUsingWriteHost is excluded: these are CLI scripts whose output IS
-# Write-Host.
-#
-# SAFETY: the 'Format: Apply PSScriptAnalyzer' task runs -Fix but additionally
-# passes -ExcludeRule PSUseSingularNouns,PSUseApprovedVerbs. Those rules' auto-fix
-# RENAMES a function's definition WITHOUT updating its call sites, silently
-# breaking scripts (PSSA does not flag calls to now-undefined functions). Naming
-# issues are therefore reported by the check but never auto-applied — rename by
-# hand (update every call site). Do not remove that -ExcludeRule from the task.
+# Deployed to each host repo's .validate/ by sync_projects.ps1 (Sync-HostRepo, Pass 2).
+# Keeps default rule set + opt-in formatting rules; PSAvoidUsingWriteHost excluded for CLI output.
+# (Note: format task passes -ExcludeRule PSUseSingularNouns,PSUseApprovedVerbs; see host_tooling_process.md).
 @{
     ExcludeRules = @(
         'PSAvoidUsingWriteHost'

@@ -109,7 +109,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; if (Test-Path tests) { uv run pytest --cov=workbench --cov-branch --cov-report=term-missing --cov-report=html:.reports/htmlcov --cov-report=xml:.reports/coverage.xml } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
+      "command": "mkdir -Force .reports; if (Test-Path tests) { $cov = @(); if (Test-Path workbench) { $cov += '--cov=workbench' }; if (Test-Path scripts) { $cov += '--cov=scripts' }; if ($cov.Count -eq 0) { $cov = @('--cov') }; uv run pytest $cov --cov-branch --cov-fail-under=100 --cov-report=term-missing --cov-report=html:.reports/htmlcov --cov-report=xml:.reports/coverage.xml } else { Write-Host 'Skipped: No tests/ folder found' -ForegroundColor Yellow }; exit 0",
       "group": "build",
       "label": "Validate: Pytest Coverage",
       "presentation": {
@@ -133,6 +133,30 @@
       "type": "shell"
     },
     {
+      "command": "if (Test-Path scripts/check_prompt_cadence.py) { mkdir -Force .reports; uv run python scripts/check_prompt_cadence.py | tee .reports/prompt_cadence.txt; Write-Host; if (Select-String -Quiet 'Prompts Overdue & Due Check' .reports/prompt_cadence.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prompt Cadence: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prompt Cadence: FAILED' -ForegroundColor Red } } else { Write-Host 'Skipped: no scripts/check_prompt_cadence.py' -ForegroundColor Yellow }; exit 0",
+      "group": "build",
+      "label": "Env: Check Prompt Cadence",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "if (Test-Path workbench/check_sensor_manifest.py) { mkdir -Force .reports | Out-Null; Remove-Item -Force -ErrorAction SilentlyContinue .reports/sensor_manifest.txt; $failed = $false; foreach ($proj in @('huawei', 'zte', 'unifi', 'wifi')) { uv run python workbench/check_sensor_manifest.py $proj --check | tee -Append .reports/sensor_manifest.txt; if ($LASTEXITCODE -ne 0) { $failed = $true } }; Write-Host; if (-not $failed) { Write-Host '✔  Sensor Manifest: PASSED' -ForegroundColor Green } else { Write-Host '✖  Sensor Manifest: FAILED' -ForegroundColor Red } } else { Write-Host 'Skipped: no workbench/check_sensor_manifest.py' -ForegroundColor Yellow }; exit 0",
+      "group": "build",
+      "label": "Env: Check Sensor Manifest",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "dependsOn": [
         "Validate: Ruff Lint",
         "Validate: Ruff Format Check",
@@ -143,7 +167,9 @@
         "Validate: Zizmor",
         "Validate: PSScriptAnalyzer",
         "Validate: Pytest Coverage",
-        "Env: Check Shared Prompts"
+        "Env: Check Shared Prompts",
+        "Env: Check Prompt Cadence",
+        "Env: Check Sensor Manifest"
       ],
       "dependsOrder": "sequence",
       "group": {

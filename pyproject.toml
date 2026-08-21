@@ -1,3 +1,11 @@
+# SYNCED FILE — DO NOT EDIT IN A TARGET ROOT.
+# Edit dev-workbench/host-tooling/github/pyproject.toml and re-sync via dev-workbench/scripts/sync_projects.ps1.
+
+[project]
+name = "github"
+version = "1.0.0"
+requires-python = ">=3.12"
+
 [tool.ruff]
 extend = ".validate/pyproject_common.toml"
 
