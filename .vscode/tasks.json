@@ -121,6 +121,19 @@
       "type": "shell"
     },
     {
+      "command": "if (Test-Path scripts/check_queue_format.py) { mkdir -Force .reports; uv run python scripts/check_queue_format.py | tee .reports/queue_format.txt; Write-Host; if (Select-String -Quiet 'Queue Format: PASSED' .reports/queue_format.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Queue Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Queue Format: FINDINGS (report-only)' -ForegroundColor Yellow } } else { Write-Host 'Skipped: no scripts/check_queue_format.py' -ForegroundColor Yellow }; exit 0",
+      "group": "build",
+      "detail": "Validates the cross-project x_project/ queue and, with --project, one project's .notes/tasks/. Checks the status vocabulary, the Verified date, the Start here line, evidence on settled cells and stamps on archived ones. Report-only: prints a yellow banner on findings and always exits 0, so it never aborts Validate All.",
+      "label": "Env: Check Queue Format",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "command": "if (Test-Path scripts/check_prompts.py) { mkdir -Force .reports; uv run python scripts/check_prompts.py | tee .reports/prompt_check.txt; Write-Host; if (Select-String -Quiet 'Prompt Check: PASSED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prompt Check: PASSED' -ForegroundColor Green } elseif (Select-String -Quiet 'Prompt Check: SKIPPED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '–  Prompt Check: SKIPPED' -ForegroundColor Yellow } else { Write-Host '✖  Prompt Check: FAILED' -ForegroundColor Red } } else { Write-Host 'Skipped: no scripts/check_prompts.py' -ForegroundColor Yellow }; exit 0",
       "group": "build",
       "label": "Env: Check Shared Prompts",
@@ -169,7 +182,8 @@
         "Validate: Pytest Coverage",
         "Env: Check Shared Prompts",
         "Env: Check Prompt Cadence",
-        "Env: Check Sensor Manifest"
+        "Env: Check Sensor Manifest",
+        "Env: Check Queue Format"
       ],
       "dependsOrder": "sequence",
       "group": {

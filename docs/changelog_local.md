@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.15-dev1\] - 2026-08-27 - Bump MyPy; Ruff rules HA alignment; gitignore update; Issues Queue task](#2015-dev1---2026-08-27---bump-mypy-ruff-rules-ha-alignment-gitignore-update-issues-queue-task)
   - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
   - [\[2.0.14-dev3\] - 2026-08-21 - CI Bump ruff](#2014-dev3---2026-08-21---ci-bump-ruff)
   - [\[2.0.14-dev2\] - 2026-08-18 - Shared Sync Update Does Not Impact This Project](#2014-dev2---2026-08-18---shared-sync-update-does-not-impact-this-project)
@@ -19,7 +20,7 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[2.0.10-dev1\] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments](#2010-dev1---2026-08-04---local-ci-sync-add-do-not-edit-comments)
   - [\[2.0.9\] - 2026-08-02 - Release - Changelog ToC Dependabot Bumps CodeQL Python HASSFest](#209---2026-08-02---release---changelog-toc-dependabot-bumps-codeql-python-hassfest)
   - [\[2.0.9-dev2\] - 2026-08-02 - Dependabot Bumps to CodeQL Python HASSFest](#209-dev2---2026-08-02---dependabot-bumps-to-codeql-python-hassfest)
-  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
+  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog\_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
   - [\[2.0.8\] - 2026-08-01 - Release - Docs CI Bumps Ruff Zizmor](#208---2026-08-01---release---docs-ci-bumps-ruff-zizmor)
   - [\[2.0.8-dev3\] - 2026-07-30 - CI Bump Ruff Zizmor](#208-dev3---2026-07-30---ci-bump-ruff-zizmor)
   - [\[2.0.8-dev2\] - 2026-07-26 - CI Bump Ruff](#208-dev2---2026-07-26---ci-bump-ruff)
@@ -70,6 +71,22 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.15-dev1] - 2026-08-27 - Bump MyPy; Ruff rules HA alignment; gitignore update; Issues Queue task
+
+### Bumps
+
+- **Validate Bump**: Update `mypy` from 2.3.0 to 2.3.1
+
+### Changed
+
+- **Ruff Rules Alignment**: Adopted Home Assistant Core's full parameter configuration sub-tables in shared lint configuration, enabling active enforcement of HA module import aliases and banned legacy APIs. This includes:
+  - McCabe complexity check, set to max 25.
+  - Helper shortcut list
+  - Banned APIs
+- **`tasks.json`**: Added `Env: Check Queue Format` task to `Validate All`, to check cross project issues queue.
+- **gitignore**: Updated `.gitignore`to add `.mdbase/` an Obsidian folder.
+- **gitignore**: Updated `.gitignore`to add `.coverage.*`, to prevent commits of pytest coverage temp files.
 
 ## [2.0.14] - 2026-08-21 - Release - CI Bump ruff
 
