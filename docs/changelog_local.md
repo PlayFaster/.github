@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.15-dev2\] - 2026-08-27 - Dependabot Bump CodeQL from 4.37.6 to 4.37.7](#2015-dev2---2026-08-27---dependabot-bump-codeql-from-4376-to-4377)
   - [\[2.0.15-dev1\] - 2026-08-27 - Bump MyPy; Ruff rules HA alignment; gitignore update; Issues Queue task](#2015-dev1---2026-08-27---bump-mypy-ruff-rules-ha-alignment-gitignore-update-issues-queue-task)
   - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
   - [\[2.0.14-dev3\] - 2026-08-21 - CI Bump ruff](#2014-dev3---2026-08-21---ci-bump-ruff)
@@ -71,6 +72,13 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.15-dev2] - 2026-08-27 - Dependabot Bump CodeQL from 4.37.6 to 4.37.7
+
+### Bumps
+
+- **Dependabot Bump**: Bump `github/codeql-action/init` from 4.37.6 to 4.37.7- #59
+- **Dependabot Bump**: Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.7- #58
 
 ## [2.0.15-dev1] - 2026-08-27 - Bump MyPy; Ruff rules HA alignment; gitignore update; Issues Queue task
 
