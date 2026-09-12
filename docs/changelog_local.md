@@ -5,6 +5,9 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.15-dev4\] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax](#2015-dev4---2026-09-12---ci-adopt-github-self-repository-syntax)
+  - [\[2.0.15-dev3\] - 2026-09-12 - CI Bump ruff zizmor](#2015-dev3---2026-09-12---ci-bump-ruff-zizmor)
+  - [\[2.0.15-dev3\] - 2026-09-05 - CI Bump ruff](#2015-dev3---2026-09-05---ci-bump-ruff)
   - [\[2.0.15-dev2\] - 2026-08-27 - Dependabot Bump CodeQL from 4.37.6 to 4.37.7](#2015-dev2---2026-08-27---dependabot-bump-codeql-from-4376-to-4377)
   - [\[2.0.15-dev1\] - 2026-08-27 - Bump MyPy; Ruff rules HA alignment; gitignore update; Issues Queue task](#2015-dev1---2026-08-27---bump-mypy-ruff-rules-ha-alignment-gitignore-update-issues-queue-task)
   - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
@@ -72,6 +75,28 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.15-dev4] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax
+
+### Changed
+
+- **Self-Repository Syntax Adoption**: Updated internal reusable workflow calls to use GitHub's dedicated self-repository syntax (`$/...` instead of `./...`), resolving Zizmor `self-repository` security findings:
+  - `.github/workflows/validate-self.yaml`: Changed `uses: ./.github/workflows/validate.yaml` to `uses: $/.github/workflows/validate.yaml`.
+  - `.github/workflows/validate.yaml`: Changed `uses: ./.github/workflows/validate-specific.yaml` to `uses: $/.github/workflows/validate-specific.yaml`.
+  - This ensures intra-repo workflow calls resolve immutably against the executing ref/commit rather than runner workspace filesystem state.
+
+## [2.0.15-dev3] - 2026-09-12 - CI Bump ruff zizmor
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.29.0 to 1.30.0
+- **Validate Bump**: Update `ruff` from 0.16.3 to 0.16.6
+
+## [2.0.15-dev3] - 2026-09-05 - CI Bump ruff
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.16.3 to 0.16.5
 
 ## [2.0.15-dev2] - 2026-08-27 - Dependabot Bump CodeQL from 4.37.6 to 4.37.7
 

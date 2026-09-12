@@ -23,6 +23,6 @@ permissions:
 jobs:
   validate:
     name: "Self Validation"
-    uses: ./.github/workflows/validate.yaml
+    uses: $/.github/workflows/validate.yaml
     with:
       category: standard
