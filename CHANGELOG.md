@@ -21,8 +21,9 @@ All notable changes to this project will be documented in this file.
 
 ### Dependabot Bumps
 
-- Bump `github/codeql-action/init` from 4.37.6 to 4.37.7 (#59)
-- Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.7 (#58)
+- Bump `github/codeql-action/init` from 4.37.6 to 4.37.9 (#62)
+- Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.9 (#63)
+- Bump `hassfest` from a7c616ce81ccda50150bf1595786c71b1883fabb to 58bff37c8947f690ace498be413a9b78d6f30f93 #64
 
 ## [2.0.14] - 2026-08-21 - Release - CI Bump ruff
 

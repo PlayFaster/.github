@@ -6,6 +6,7 @@ All changes to this project will be documented in this file. This is the detaile
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
   - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
+  - [\[2.0.15-dev5\] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax](#2015-dev5---2026-09-12---ci-adopt-github-self-repository-syntax)
   - [\[2.0.15-dev4\] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax](#2015-dev4---2026-09-12---ci-adopt-github-self-repository-syntax)
   - [\[2.0.15-dev3\] - 2026-09-12 - CI Bump ruff zizmor](#2015-dev3---2026-09-12---ci-bump-ruff-zizmor)
   - [\[2.0.15-dev3\] - 2026-09-05 - CI Bump ruff](#2015-dev3---2026-09-05---ci-bump-ruff)
@@ -94,8 +95,17 @@ All changes to this project will be documented in this file. This is the detaile
 
 ### Dependabot Bumps
 
-- Bump `github/codeql-action/init` from 4.37.6 to 4.37.7 (#59)
-- Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.7 (#58)
+- Bump `github/codeql-action/init` from 4.37.6 to 4.37.9 (#62)
+- Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.9 (#63)
+- Bump `hassfest` from a7c616ce81ccda50150bf1595786c71b1883fabb to 58bff37c8947f690ace498be413a9b78d6f30f93 #64
+
+## [2.0.15-dev5] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax
+
+### Dependabot Bumps
+
+- Bump `github/codeql-action/init` from 4.37.7 to 4.37.9 (#62)
+- Bump `github/codeql-action/analyze` from 4.37.7 to 4.37.9 (#63)
+- Bump `hassfest` from a7c616ce81ccda50150bf1595786c71b1883fabb to 58bff37c8947f690ace498be413a9b78d6f30f93 #64
 
 ## [2.0.15-dev4] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax
 
