@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
   - [\[2.0.15-dev4\] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax](#2015-dev4---2026-09-12---ci-adopt-github-self-repository-syntax)
   - [\[2.0.15-dev3\] - 2026-09-12 - CI Bump ruff zizmor](#2015-dev3---2026-09-12---ci-bump-ruff-zizmor)
   - [\[2.0.15-dev3\] - 2026-09-05 - CI Bump ruff](#2015-dev3---2026-09-05---ci-bump-ruff)
@@ -75,6 +76,26 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.15] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps & HA Ruff Alignment
+
+### Changed
+
+- **Self-Repository Syntax**: Updated intra-repository workflow calls in `validate-self.yaml` and `validate.yaml` to use GitHub's dedicated `$/...` self-repository syntax instead of `./...`, ensuring reusable workflows resolve immutably against the executing commit rather than runner workspace filesystem state.
+- **Ruff Rules Alignment**: Expanded shared lint configuration to align with Home Assistant Core parameter sub-tables, adding McCabe complexity checks (max 25), helper shortcut lists, and banned legacy APIs.
+- **Tasks**: Added `Env: Check Queue Format` validation task to check cross-project issues queue formatting.
+- **Gitignore**: Added `.mdbase/` (Obsidian) and `.coverage.*` (coverage temporary files) to `.gitignore`.
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.29.0 to 1.30.0
+- **Validate Bump**: Update `ruff` from 0.16.3 to 0.16.6
+- **Validate Bump**: Update `mypy` from 2.3.0 to 2.3.1
+
+### Dependabot Bumps
+
+- Bump `github/codeql-action/init` from 4.37.6 to 4.37.7 (#59)
+- Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.7 (#58)
 
 ## [2.0.15-dev4] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax
 
