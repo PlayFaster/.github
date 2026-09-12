@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Zizmor
-        run: pip install zizmor==1.29.0
+        run: pip install zizmor==1.30.0
 
       - name: Run Zizmor
         continue-on-error: false
@@ -113,7 +113,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.16.3
+        run: pip install ruff==0.16.6
 
       - name: Run Ruff Check
         run: ruff check .
@@ -268,7 +268,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mypy==2.3.0
+          pip install mypy==2.3.1
           pip install -r .validate/requirements_test.txt
 
       - name: Run Mypy

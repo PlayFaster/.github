@@ -4,6 +4,26 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.15] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps & HA Ruff Alignment
+
+### Changed
+
+- **Self-Repository Syntax**: Updated intra-repository workflow calls in `validate-self.yaml` and `validate.yaml` to use GitHub's dedicated `$/...` self-repository syntax instead of `./...`, ensuring reusable workflows resolve immutably against the executing commit rather than runner workspace filesystem state.
+- **Ruff Rules Alignment**: Expanded shared lint configuration to align with Home Assistant Core parameter sub-tables, adding McCabe complexity checks (max 25), helper shortcut lists, and banned legacy APIs.
+- **Tasks**: Added `Env: Check Queue Format` validation task to check cross-project issues queue formatting.
+- **Gitignore**: Added `.mdbase/` (Obsidian) and `.coverage.*` (coverage temporary files) to `.gitignore`.
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.29.0 to 1.30.0
+- **Validate Bump**: Update `ruff` from 0.16.3 to 0.16.6
+- **Validate Bump**: Update `mypy` from 2.3.0 to 2.3.1
+
+### Dependabot Bumps
+
+- Bump `github/codeql-action/init` from 4.37.6 to 4.37.7 (#59)
+- Bump `github/codeql-action/analyze` from 4.37.6 to 4.37.7 (#58)
+
 ## [2.0.14] - 2026-08-21 - Release - CI Bump ruff
 
 ### Bumps
@@ -272,6 +292,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
   - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
   - [\[2.0.12\] - 2026-08-16 - Release - CI Bump ruff codeql hassfest](#2012---2026-08-16---release---ci-bump-ruff-codeql-hassfest)
   - [\[2.0.11\] - 2026-08-14 - Release - CI Bumps zizmor mypy ruff jsonschema](#2011---2026-08-14---release---ci-bumps-zizmor-mypy-ruff-jsonschema)

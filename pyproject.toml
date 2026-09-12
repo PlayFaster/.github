@@ -3,6 +3,7 @@
 
 [project]
 name = "github"
+# Version is dummy and required for UV. Do NOT Edit
 version = "1.0.0"
 requires-python = ">=3.12"
 
