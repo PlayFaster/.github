@@ -40,7 +40,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --check '**/*.md' '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; if ($out) { $out | Set-Content .reports/prettier_check.txt } else { Set-Content .reports/prettier_check.txt 'All matched files use Prettier code style!' }; Write-Host; if (Select-String -Quiet -Pattern 'Prettier code style', 'All matched files use Prettier code style' .reports/prettier_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prettier: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --check '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; if ($out) { $out | Set-Content .reports/prettier_check.txt } else { Set-Content .reports/prettier_check.txt 'All matched files use Prettier code style!' }; Write-Host; if (Select-String -Quiet -Pattern 'Prettier code style', 'All matched files use Prettier code style' .reports/prettier_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prettier: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Prettier Check",
       "presentation": {
@@ -239,7 +239,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --write '**/*.md' '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_prettier.txt } else { Set-Content .reports/format_prettier.txt 'unchanged' }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_prettier.txt '✔  Prettier Format: PASSED'; Write-Host '✔  Prettier Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier Format: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --write '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_prettier.txt } else { Set-Content .reports/format_prettier.txt 'unchanged' }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_prettier.txt '✔  Prettier Format: PASSED'; Write-Host '✔  Prettier Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier Format: FAILED' -ForegroundColor Red }; exit 0",
       "label": "Format: Apply Prettier",
       "presentation": {
         "clear": true,

@@ -1,0 +1,3 @@
+# Exclude Markdown files workspace-wide
+*.md
+**/*.md

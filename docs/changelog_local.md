@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)
   - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
   - [\[2.0.15-dev5\] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax](#2015-dev5---2026-09-12---ci-adopt-github-self-repository-syntax)
   - [\[2.0.15-dev4\] - 2026-09-12 - CI Adopt GitHub Self-Repository Syntax](#2015-dev4---2026-09-12---ci-adopt-github-self-repository-syntax)
@@ -26,7 +27,7 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[2.0.10-dev1\] - 2026-08-04 - Local CI Sync Add Do Not Edit Comments](#2010-dev1---2026-08-04---local-ci-sync-add-do-not-edit-comments)
   - [\[2.0.9\] - 2026-08-02 - Release - Changelog ToC Dependabot Bumps CodeQL Python HASSFest](#209---2026-08-02---release---changelog-toc-dependabot-bumps-codeql-python-hassfest)
   - [\[2.0.9-dev2\] - 2026-08-02 - Dependabot Bumps to CodeQL Python HASSFest](#209-dev2---2026-08-02---dependabot-bumps-to-codeql-python-hassfest)
-  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
+  - [\[2.0.9-dev1\] - 2026-08-02 - Changelog\_Local Table of Contents](#209-dev1---2026-08-02---changelog_local-table-of-contents)
   - [\[2.0.8\] - 2026-08-01 - Release - Docs CI Bumps Ruff Zizmor](#208---2026-08-01---release---docs-ci-bumps-ruff-zizmor)
   - [\[2.0.8-dev3\] - 2026-07-30 - CI Bump Ruff Zizmor](#208-dev3---2026-07-30---ci-bump-ruff-zizmor)
   - [\[2.0.8-dev2\] - 2026-07-26 - CI Bump Ruff](#208-dev2---2026-07-26---ci-bump-ruff)
@@ -77,6 +78,13 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.16] - 2026-09-13 - Drop Prettier Formatting of Markdown Files
+
+### Changed
+
+- **No Prettier on Markdown**: As part of the local CI process, `prettier` was used to format markdown `.md` files, as well as `JSON`, `YAML` and Python files. This caused table formatting oscillation issues, with markdownlint creating compact tables, and prettier reformatting them to fully padded. Determined that the HA core approach (which is where our local CI guidance comes from) is to exclude markdown files from `prettier`, which we have now done as well.
+- **CI Prettier Check**: Updated `Prettier Format Check` step in `.github/workflows/validate-specific.yaml` to check `"**/*.{json,yaml,yml}"`, dropping `*.md` files so GitHub CI runs do not fail on markdown formatting across repositories.
 
 ## [2.0.15] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps & HA Ruff Alignment
 

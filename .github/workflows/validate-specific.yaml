@@ -218,7 +218,7 @@ jobs:
         # zizmor: ignore[adhoc-packages]
         run: |
           npm install prettier@3.6.2 prettier-plugin-sort-json@4.2.0
-          npx prettier --config .validate/.prettierrc.json --check "**/*.{md,json,yaml,yml}"
+          npx prettier --config .validate/.prettierrc.json --check "**/*.{json,yaml,yml}"
 
       - name: Check README Links
         # Tag @v1
