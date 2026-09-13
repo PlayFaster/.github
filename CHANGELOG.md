@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.16] - 2026-09-13 - Drop Prettier Formatting of Markdown Files
+
+### Changed
+
+- **No Prettier on Markdown**: As part of the local CI process, `prettier` was used to format markdown `.md` files, as well as `JSON`, `YAML` and Python files. This caused table formatting oscillation issues, with markdownlint creating compact tables, and prettier reformatting them to fully padded. Determined that the HA core approach (which is where our local CI guidance comes from) is to exclude markdown files from `prettier`, which we have now done as well.
+- **CI Prettier Check**: Updated `Prettier Format Check` step in `.github/workflows/validate-specific.yaml` to check `"**/*.{json,yaml,yml}"`, dropping `*.md` files so GitHub CI runs do not fail on markdown formatting across repositories.
+
 ## [2.0.15] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps & HA Ruff Alignment
 
 ### Changed
@@ -293,6 +300,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)
   - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
   - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
   - [\[2.0.12\] - 2026-08-16 - Release - CI Bump ruff codeql hassfest](#2012---2026-08-16---release---ci-bump-ruff-codeql-hassfest)

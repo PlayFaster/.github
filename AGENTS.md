@@ -116,7 +116,7 @@ The file integrity job reads schema and formatter config from `.validate/` in th
 - `.validate/hacs_schema.json` — HACS manifest schema (all projects)
 - `.validate/ha_manifest_schema.json` — HA manifest schema (integration only)
 - `.validate/.yamllint` — YAML lint rules
-- `.validate/.prettierrc.json` — Prettier config (covers `*.md`, `*.json`, `*.yaml`, `*.yml`)
+- `.validate/.prettierrc.json` — Prettier config (covers `*.json`, `*.yaml`, `*.yml`)
 - `.validate/.mlc_config.json` — markdown-link-check config
 
 ### `codespell` Config
@@ -160,7 +160,7 @@ Run via **Terminal → Run Task** in VS Code:
 | **Validate All** | Runs all validate tasks in sequence |
 | `Validate: Ruff Lint` | Ruff lint (exits cleanly on non-Python repos) |
 | `Validate: Ruff Format Check` | Ruff format check |
-| `Validate: Prettier Check` | Prettier check — md, json, yaml |
+| `Validate: Prettier Check` | Prettier check — json, yaml |
 | `Validate: Markdown Style` | markdownlint check |
 | `Validate: YAML Style` | yamllint check |
 | `Validate: Codespell` | Spell check |

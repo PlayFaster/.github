@@ -88,7 +88,7 @@ jobs:
 >
 > - `hacs_schema.json` and `ha_manifest_schema.json` — JSON schemas for the file integrity job
 > - `.yamllint` — YAML lint rules
-> - `.prettierrc.json` — Prettier config covering `*.md`, `*.json`, `*.yaml`, `*.yml`
+> - `.prettierrc.json` — Prettier config covering `*.json`, `*.yaml`, `*.yml`
 > - `.mlc_config.json` — markdown-link-check config
 >
 > Integration repos also need `requirements_test.txt` and a root `pyproject.toml` with `[tool.codespell]`. Theme repos need a root `pyproject.toml` with `[tool.codespell]`.
