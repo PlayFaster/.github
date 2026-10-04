@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Zizmor
-        run: pip install zizmor==1.30.0
+        run: pip install zizmor==1.30.1
 
       - name: Run Zizmor
         continue-on-error: false
@@ -113,7 +113,7 @@ jobs:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.16.6
+        run: pip install ruff==0.16.9
 
       - name: Run Ruff Check
         run: ruff check .
@@ -197,7 +197,7 @@ jobs:
       - name: HACS Schema Check
         if: ${{ inputs.category != 'standard' }}
         run: |
-          pip install check-jsonschema==0.38.0
+          pip install check-jsonschema==0.38.2
           check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
 
       - name: HA Manifest Schema Check
@@ -268,7 +268,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mypy==2.3.1
+          pip install mypy==2.4.0
           pip install -r .validate/requirements_test.txt
 
       - name: Run Mypy
