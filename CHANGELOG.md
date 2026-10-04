@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [2.0.17] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema
+## [2.0.17] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL
 
 ### Bumps
 
@@ -12,6 +12,11 @@ All notable changes to this project will be documented in this file.
 - **Validate Bump**: Update `mypy` from 2.3.1 to 2.4.0
 - **Validate Bump**: Update `ruff` from 0.16.6 to 0.16.9
 - **Validate Bump**: Update `check-jsonschema` from 0.38.0 to 0.38.2
+
+### Dependabot Bumps
+
+- Bump `github/codeql-action/init` from 4.37.9 to 4.38.2 (#71)
+- Bump `github/codeql-action/analyze` from 4.37.9 to 4.38.2 (#70)
 
 ## [2.0.16] - 2026-09-13 - Drop Prettier Formatting of Markdown Files
 
@@ -309,7 +314,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
-  - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema)
+  - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)
   - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)
   - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
   - [\[2.0.14\] - 2026-08-21 - Release - CI Bump ruff](#2014---2026-08-21---release---ci-bump-ruff)
