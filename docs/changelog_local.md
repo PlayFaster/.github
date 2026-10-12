@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.18-dev1\] - 2026-10-12 - CI Bump ruff](#2018-dev1---2026-10-12---ci-bump-ruff)
   - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)
   - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)
   - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
@@ -79,6 +80,17 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.18-dev1] - 2026-10-12 - CI Bump ruff
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.16.9 to 0.16.10
+
+### Changed
+
+- **Host Tooling**: Updated via shared sync.
+  - **`tasks.json`**: Updated to provide better on-screen output, and avoid false positives (that is hidden failures).
 
 ## [2.0.17] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL
 
