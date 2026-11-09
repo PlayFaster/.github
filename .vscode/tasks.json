@@ -1,4 +1,5 @@
 {
+  "//": "Tasks source for Windows-host tooling. Run 'uv run python scripts/check_tasks_json.py' after editing tasks to verify screen error visibility contracts.",
   "tasks": [
     {
       "command": "npm install",
@@ -14,7 +15,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff check --config pyproject.toml --exit-zero . 2>&1; if ($out) { $out | Set-Content .reports/ruff_lint.txt } else { Set-Content .reports/ruff_lint.txt 'All checks passed' }; Write-Host; if (Select-String -Quiet 'All checks passed' .reports/ruff_lint.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Ruff Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint: FAILED' -ForegroundColor Red }",
+      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff check --config pyproject.toml --exit-zero . 2>&1; if ($out) { $out | Set-Content .reports/ruff_lint.txt } else { Set-Content .reports/ruff_lint.txt 'All checks passed' }; $passed = Select-String -Quiet 'All checks passed' .reports/ruff_lint.txt -ErrorAction SilentlyContinue; if (-not $passed -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/ruff_lint.txt)') } } }; Write-Host; if ($passed) { Write-Host '✔  Ruff Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint: FAILED' -ForegroundColor Red }",
       "group": "build",
       "label": "Validate: Ruff Lint",
       "presentation": {
@@ -27,7 +28,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff format --config pyproject.toml --check . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/ruff_format_status.txt } else { Set-Content .reports/ruff_format_status.txt '36 files already formatted' }; $summaryLine = if ($out -is [array]) { $out[-1] } else { $out }; if ($summaryLine) { Write-Host ('  ' + $summaryLine) }; Write-Host; if ($ec -eq 0) { Write-Host '✔  Ruff Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff format --config pyproject.toml --check . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/ruff_format_status.txt } else { Set-Content .reports/ruff_format_status.txt '36 files already formatted' }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/ruff_format_status.txt)') } } } else { $summaryLine = if ($out -is [array]) { $out[-1] } else { $out }; if ($summaryLine) { Write-Host ('  ' + $summaryLine) } }; Write-Host; if ($ec -eq 0) { Write-Host '✔  Ruff Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Ruff Format Check",
       "presentation": {
@@ -40,7 +41,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --check '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; if ($out) { $out | Set-Content .reports/prettier_check.txt } else { Set-Content .reports/prettier_check.txt 'All matched files use Prettier code style!' }; Write-Host; if (Select-String -Quiet -Pattern 'Prettier code style', 'All matched files use Prettier code style' .reports/prettier_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prettier: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .gitignore --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --check '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; if ($out) { $out | Set-Content .reports/prettier_check.txt } else { Set-Content .reports/prettier_check.txt 'All matched files use Prettier code style!' }; $passed = Select-String -Quiet -Pattern 'Prettier code style', 'All matched files use Prettier code style' .reports/prettier_check.txt -ErrorAction SilentlyContinue; if (-not $passed -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/prettier_check.txt)') } } }; Write-Host; if ($passed) { Write-Host '✔  Prettier: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Prettier Check",
       "presentation": {
@@ -53,7 +54,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = npx -q --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore '**/*.md' 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/markdown_lint.txt '' } else { $out | Set-Content .reports/markdown_lint.txt }; Write-Host; if ($ec -eq 0) { Write-Host '✔  Markdown Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Markdown Lint: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = npx -q --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore '**/*.md' 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/markdown_lint.txt '' } else { $out | Set-Content .reports/markdown_lint.txt }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/markdown_lint.txt)') } } }; Write-Host; if ($ec -eq 0) { Write-Host '✔  Markdown Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  Markdown Lint: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Markdown Style",
       "presentation": {
@@ -66,7 +67,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $null = git rev-parse --is-inside-work-tree 2>$null; if ($LASTEXITCODE -eq 0) { $f = git ls-files -- '*.yaml' '*.yml' 2>$null; if ($f) { $out = uv run -q --with yamllint yamllint -c .validate/.yamllint $f 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/yaml_lint.txt '' } else { $out | Set-Content .reports/yaml_lint.txt } } else { $ec = 0; Set-Content .reports/yaml_lint.txt ''; Write-Host 'No tracked YAML files.' } } else { $out = uv run -q --with yamllint yamllint -c .validate/.yamllint . 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/yaml_lint.txt '' } else { $out | Set-Content .reports/yaml_lint.txt } }; Write-Host; if ($ec -eq 0) { Write-Host '✔  YAML Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  YAML Lint: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $null = git rev-parse --is-inside-work-tree 2>$null; if ($LASTEXITCODE -eq 0) { $f = git ls-files -- '*.yaml' '*.yml' 2>$null; if ($f) { $out = uv run -q --with yamllint yamllint -c .validate/.yamllint $f 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/yaml_lint.txt '' } else { $out | Set-Content .reports/yaml_lint.txt } } else { $ec = 0; Set-Content .reports/yaml_lint.txt ''; Write-Host 'No tracked YAML files.' } } else { $out = uv run -q --with yamllint yamllint -c .validate/.yamllint . 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/yaml_lint.txt '' } else { $out | Set-Content .reports/yaml_lint.txt } }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/yaml_lint.txt)') } } }; Write-Host; if ($ec -eq 0) { Write-Host '✔  YAML Lint: PASSED' -ForegroundColor Green } else { Write-Host '✖  YAML Lint: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: YAML Style",
       "presentation": {
@@ -79,7 +80,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with codespell codespell . 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/codespell.txt '' } else { $out | Set-Content .reports/codespell.txt }; Write-Host; if ($ec -eq 0) { Write-Host '✔  Codespell: PASSED' -ForegroundColor Green } else { Write-Host '✖  Codespell: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with codespell codespell . 2>&1; $ec = $LASTEXITCODE; if ($ec -eq 0) { Set-Content .reports/codespell.txt '' } else { $out | Set-Content .reports/codespell.txt }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/codespell.txt)') } } }; Write-Host; if ($ec -eq 0) { Write-Host '✔  Codespell: PASSED' -ForegroundColor Green } else { Write-Host '✖  Codespell: FAILED' -ForegroundColor Red }; exit 0",
       "group": "build",
       "label": "Validate: Codespell",
       "presentation": {
@@ -92,7 +93,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; if (Test-Path .github) { uv run -q --with zizmor zizmor --pedantic .github/ | tee .reports/zizmor_audit.txt; $ec = $LASTEXITCODE; if ($ec -eq 0) { Add-Content .reports/zizmor_audit.txt '✔  Zizmor Audit: PASSED' } } else { Set-Content .reports/zizmor_audit.txt '\u2013  Skipped: no .github/ workflows'; Write-Host '\u2013  Skipped: no .github/ workflows' -ForegroundColor Cyan }; exit 0",
+      "command": "mkdir -Force .reports; if (Test-Path .github) { uv run -q --with zizmor zizmor --pedantic .github/ | tee .reports/zizmor_audit.txt; $ec = $LASTEXITCODE; if ($ec -eq 0) { Add-Content .reports/zizmor_audit.txt '✔  Zizmor Audit: PASSED' } } else { Set-Content .reports/zizmor_audit.txt '–  Skipped: no .github/ workflows'; Write-Host '–  Skipped: no .github/ workflows' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "label": "Validate: Zizmor",
       "presentation": {
@@ -105,7 +106,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; $ps = @(git ls-files --cached --others --exclude-standard -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host '\u2013  Skipped: no PowerShell files' -ForegroundColor Cyan; Set-Content .reports/psscriptanalyzer.txt '\u2013  Skipped: no PowerShell files'; exit 0 }; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $r = $ps | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Settings .validate/PSScriptAnalyzerSettings.psd1 }; ($r | Format-Table -AutoSize | Out-String) | Tee-Object .reports/psscriptanalyzer.txt; Write-Host; if ($r) { Write-Host '✖  PSScriptAnalyzer: FAILED' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: PASSED' -ForegroundColor Green }; exit 0",
+      "command": "mkdir -Force .reports; $ps = @(git ls-files --cached --others --exclude-standard -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host '–  Skipped: no PowerShell files' -ForegroundColor Cyan; Set-Content .reports/psscriptanalyzer.txt '–  Skipped: no PowerShell files'; exit 0 }; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $r = $ps | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Settings .validate/PSScriptAnalyzerSettings.psd1 }; ($r | Format-Table -AutoSize | Out-String) | Tee-Object .reports/psscriptanalyzer.txt; Write-Host; if ($r) { Write-Host '✖  PSScriptAnalyzer: FAILED' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: PASSED' -ForegroundColor Green }; exit 0",
       "group": "build",
       "label": "Validate: PSScriptAnalyzer",
       "presentation": {
@@ -131,7 +132,7 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path scripts/check_queue_format.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_queue_format.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/queue_format.txt } else { Set-Content .reports/queue_format.txt 'Queue Format: PASSED' }; if ($out) { $out | Where-Object { $_ -match '^(Advisory|\\s+\\[|Queue Format:)' } | ForEach-Object { Write-Host $_ } }; Write-Host; if (Select-String -Quiet 'Queue Format: PASSED' .reports/queue_format.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Queue Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Queue Format: FINDINGS (report-only)' -ForegroundColor Yellow } } else { Set-Content .reports/queue_format.txt '–  Skipped: no scripts/check_queue_format.py'; Write-Host '–  Skipped: no scripts/check_queue_format.py' -ForegroundColor Cyan }; exit 0",
+      "command": "if (Test-Path scripts/check_queue_format.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_queue_format.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/queue_format.txt } else { Set-Content .reports/queue_format.txt 'Queue Format: PASSED' }; $passed = Select-String -Quiet 'Queue Format: PASSED' .reports/queue_format.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^\\(Advisory:' } | ForEach-Object { Write-Host $_ -ForegroundColor Yellow } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/queue_format.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  Queue Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Queue Format: FINDINGS (report-only)' -ForegroundColor Yellow } } else { Set-Content .reports/queue_format.txt '–  Skipped: no scripts/check_queue_format.py'; Write-Host '–  Skipped: no scripts/check_queue_format.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "detail": "Validates the cross-project x_project/ queue and, with --project, one project's .notes/tasks/. Checks the status vocabulary, the Verified date, the Start here line, evidence on settled cells and stamps on archived ones. Report-only: prints a yellow banner on findings and always exits 0, so it never aborts Validate All.",
       "label": "Env: Check Queue Format",
@@ -140,6 +141,34 @@
         "panel": "dedicated",
         "reveal": "always",
         "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "if (Test-Path workbench/generate_roadmap.py) { mkdir -Force .reports | Out-Null; $out = uv run python workbench/generate_roadmap.py --check 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/roadmap_check.txt } else { Set-Content .reports/roadmap_check.txt 'Roadmaps: all up to date' }; if ($ec -eq 0) { Write-Host '✔  Roadmap Check: PASSED' -ForegroundColor Green } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/roadmap_check.txt)') } }; Write-Host; Write-Host '✖  Roadmap Check: FAILED' -ForegroundColor Red } } else { Set-Content .reports/roadmap_check.txt '–  Skipped: no workbench/generate_roadmap.py'; Write-Host '–  Skipped: no workbench/generate_roadmap.py' -ForegroundColor Cyan }; exit 0",
+      "detail": "Runs workbench/generate_roadmap.py --check across projects to detect roadmap drift from task queues.",
+      "group": "build",
+      "label": "Roadmap: Generate & Check",
+      "presentation": {
+        "clear": true,
+        "echo": false,
+        "panel": "dedicated",
+        "reveal": "always"
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python workbench/generate_roadmap.py; Write-Host '✔  Generate All Roadmaps: COMPLETED' -ForegroundColor Green",
+      "detail": "Manual generator for all project ROADMAP.md files from task queues. Not part of validation suites.",
+      "group": "none",
+      "label": "Fix: Generate All Roadmaps",
+      "presentation": {
+        "clear": true,
+        "echo": false,
+        "panel": "dedicated",
+        "reveal": "always"
       },
       "problemMatcher": [],
       "type": "shell"
@@ -159,7 +188,7 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path scripts/check_prompts.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_prompts.py 2>&1; if ($out) { $out | Set-Content .reports/prompt_check.txt } else { Set-Content .reports/prompt_check.txt 'Prompt Check: PASSED' }; if ($out) { $out | Where-Object { $_ -match '^\\(Advisory:' } | ForEach-Object { Write-Host $_ -ForegroundColor Yellow } }; Write-Host; if (Select-String -Quiet 'Prompt Check: PASSED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Prompt Check: PASSED' -ForegroundColor Green } elseif (Select-String -Quiet 'Prompt Check: SKIPPED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '–  Prompt Check: SKIPPED' -ForegroundColor Cyan } else { Write-Host '✖  Prompt Check: FAILED' -ForegroundColor Red } } else { Set-Content .reports/prompt_check.txt '–  Skipped: no scripts/check_prompts.py'; Write-Host '–  Skipped: no scripts/check_prompts.py' -ForegroundColor Cyan }; exit 0",
+      "command": "if (Test-Path scripts/check_prompts.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_prompts.py 2>&1; if ($out) { $out | Set-Content .reports/prompt_check.txt } else { Set-Content .reports/prompt_check.txt 'Prompt Check: PASSED' }; $passed = Select-String -Quiet 'Prompt Check: PASSED' .reports/prompt_check.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^\\(Advisory:' } | ForEach-Object { Write-Host $_ -ForegroundColor Yellow } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/prompt_check.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  Prompt Check: PASSED' -ForegroundColor Green } elseif (Select-String -Quiet 'Prompt Check: SKIPPED' .reports/prompt_check.txt -ErrorAction SilentlyContinue) { Write-Host '–  Prompt Check: SKIPPED' -ForegroundColor Cyan } else { Write-Host '✖  Prompt Check: FAILED' -ForegroundColor Red } } else { Set-Content .reports/prompt_check.txt '–  Skipped: no scripts/check_prompts.py'; Write-Host '–  Skipped: no scripts/check_prompts.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "label": "Env: Check Shared Prompts",
       "presentation": {
@@ -198,7 +227,7 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path scripts/check_changelog_header.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_changelog_header.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/changelog_header.txt } else { Set-Content .reports/changelog_header.txt 'Changelog Header: PASSED' }; if ($out) { $out | Where-Object { $_ -match '^(Total files checked:|\\[OK\\]|\\[FINDINGS\\]|  - \\[|Summary:)' } | ForEach-Object { Write-Host $_ } }; Write-Host; if (Select-String -Quiet 'carry the canonical Authoring Rules block' .reports/changelog_header.txt -ErrorAction SilentlyContinue) { Write-Host '✔  Changelog Headers: PASSED' -ForegroundColor Green } else { Write-Host '✖  Changelog Headers: FAILED' -ForegroundColor Red } } else { Set-Content .reports/changelog_header.txt '–  Skipped: no scripts/check_changelog_header.py'; Write-Host '–  Skipped: no scripts/check_changelog_header.py' -ForegroundColor Cyan }; exit 0",
+      "command": "if (Test-Path scripts/check_changelog_header.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_changelog_header.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/changelog_header.txt } else { Set-Content .reports/changelog_header.txt 'Changelog Header: PASSED' }; $passed = Select-String -Quiet 'carry the canonical Authoring Rules block' .reports/changelog_header.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^(Total files checked:|\\[OK\\]|Summary:)' } | ForEach-Object { Write-Host $_ } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/changelog_header.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  Changelog Headers: PASSED' -ForegroundColor Green } else { Write-Host '✖  Changelog Headers: FAILED' -ForegroundColor Red } } else { Set-Content .reports/changelog_header.txt '–  Skipped: no scripts/check_changelog_header.py'; Write-Host '–  Skipped: no scripts/check_changelog_header.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "label": "Env: Check Changelog Headers",
       "presentation": {
@@ -211,9 +240,64 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path scripts/check_agents_md.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_agents_md.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/agents_md.txt } else { Set-Content .reports/agents_md.txt 'AGENTS.md Audit: PASSED' }; if ($out) { $out | Where-Object { $_ -match '^(Total files checked:|Missing files:|\\[OK\\]|\\[ERRORS\\]|\\[WARNINGS|\\[OK\\]|  - \\[|Summary:)' } | ForEach-Object { Write-Host $_ } }; Write-Host; if (Select-String -Quiet 'match canonical structure and boilerplate rules' .reports/agents_md.txt -ErrorAction SilentlyContinue) { Write-Host '✔  AGENTS.md Audit: PASSED' -ForegroundColor Green } else { Write-Host '✖  AGENTS.md Audit: FAILED' -ForegroundColor Red } } else { Set-Content .reports/agents_md.txt '–  Skipped: no scripts/check_agents_md.py'; Write-Host '–  Skipped: no scripts/check_agents_md.py' -ForegroundColor Cyan }; exit 0",
+      "command": "if (Test-Path scripts/check_agents_md.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_agents_md.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/agents_md.txt } else { Set-Content .reports/agents_md.txt 'AGENTS.md Audit: PASSED' }; $passed = Select-String -Quiet 'match canonical structure and boilerplate rules' .reports/agents_md.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^(Total files checked:|\\[OK\\]|Summary:)' } | ForEach-Object { Write-Host $_ } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/agents_md.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  AGENTS.md Audit: PASSED' -ForegroundColor Green } else { Write-Host '✖  AGENTS.md Audit: FAILED' -ForegroundColor Red } } else { Set-Content .reports/agents_md.txt '–  Skipped: no scripts/check_agents_md.py'; Write-Host '–  Skipped: no scripts/check_agents_md.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "label": "Env: Check AGENTS.md",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "if (Test-Path scripts/check_local_leaks.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_local_leaks.py 2>&1; if ($out) { $out | Set-Content .reports/local_leaks.txt } else { Set-Content .reports/local_leaks.txt 'Local Leak Check: FAILED (no output)' }; $passed = Select-String -Quiet 'Local Leak Check: PASSED' .reports/local_leaks.txt -ErrorAction SilentlyContinue; if ($out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/local_leaks.txt)') } } }; Write-Host; if ($passed) { Write-Host '✔  Local Leak Check: PASSED' -ForegroundColor Green } elseif (Select-String -Quiet 'Local Leak Check: SKIPPED' .reports/local_leaks.txt -ErrorAction SilentlyContinue) { Write-Host '–  Local Leak Check: SKIPPED (no denylist)' -ForegroundColor Cyan } else { Write-Host '✖  Local Leak Check: FAILED' -ForegroundColor Red } } else { Set-Content .reports/local_leaks.txt '–  Skipped: no scripts/check_local_leaks.py'; Write-Host '–  Skipped: no scripts/check_local_leaks.py' -ForegroundColor Cyan }; exit 0",
+      "group": "build",
+      "detail": "Scans every repository in the workspace for real deployment values listed in shared/ProjNotes/Notes-dev-workbench/local_only/leak_denylist.txt. Findings print masked. The list stays in local_only/ because a tracked copy would publish it. Standard placeholders: shared/SharedNotes/dev_std/example_values.md. Report-only: always exits 0, so it never aborts Validate All.",
+      "label": "Env: Check Local Leaks",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "if (Test-Path scripts/check_suppressions.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_suppressions.py --summary 2>&1; if ($out) { $out | Set-Content .reports/check_suppressions.txt } else { Set-Content .reports/check_suppressions.txt 'Pragma Suppression Check: FAILED (no output)' }; $passed = Select-String -Quiet 'Pragma Suppression Check: PASSED' .reports/check_suppressions.txt -ErrorAction SilentlyContinue; $hasAdvisory = Select-String -Quiet 'ADVISORY WARNING:' .reports/check_suppressions.txt -ErrorAction SilentlyContinue; if ($out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/check_suppressions.txt)') } } }; Write-Host; if ($passed -and $hasAdvisory) { Write-Host '⚠  Suppression Check: ADVISORY (unvetted suppressions)' -ForegroundColor Yellow } elseif ($passed) { Write-Host '✔  Suppression Check: PASSED' -ForegroundColor Green } else { Write-Host '✖  Suppression Check: FAILED' -ForegroundColor Red } } else { Set-Content .reports/check_suppressions.txt '–  Skipped: no scripts/check_suppressions.py'; Write-Host '–  Skipped: no scripts/check_suppressions.py' -ForegroundColor Cyan }; exit 0",
+      "group": "build",
+      "detail": "Audits Python files across the workspace for static analysis suppressions and coverage pragmas. Outputs aggregate totals and advisory warnings to .reports/check_suppressions.txt.",
+      "label": "Env: Check Suppressions",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "if (Test-Path .workbench/check_host_tools.py) { mkdir -Force .reports | Out-Null; $out = uv run python .workbench/check_host_tools.py 2>&1; if ($out) { $out | Set-Content .reports/host_tools.txt } else { Set-Content .reports/host_tools.txt 'Host Tools Check: FAILED (no output)' }; $passed = Select-String -Quiet 'Host Tools Check: PASSED' .reports/host_tools.txt -ErrorAction SilentlyContinue; $hasAdvisory = Select-String -Quiet 'ADVISORY WARNING:' .reports/host_tools.txt -ErrorAction SilentlyContinue; if ($out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/host_tools.txt)') } } }; Write-Host; if ($passed -and $hasAdvisory) { Write-Host '⚠  Host Tools Check: ADVISORY (tools below pin or update overdue)' -ForegroundColor Yellow } elseif ($passed) { Write-Host '✔  Host Tools Check: PASSED' -ForegroundColor Green } else { Write-Host '✖  Host Tools Check: FAILED' -ForegroundColor Red } } else { Set-Content .reports/host_tools.txt '–  Skipped: no .workbench/check_host_tools.py'; Write-Host '–  Skipped: no .workbench/check_host_tools.py' -ForegroundColor Cyan }; exit 0",
+      "group": "build",
+      "detail": "Offline check of host tools: pinned npm and .venv packages against workbench/matrix/version_matrix.json, and the age of the Update_Host_Tools.ps1 -Update record. Writes .reports/host_tools.txt. Report-only: always exits 0, so it never aborts Validate All.",
+      "label": "Env: Check Host Tools",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "if (Test-Path scripts/check_tasks_json.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_tasks_json.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/tasks_conformance.txt } else { Set-Content .reports/tasks_conformance.txt 'Task Contracts: PASSED' }; $passed = Select-String -Quiet 'satisfy screen visibility and error contracts' .reports/tasks_conformance.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^\\[OK\\]' } | ForEach-Object { Write-Host $_ } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/tasks_conformance.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  Task Contracts: PASSED' -ForegroundColor Green } else { Write-Host '✖  Task Contracts: FAILED' -ForegroundColor Red } } else { Set-Content .reports/tasks_conformance.txt '–  Skipped: no scripts/check_tasks_json.py'; Write-Host '–  Skipped: no scripts/check_tasks_json.py' -ForegroundColor Cyan }; exit 0",
+      "group": "build",
+      "label": "Env: Check Tasks Conformance",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
@@ -227,20 +311,26 @@
       "dependsOn": [
         "Validate: Ruff Lint",
         "Validate: Ruff Format Check",
-        "Validate: Prettier Check",
-        "Validate: Markdown Style",
         "Validate: YAML Style",
         "Validate: Codespell",
-        "Validate: Zizmor",
-        "Validate: PSScriptAnalyzer",
-        "Validate: Pytest Coverage",
+        "Validate: Prettier Check",
+        "Validate: Markdown Style",
+        "Env: Check Tasks Conformance",
         "Env: Check Shared Prompts",
         "Env: Check Prompt Cadence",
-        "Env: Check Sensor Manifest",
         "Env: Check Queue Format",
         "Env: Check Release Plans",
         "Env: Check Changelog Headers",
-        "Env: Check AGENTS.md"
+        "Env: Check AGENTS.md",
+        "Env: Check Sensor Manifest",
+        "Env: Check Local Leaks",
+        "Env: Check Suppressions",
+        "Env: Check Host Tools",
+        "Validate: Zizmor",
+        "Validate: PSScriptAnalyzer",
+        "Validate: Pytest Coverage",
+        "Show: Summary Statistics (Validate All)",
+        "Show: Results Summary (Validate All)"
       ],
       "dependsOrder": "sequence",
       "group": {
@@ -258,7 +348,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff check --config pyproject.toml --fix . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_ruff_lint.txt } else { Set-Content .reports/format_ruff_lint.txt 'All checks passed' }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_ruff_lint.txt '✔  Ruff Lint Fix: PASSED'; Write-Host '✔  Ruff Lint Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint Fix: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff check --config pyproject.toml --fix . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_ruff_lint.txt } else { Set-Content .reports/format_ruff_lint.txt 'All checks passed' }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/format_ruff_lint.txt)') } } }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_ruff_lint.txt '✔  Ruff Lint Fix: PASSED'; Write-Host '✔  Ruff Lint Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Lint Fix: FAILED' -ForegroundColor Red }; exit 0",
       "label": "Format: Apply Ruff Lint Fix",
       "presentation": {
         "clear": true,
@@ -270,7 +360,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff format --config pyproject.toml . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_ruff.txt } else { Set-Content .reports/format_ruff.txt '36 files left unchanged' }; $summaryLine = if ($out -is [array]) { $out[-1] } else { $out }; if ($summaryLine) { Write-Host ('  ' + $summaryLine) }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_ruff.txt '✔  Ruff Format Fix: PASSED'; Write-Host '✔  Ruff Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with ruff ruff format --config pyproject.toml . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_ruff.txt } else { Set-Content .reports/format_ruff.txt '36 files left unchanged' }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/format_ruff.txt)') } } } else { $summaryLine = if ($out -is [array]) { $out[-1] } else { $out }; if ($summaryLine) { Write-Host ('  ' + $summaryLine) } }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_ruff.txt '✔  Ruff Format Fix: PASSED'; Write-Host '✔  Ruff Format Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Ruff Format Fix: FAILED' -ForegroundColor Red }; exit 0",
       "label": "Format: Apply Ruff Format",
       "presentation": {
         "clear": true,
@@ -282,7 +372,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --write '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; $ec = $LASTEXITCODE; $clean = if ($out) { $out -replace '\\x1b\\[[0-9;]*[a-zA-Z]', '' } else { 'unchanged' }; $clean | Set-Content .reports/format_prettier.txt; if ($clean -and $clean -notmatch '^\\s*unchanged\\s*$') { $clean | Where-Object { $_ -notmatch 'PASSED|FAILED' } | ForEach-Object { Write-Host ('  ' + $_) } }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_prettier.txt '✔  Prettier Format: PASSED'; Write-Host '✔  Prettier Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier Format: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = npx -q prettier --config .validate/.prettierrc.json --ignore-path .gitignore --ignore-path .validate/.prettierignore --no-error-on-unmatched-pattern --write '**/*.json' '**/*.yaml' '!.validate/**' '!node_modules/**' 2>&1; $ec = $LASTEXITCODE; $clean = if ($out) { $out -replace '\\x1b\\[[0-9;]*[a-zA-Z]', '' } else { 'unchanged' }; $clean | Set-Content .reports/format_prettier.txt; if ($clean -and $clean -notmatch '^\\s*unchanged\\s*$') { $errs = @($clean | Out-String -Stream | Where-Object { $_.Trim() -and $_ -notmatch 'PASSED|FAILED' }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/format_prettier.txt)') } } }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_prettier.txt '✔  Prettier Format: PASSED'; Write-Host '✔  Prettier Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Prettier Format: FAILED' -ForegroundColor Red }; exit 0",
       "label": "Format: Apply Prettier",
       "presentation": {
         "clear": true,
@@ -294,7 +384,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with codespell codespell -w . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_codespell.txt } else { Set-Content .reports/format_codespell.txt '' }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_codespell.txt '✔  Codespell Fix: PASSED'; Write-Host '✔  Codespell Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Codespell Fix: FAILED' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = uv run -q --with codespell codespell -w . 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_codespell.txt } else { Set-Content .reports/format_codespell.txt '' }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/format_codespell.txt)') } } }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_codespell.txt '✔  Codespell Fix: PASSED'; Write-Host '✔  Codespell Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Codespell Fix: FAILED' -ForegroundColor Red }; exit 0",
       "label": "Format: Apply Codespell",
       "presentation": {
         "clear": true,
@@ -306,7 +396,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports | Out-Null; $out = npx -q --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore --fix '**/*.md' 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_markdownlint.txt } else { Set-Content .reports/format_markdownlint.txt '' }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_markdownlint.txt '✔  Markdownlint Fix: PASSED'; Write-Host '✔  Markdownlint Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Markdownlint Fix: FAILED (unfixable errors remain \u2014 edit manually)' -ForegroundColor Red }; exit 0",
+      "command": "mkdir -Force .reports | Out-Null; $out = npx -q --package=markdownlint-cli markdownlint --config .validate/.markdownlint.json --ignore-path .gitignore --fix '**/*.md' 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/format_markdownlint.txt } else { Set-Content .reports/format_markdownlint.txt '' }; if ($ec -ne 0 -and $out) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/format_markdownlint.txt)') } } }; Write-Host; if ($ec -eq 0) { Add-Content .reports/format_markdownlint.txt '✔  Markdownlint Fix: PASSED'; Write-Host '✔  Markdownlint Fix: PASSED' -ForegroundColor Green } else { Write-Host '✖  Markdownlint Fix: FAILED (unfixable errors remain — edit manually)' -ForegroundColor Red }; exit 0",
       "label": "Format: Apply Markdownlint",
       "presentation": {
         "clear": true,
@@ -318,7 +408,7 @@
       "type": "shell"
     },
     {
-      "command": "$ps = @(git ls-files --cached --others --exclude-standard -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host '\u2013  Skipped: no PowerShell files' -ForegroundColor Cyan; Set-Content .reports/format_psscriptanalyzer.txt '\u2013  Skipped: no PowerShell files'; exit 0 }; mkdir -Force .reports | Out-Null; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $lines = @(); $hasErr = $false; foreach ($f in $ps) { try { $out = Invoke-ScriptAnalyzer -Path $f -Settings .validate/PSScriptAnalyzerSettings.psd1 -Fix -ExcludeRule PSUseSingularNouns,PSUseApprovedVerbs 2>&1; $errs = @($out | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] -or $_.ToString() -match 'Invoke-ScriptAnalyzer:|Exception|Error' }); if ($errs) { $hasErr = $true; foreach ($e in $errs) { $msg = 'ERROR: ' + $f + ' - ' + $e.ToString(); Write-Host $msg -ForegroundColor Red; $lines += $msg } } else { Write-Host ('  fixed: ' + $f) -ForegroundColor Green; $lines += ('fixed: ' + $f) } } catch { $hasErr = $true; $msg = 'ERROR: ' + $f + ' - ' + $_.Exception.Message; Write-Host $msg -ForegroundColor Red; $lines += $msg } }; $lines | Set-Content .reports/format_psscriptanalyzer.txt; Write-Host; if ($hasErr) { Write-Host '✖  PSScriptAnalyzer: formatting failed with errors' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: formatting applied (naming fixes are report-only \u2014 rename manually)' -ForegroundColor Green }; exit 0",
+      "command": "$ps = @(git ls-files --cached --others --exclude-standard -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host '–  Skipped: no PowerShell files' -ForegroundColor Cyan; Set-Content .reports/format_psscriptanalyzer.txt '–  Skipped: no PowerShell files'; exit 0 }; mkdir -Force .reports | Out-Null; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $lines = @(); $hasErr = $false; foreach ($f in $ps) { try { $out = Invoke-ScriptAnalyzer -Path $f -Settings .validate/PSScriptAnalyzerSettings.psd1 -Fix -ExcludeRule PSUseSingularNouns,PSUseApprovedVerbs 2>&1; $errs = @($out | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] -or $_.ToString() -match 'Invoke-ScriptAnalyzer:|Exception|Error' }); if ($errs) { $hasErr = $true; foreach ($e in $errs) { $msg = 'ERROR: ' + $f + ' - ' + $e.ToString(); Write-Host $msg -ForegroundColor Red; $lines += $msg } } else { Write-Host ('  fixed: ' + $f) -ForegroundColor Green; $lines += ('fixed: ' + $f) } } catch { $hasErr = $true; $msg = 'ERROR: ' + $f + ' - ' + $_.Exception.Message; Write-Host $msg -ForegroundColor Red; $lines += $msg } }; $lines | Set-Content .reports/format_psscriptanalyzer.txt; Write-Host; if ($hasErr) { Write-Host '✖  PSScriptAnalyzer: formatting failed with errors' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: formatting applied (naming fixes are report-only — rename manually)' -ForegroundColor Green }; exit 0",
       "label": "Format: Apply PSScriptAnalyzer",
       "presentation": {
         "clear": true,
@@ -351,8 +441,41 @@
       "type": "shell"
     },
     {
-      "command": "$lines = @(); $chk = { param($lbl, $f, $pat); $p = Join-Path '.reports' $f; if (-not (Test-Path $p)) { $msg = '  ?  ' + $lbl + ' (not run)'; Write-Host $msg -ForegroundColor Yellow; $lines += $msg; return }; $raw = Get-Content $p -Raw -ErrorAction SilentlyContinue; if ($null -eq $raw) { $raw = '' }; $trimmed = $raw.Trim(); if ($trimmed -like '*Skipped*') { $msg = '  \u2013  ' + $lbl + ' (skipped)'; Write-Host $msg -ForegroundColor Cyan; $lines += $msg; return }; if ([string]::IsNullOrEmpty($pat)) { if ($trimmed.Length -eq 0) { $msg = '  ✔  ' + $lbl + ' (no issues)'; Write-Host $msg -ForegroundColor Green; $lines += $msg } else { $last = (Get-Content $p -ErrorAction SilentlyContinue | Where-Object { $_.Trim() } | Select-Object -Last 1); $msg = '  ✖  ' + $lbl + ' ' + $last.Trim(); Write-Host $msg -ForegroundColor Red; $lines += $msg } } else { $failMatch = $null; if ($f -eq 'coverage.txt' -and $lbl -like '*Coverage*') { $failMatch = (Select-String -Path $p -Pattern '^(FAIL Required|ERROR: Coverage failure)' -ErrorAction SilentlyContinue | Select-Object -Last 1) } elseif ($f -eq 'coverage.txt' -or $lbl -like '*Pytest*') { $failMatch = (Select-String -Path $p -Pattern '(=+ .*([0-9]+ failed|[0-9]+ error).* =+|^FAILURES =+|^ERRORS =+)' -ErrorAction SilentlyContinue | Select-Object -Last 1) } elseif ($f -eq 'format_psscriptanalyzer.txt' -or $lbl -like '*PSScript*') { $failMatch = (Select-String -Path $p -Pattern '^(ERROR:|Invoke-ScriptAnalyzer:|Exception|\bFAILED\b)' -ErrorAction SilentlyContinue | Select-Object -Last 1) } elseif (Select-String -Path $p -Pattern ':\\s*FAILED\\b' -Quiet -ErrorAction SilentlyContinue) { $failMatch = (Select-String -Path $p -Pattern ':\\s*FAILED\\b' -ErrorAction SilentlyContinue | Select-Object -Last 1) }; if ($failMatch) { $msg = '  ✖  ' + $lbl + ' ' + $failMatch.Line.Trim(); Write-Host $msg -ForegroundColor Red; $lines += $msg } elseif (Select-String -Path $p -Pattern $pat -Quiet -SimpleMatch -ErrorAction SilentlyContinue) { $m = (Select-String -Path $p -Pattern $pat -SimpleMatch -ErrorAction SilentlyContinue | Select-Object -Last 1).Line.Trim(); $adv = (Select-String -Path $p -Pattern '^\\(Advisory:' -ErrorAction SilentlyContinue | Select-Object -Last 1); if ($adv) { $msg = '  ✔  ' + $lbl + ' ' + $m + ' ' + $adv.Line.Trim(); Write-Host $msg -ForegroundColor Yellow } elseif ($f -eq 'coverage.txt' -and $lbl -notlike '*Coverage*' -and ($m -match '[0-9]+\\s+warning')) { $msg = '  ✔  ' + $lbl + ' ' + $m; Write-Host $msg -ForegroundColor Yellow } else { $msg = '  ✔  ' + $lbl + ' ' + $m; Write-Host $msg -ForegroundColor Green }; $lines += $msg } else { $last = (Get-Content $p -ErrorAction SilentlyContinue | Where-Object { $_.Trim() } | Select-Object -Last 1); if (-not $last) { $last = '(issues remain)' }; $msg = '  ✖  ' + $lbl + ' ' + $last.Trim(); Write-Host $msg -ForegroundColor Red; $lines += $msg } } }; Write-Host ''; $lines += ''; $lines += '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550'; $lines += '   Format & Validate \u2014 Summary'; $lines += '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550'; Write-Host '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550'; Write-Host '   Format & Validate \u2014 Summary'; Write-Host '\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550'; & $chk 'Ruff Lint Fix     ' 'format_ruff_lint.txt' 'PASSED'; & $chk 'Ruff Format Fix   ' 'format_ruff.txt' 'PASSED'; & $chk 'Prettier Format   ' 'format_prettier.txt' 'PASSED'; & $chk 'Codespell Fix     ' 'format_codespell.txt' 'PASSED'; & $chk 'Markdownlint Fix  ' 'format_markdownlint.txt' 'PASSED'; & $chk 'PSScript Fix      ' 'format_psscriptanalyzer.txt' 'fixed:'; Write-Host '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500'; $lines += '\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500'; & $chk 'Ruff Lint         ' 'ruff_lint.txt' 'All checks passed'; & $chk 'Ruff Format       ' 'ruff_format_status.txt' 'already formatted'; & $chk 'Prettier          ' 'prettier_check.txt' 'Prettier code style'; & $chk 'Markdown Style    ' 'markdown_lint.txt' ''; & $chk 'YAML Style        ' 'yaml_lint.txt' ''; & $chk 'Codespell         ' 'codespell.txt' ''; & $chk 'Zizmor            ' 'zizmor_audit.txt' 'PASSED'; & $chk 'PSScriptAnalyzer  ' 'psscriptanalyzer.txt' ''; & $chk 'Pytest            ' 'coverage.txt' ' passed'; & $chk 'Pytest Coverage   ' 'coverage.txt' '% reached'; & $chk 'Shared Prompts    ' 'prompt_check.txt' 'Prompt Check: PASSED'; & $chk 'Prompt Cadence    ' 'prompt_cadence.txt' 'Prompts Overdue & Due Check'; & $chk 'Sensor Manifest   ' 'sensor_manifest.txt' 'Documentation is in sync'; & $chk 'Queue Format      ' 'queue_format.txt' 'Queue Format: PASSED'; & $chk 'Release Plans     ' 'release_plans.txt' 'Release Plan Check: PASSED'; & $chk 'Changelog Headers ' 'changelog_header.txt' 'carry the canonical Authoring Rules block'; & $chk 'AGENTS.md Audit   ' 'agents_md.txt' 'match canonical structure and boilerplate rules'; Write-Host ''; $lines += ''; $lines | Set-Content .reports/summary_format_and_validate.txt",
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-validate --stats",
+      "label": "Show: Summary Statistics",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-validate",
       "label": "Show: Results Summary",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-checks --stats",
+      "label": "Show: Summary Statistics (Validate All)",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-checks",
+      "label": "Show: Results Summary (Validate All)",
       "presentation": {
         "panel": "dedicated",
         "reveal": "always",
@@ -387,26 +510,31 @@
       "dependsOn": [
         "Format: Apply Ruff Lint Fix",
         "Format: Apply Ruff Format",
-        "Format: Apply Prettier",
         "Format: Apply Codespell",
+        "Format: Apply Prettier",
         "Format: Apply Markdownlint",
         "Format: Apply PSScriptAnalyzer",
         "Validate: Ruff Lint",
         "Validate: Ruff Format Check",
-        "Validate: Prettier Check",
-        "Validate: Markdown Style",
         "Validate: YAML Style",
         "Validate: Codespell",
-        "Validate: Zizmor",
-        "Validate: PSScriptAnalyzer",
-        "Validate: Pytest Coverage",
+        "Validate: Prettier Check",
+        "Validate: Markdown Style",
+        "Env: Check Tasks Conformance",
         "Env: Check Shared Prompts",
         "Env: Check Prompt Cadence",
-        "Env: Check Sensor Manifest",
         "Env: Check Queue Format",
         "Env: Check Release Plans",
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",
+        "Env: Check Sensor Manifest",
+        "Env: Check Local Leaks",
+        "Env: Check Suppressions",
+        "Env: Check Host Tools",
+        "Validate: Zizmor",
+        "Validate: PSScriptAnalyzer",
+        "Validate: Pytest Coverage",
+        "Show: Summary Statistics",
         "Show: Results Summary"
       ],
       "dependsOrder": "sequence",

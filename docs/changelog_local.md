@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.18-dev2\] - 2026-11-09 - CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018-dev2---2026-11-09---ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
   - [\[2.0.18-dev1\] - 2026-10-12 - CI Bump ruff](#2018-dev1---2026-10-12---ci-bump-ruff)
   - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)
   - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)
@@ -81,11 +82,37 @@ All changes to this project will be documented in this file. This is the detaile
 
 ---
 
+## [2.0.18-dev2] - 2026-11-09 - CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant
+
+### Summary
+
+Four inline CI pins in `validate-specific.yaml` move to the dev-workbench version matrix, and the host-tooling sync brings the 7-day release-age wait, the host tools check and new summary tasks. The test harness that CI installs changes from `pytest-homeassistant-custom-component` (PHACC) to `pytest-homeassistant` (PytestHA) through each integration's synced `.validate/requirements_test.txt`; this repository's workflow files need no change for it.
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.30.1 to 1.31.1
+- **Validate Bump**: Update `ruff` from 0.16.10 to 0.17.3
+- **Validate Bump**: Update `mypy` from 2.4.0 to 2.4.1
+- **Validate Bump**: Update `check-jsonschema` from 0.38.2 to 0.39.0
+- **Validate Bump**: Update `prettier` from 3.6.2 to 3.9.10
+
+### Changed
+
+- **CI Test Harness (`.github/workflows/validate-specific.yaml:148`, `:272`)**: PHACC replaced by `pytest-homeassistant`, published from home-assistant/core and versioned with HA. PHACC's last release (0.13.375) pins `homeassistant==2026.10.4` and cannot be imported on HA 2026.11. The pytest and mypy jobs install `.validate/requirements_test.txt`, which each integration receives from `dev-workbench/workbench/python/requirements_test.txt` and which now lists `pytest-homeassistant` unversioned; CI resolves the latest harness and the HA version that harness pins exactly. The workflow files are unchanged; the change reaches CI when each integration commits its synced requirements file (dev-workbench v302; `shared/SharedNotes/issues/x_project/per_project_pytest_passing_on_pyha_in_its_own_devcontainer.md`).
+- **Inline CI Pins Written From the Matrix**: the four inline `pip install name==version` pins above are written by `check_tool_drift.py --apply` from `dev-workbench/workbench/matrix/version_matrix.json` (dev-workbench v302); the `Action` pins of codespell and yamllint are not touched.
+- **Host Tooling**: updated via shared sync from `dev-workbench/host-tooling/`.
+  - **`.vscode/tasks.json`**: new tasks `Env: Check Host Tools`, `Env: Check Local Leaks`, `Env: Check Suppressions`, `Env: Check Tasks Conformance`, `Roadmap: Generate & Check`, `Fix: Generate All Roadmaps`, `Show: Summary Statistics`, `Show: Summary Statistics (Validate All)` and `Show: Results Summary (Validate All)`; Prettier and codespell pass `--ignore-path .gitignore`, so gitignored paths are not linted.
+  - **`.npmrc` (new)**: `min-release-age=7`, a 7-day release-age wait for every npm and npx resolve.
+  - **`pyproject.toml`**: `[tool.uv] exclude-newer = "7 days"`, the same wait for uv resolves; codespell `skip` adds `.workbench`, `local_only`, `mutants`, `scratch`, `temp_check`, `CLAUDE.md` and `uv.lock`.
+  - **`package.json` lock (`package-lock.json`)**: `prettier` and `prettier-plugin-sort-json` move from exact to caret ranges; the lock resolves `prettier` 3.9.10.
+  - **`.gitignore`**: adds `.hypothesis/`.
+  - **`.validate/.prettierignore`**: adds `../.workbench/`.
+
 ## [2.0.18-dev1] - 2026-10-12 - CI Bump ruff
 
 ### Bumps
 
-- **Validate Bump**: Update `ruff` from 0.16.9 to 0.16.10
+- **Validate Bump**: Update `ruff` from 0.16.9 to 0.17.0
 
 ### Changed
 
