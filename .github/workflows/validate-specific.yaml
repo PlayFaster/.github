@@ -47,7 +47,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Zizmor
-        run: pip install zizmor==1.30.1
+        run: pip install zizmor==1.31.1
 
       - name: Run Zizmor
         continue-on-error: false
@@ -69,7 +69,7 @@ jobs:
 
       - name: Hassfest Validation
         # Branch @master
-        uses: home-assistant/actions/hassfest@58bff37c8947f690ace498be413a9b78d6f30f93
+        uses: home-assistant/actions/hassfest@86d4564712fa02543c808e3a693dd04f9d3f8361
 
   # Job 3: Official HACS metadata validation.
   # category is passed through directly — 'integration' or 'theme'.
@@ -107,13 +107,13 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v7.0.0
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        # Tag @v7.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.14"
 
       - name: Install Ruff
-        run: pip install ruff==0.16.9
+        run: pip install ruff==0.17.3
 
       - name: Run Ruff Check
         run: ruff check .
@@ -137,8 +137,8 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v7.0.0
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        # Tag @v7.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.14"
           cache: "pip"
@@ -189,15 +189,15 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v7.0.0
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        # Tag @v7.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.14"
 
       - name: HACS Schema Check
         if: ${{ inputs.category != 'standard' }}
         run: |
-          pip install check-jsonschema==0.38.2
+          pip install check-jsonschema==0.39.0
           check-jsonschema --schemafile .validate/hacs_schema.json hacs.json
 
       - name: HA Manifest Schema Check
@@ -261,14 +261,14 @@ jobs:
           persist-credentials: false
 
       - name: Set up Python
-        # Tag @v7.0.0
-        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97
+        # Tag @v7.1.0
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0
         with:
           python-version: "3.14"
 
       - name: Install dependencies
         run: |
-          pip install mypy==2.4.0
+          pip install mypy==2.4.1
           pip install -r .validate/requirements_test.txt
 
       - name: Run Mypy

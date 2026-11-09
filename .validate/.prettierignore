@@ -1,3 +1,4 @@
 # Exclude Markdown files workspace-wide
+../.workbench/
 *.md
 **/*.md

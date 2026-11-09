@@ -11,5 +11,9 @@ requires-python = ">=3.12"
 extend = ".validate/pyproject_common.toml"
 
 [tool.codespell]
-skip = ".git,.reports,node_modules,.validate,.venv,.ruff_cache,.gptcache,*.log,*.db,*.db-shm,*.db-wal,*.ffs_*,*.code-workspace"
+skip = ".git,.reports,node_modules,.validate,.workbench,.venv,.ruff_cache,.gptcache,*.log,*.db,*.db-shm,*.db-wal,*.ffs_*,*.code-workspace,local_only,mutants,scratch,temp_check,CLAUDE.md,uv.lock"
 ignore-words-list = "hass"
+
+[tool.uv]
+# 7-day release-age wait for every uv resolve in this repo (uv run --with, uv pip install).
+exclude-newer = "7 days"
