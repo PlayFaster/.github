@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.18-dev3\] - 2026-11-09 - Dependabot CI Bumps; CodeQL, HASSFest, Python](#2018-dev3---2026-11-09---dependabot-ci-bumps-codeql-hassfest-python)
   - [\[2.0.18-dev2\] - 2026-11-09 - CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018-dev2---2026-11-09---ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
   - [\[2.0.18-dev1\] - 2026-10-12 - CI Bump ruff](#2018-dev1---2026-10-12---ci-bump-ruff)
   - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)
@@ -81,6 +82,15 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.18-dev3] - 2026-11-09 - Dependabot CI Bumps; CodeQL, HASSFest, Python
+
+### Dependabot Bumps
+
+- Bump github/codeql-action/analyze from 4.38.2 to 4.39.1 #83
+- Bump github/codeql-action/init from 4.38.2 to 4.39.1 #80
+- Bump actions/setup-python from 7.0.0 to 7.1.0 #82
+- Bump home-assistant/actions/hassfest from 58bff37c8947f690ace498be413a9b78d6f30f93 to 86d4564712fa02543c808e3a693dd04f9d3f8361 #81
 
 ## [2.0.18-dev2] - 2026-11-09 - CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant
 
