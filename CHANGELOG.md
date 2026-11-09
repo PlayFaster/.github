@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [2.0.18] - 2026-11-09 - CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant
+## [2.0.18] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant
 
 ### Summary
 
@@ -20,10 +20,10 @@ Four inline CI pins in `validate-specific.yaml` move to the dev-workbench versio
 
 ### Dependabot Bumps
 
-- Bump github/codeql-action/analyze from 4.38.2 to 4.39.1 #83
-- Bump github/codeql-action/init from 4.38.2 to 4.39.1 #80
-- Bump actions/setup-python from 7.0.0 to 7.1.0 #82
-- Bump home-assistant/actions/hassfest from 58bff37c8947f690ace498be413a9b78d6f30f93 to 86d4564712fa02543c808e3a693dd04f9d3f8361 #81
+- Bump github/codeql-action/analyze from 4.38.2 to 4.39.1 (#83)
+- Bump github/codeql-action/init from 4.38.2 to 4.39.1 (#80)
+- Bump actions/setup-python from 7.0.0 to 7.1.0 (#82)
+- Bump home-assistant/actions/hassfest from 58bff37c8947f690ace498be413a9b78d6f30f93 to 86d4564712fa02543c808e3a693dd04f9d3f8361 (#81)
 
 ### Changed
 
@@ -345,7 +345,7 @@ Four inline CI pins in `validate-specific.yaml` move to the dev-workbench versio
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
-  - [\[2.0.18\] - 2026-11-09 - CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---2026-11-09---ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
+  - [\[2.0.18\] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---release---2026-11-09---ci-bumps-dependabot-ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
   - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)
   - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)
   - [\[2.0.15\] - 2026-09-12 - Release - Self-Repository Syntax, Toolchain Bumps \& HA Ruff Alignment](#2015---2026-09-12---release---self-repository-syntax-toolchain-bumps--ha-ruff-alignment)
