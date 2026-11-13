@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.19-dev2\] - 2026-11-10 - Host Tooling Shared Local CI Updates](#2019-dev2---2026-11-10---host-tooling-shared-local-ci-updates)
   - [\[2.0.19-dev1\] - 2026-11-10 - CI Bump zizmor](#2019-dev1---2026-11-10---ci-bump-zizmor)
   - [\[2.0.18\] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---release---2026-11-09---ci-bumps-dependabot-ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
   - [\[2.0.18-dev3\] - 2026-11-09 - Dependabot CI Bumps; CodeQL, HASSFest, Python](#2018-dev3---2026-11-09---dependabot-ci-bumps-codeql-hassfest-python)
@@ -84,6 +85,12 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.19-dev2] - 2026-11-10 - Host Tooling Shared Local CI Updates
+
+### Changed
+
+- **Local Validation**: Updated local validation via `tasks.json`to align integration and host task group names ("Fix and Validate All" etc.), plus updated `AGENTS.md` with list of task group names.
 
 ## [2.0.19-dev1] - 2026-11-10 - CI Bump zizmor
 

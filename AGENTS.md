@@ -168,7 +168,8 @@ Run via **Terminal → Run Task** in VS Code:
 | `Validate: PSScriptAnalyzer` | PowerShell lint — config in `.validate/PSScriptAnalyzerSettings.psd1` |
 | `Validate: Run Pytest` | pytest |
 | `Validate: Pytest Coverage` | pytest with coverage report |
-| **Format All** | Runs all `Format: Apply *` tasks in sequence |
+| `Validate: This File` | markdownlint and codespell on one named file, fixers first; `--file <path>` from `dev-workbench/`, report `.reports/file_validation.txt` |
+| **Fix All Fast** | Runs all `Format: Apply *` tasks, then the fast checks no fixer covers, then its summary |
 | `Format: Apply Ruff Lint Fix` | `ruff check --fix` |
 | `Format: Apply Ruff Format` | `ruff format` |
 | `Format: Apply Prettier` | Prettier write |
