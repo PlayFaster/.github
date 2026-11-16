@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.19] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment
+
+Routine maintenance update refining shared CI validation pins, Ruff configuration and online CodeQL.
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.31.1 to 1.32.0 in `.github/workflows/validate-specific.yaml`.
+- **Validate Bump**: Update `ruff` from 0.17.3 to 0.17.4 in `.github/workflows/validate-specific.yaml`.
+
+### Dependabot Bumps
+
+- Bump github/codeql-action/analyze from 4.39.1 to 4.39.3 (#85)
+- Bump github/codeql-action/init from 4.39.1 to 4.39.3 (#86)
+
+### Changed
+
+- **Shared Ruff Configuration (`.validate/pyproject_common.toml`)**: Aligned with Home Assistant Core by requiring Ruff `>=0.17.4`, enforcing `PLC0415` outside test suites (removed from global `ignore`), adding `known-third-party = ["hassfest"]` under `[lint.isort]`, and adding `tests/components/marketplace/fixtures/proxy` to `extend-exclude`.
+
 ## [2.0.18] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant
 
 ### Summary
@@ -345,6 +363,7 @@ Four inline CI pins in `validate-specific.yaml` move to the dev-workbench versio
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.19\] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment](#2019---2026-11-16---maintenance-shared-ci-tool-bumps-and-ruff-ha-core-alignment)
   - [\[2.0.18\] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---release---2026-11-09---ci-bumps-dependabot-ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
   - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)
   - [\[2.0.16\] - 2026-09-13 - Drop Prettier Formatting of Markdown Files](#2016---2026-09-13---drop-prettier-formatting-of-markdown-files)

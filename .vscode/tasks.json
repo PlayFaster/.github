@@ -93,6 +93,19 @@
       "type": "shell"
     },
     {
+      "command": "python .workbench/validate_files.py '${relativeFile}'",
+      "group": "build",
+      "label": "Validate: This File",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "command": "mkdir -Force .reports; if (Test-Path .github) { uv run -q --with zizmor zizmor --pedantic .github/ | tee .reports/zizmor_audit.txt; $ec = $LASTEXITCODE; if ($ec -eq 0) { Add-Content .reports/zizmor_audit.txt '✔  Zizmor Audit: PASSED' } } else { Set-Content .reports/zizmor_audit.txt '–  Skipped: no .github/ workflows'; Write-Host '–  Skipped: no .github/ workflows' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "label": "Validate: Zizmor",
@@ -106,7 +119,7 @@
       "type": "shell"
     },
     {
-      "command": "mkdir -Force .reports; $ps = @(git ls-files --cached --others --exclude-standard -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host '–  Skipped: no PowerShell files' -ForegroundColor Cyan; Set-Content .reports/psscriptanalyzer.txt '–  Skipped: no PowerShell files'; exit 0 }; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $r = $ps | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ -Settings .validate/PSScriptAnalyzerSettings.psd1 }; ($r | Format-Table -AutoSize | Out-String) | Tee-Object .reports/psscriptanalyzer.txt; Write-Host; if ($r) { Write-Host '✖  PSScriptAnalyzer: FAILED' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: PASSED' -ForegroundColor Green }; exit 0",
+      "command": "python .workbench/psscriptanalyzer_retry.py check",
       "group": "build",
       "label": "Validate: PSScriptAnalyzer",
       "presentation": {
@@ -408,7 +421,7 @@
       "type": "shell"
     },
     {
-      "command": "$ps = @(git ls-files --cached --others --exclude-standard -- '*.ps1' '*.psm1' 2>$null); if (-not $ps) { Write-Host '–  Skipped: no PowerShell files' -ForegroundColor Cyan; Set-Content .reports/format_psscriptanalyzer.txt '–  Skipped: no PowerShell files'; exit 0 }; mkdir -Force .reports | Out-Null; if (-not (Get-Module -ListAvailable PSScriptAnalyzer)) { Write-Host 'Installing PSScriptAnalyzer (CurrentUser)...' -ForegroundColor Cyan; Install-Module PSScriptAnalyzer -Scope CurrentUser -Force }; $lines = @(); $hasErr = $false; foreach ($f in $ps) { try { $out = Invoke-ScriptAnalyzer -Path $f -Settings .validate/PSScriptAnalyzerSettings.psd1 -Fix -ExcludeRule PSUseSingularNouns,PSUseApprovedVerbs 2>&1; $errs = @($out | Where-Object { $_ -is [System.Management.Automation.ErrorRecord] -or $_.ToString() -match 'Invoke-ScriptAnalyzer:|Exception|Error' }); if ($errs) { $hasErr = $true; foreach ($e in $errs) { $msg = 'ERROR: ' + $f + ' - ' + $e.ToString(); Write-Host $msg -ForegroundColor Red; $lines += $msg } } else { Write-Host ('  fixed: ' + $f) -ForegroundColor Green; $lines += ('fixed: ' + $f) } } catch { $hasErr = $true; $msg = 'ERROR: ' + $f + ' - ' + $_.Exception.Message; Write-Host $msg -ForegroundColor Red; $lines += $msg } }; $lines | Set-Content .reports/format_psscriptanalyzer.txt; Write-Host; if ($hasErr) { Write-Host '✖  PSScriptAnalyzer: formatting failed with errors' -ForegroundColor Red } else { Write-Host '✔  PSScriptAnalyzer: formatting applied (naming fixes are report-only — rename manually)' -ForegroundColor Green }; exit 0",
+      "command": "python .workbench/psscriptanalyzer_retry.py fix",
       "label": "Format: Apply PSScriptAnalyzer",
       "presentation": {
         "clear": true,
@@ -426,11 +439,21 @@
         "Format: Apply Prettier",
         "Format: Apply Codespell",
         "Format: Apply Markdownlint",
-        "Format: Apply PSScriptAnalyzer"
+        "Format: Apply PSScriptAnalyzer",
+        "Validate: YAML Style",
+        "Env: Check Tasks Conformance",
+        "Env: Check Shared Prompts",
+        "Env: Check Queue Format",
+        "Env: Check Release Plans",
+        "Env: Check Changelog Headers",
+        "Env: Check AGENTS.md",
+        "Env: Check Sensor Manifest",
+        "Show: Summary Statistics (Fix All Fast)",
+        "Show: Fix Results Summary (Fast)"
       ],
       "dependsOrder": "sequence",
       "group": "none",
-      "label": "Format All",
+      "label": "Fix All Fast",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
@@ -441,7 +464,40 @@
       "type": "shell"
     },
     {
-      "command": "uv run python .workbench/report_summary_tasks.py --profile host-validate --stats",
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-fix-fast --stats",
+      "label": "Show: Summary Statistics (Fix All Fast)",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-fix-fast",
+      "label": "Show: Fix Results Summary (Fast)",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-validate-fast",
+      "label": "Show: Results Summary (Validate Fast)",
+      "presentation": {
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-fix-and-validate --stats",
       "label": "Show: Summary Statistics",
       "presentation": {
         "panel": "dedicated",
@@ -452,7 +508,7 @@
       "type": "shell"
     },
     {
-      "command": "uv run python .workbench/report_summary_tasks.py --profile host-validate",
+      "command": "uv run python .workbench/report_summary_tasks.py --profile host-fix-and-validate",
       "label": "Show: Results Summary",
       "presentation": {
         "panel": "dedicated",
@@ -490,9 +546,16 @@
         "Validate: Ruff Format Check",
         "Validate: Prettier Check",
         "Validate: Markdown Style",
-        "Validate: YAML Style",
         "Validate: Codespell",
-        "Show: Results Summary"
+        "Validate: YAML Style",
+        "Env: Check Tasks Conformance",
+        "Env: Check Shared Prompts",
+        "Env: Check Queue Format",
+        "Env: Check Release Plans",
+        "Env: Check Changelog Headers",
+        "Env: Check AGENTS.md",
+        "Env: Check Sensor Manifest",
+        "Show: Results Summary (Validate Fast)"
       ],
       "dependsOrder": "sequence",
       "group": "build",
@@ -539,7 +602,7 @@
       ],
       "dependsOrder": "sequence",
       "group": "build",
-      "label": "Format and Validate",
+      "label": "Fix and Validate All",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
