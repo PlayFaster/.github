@@ -22,8 +22,6 @@ Routine maintenance update refining shared CI validation pins, Ruff configuratio
 
 - **Shared Ruff Configuration (`.validate/pyproject_common.toml`)**: Aligned with Home Assistant Core by requiring Ruff `>=0.17.4`, enforcing `PLC0415` outside test suites (removed from global `ignore`), adding `known-third-party = ["hassfest"]` under `[lint.isort]`, and adding `tests/components/marketplace/fixtures/proxy` to `extend-exclude`.
 
-*Full technical detail for every change in this release is in [`docs/changelog_local.md`](docs/changelog_local.md).*
-
 ## [2.0.18] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant
 
 ### Summary
