@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.19-dev3\] - 2026-11-16 - Tooling \& CI: Ruff Bump to 0.17.4 and Shared Ruff Config HA Core Alignment](#2019-dev3---2026-11-16---tooling--ci-ruff-bump-to-0174-and-shared-ruff-config-ha-core-alignment)
   - [\[2.0.19-dev2\] - 2026-11-10 - Host Tooling Shared Local CI Updates](#2019-dev2---2026-11-10---host-tooling-shared-local-ci-updates)
   - [\[2.0.19-dev1\] - 2026-11-10 - CI Bump zizmor](#2019-dev1---2026-11-10---ci-bump-zizmor)
   - [\[2.0.18\] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---release---2026-11-09---ci-bumps-dependabot-ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
@@ -85,6 +86,20 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.19-dev3] - 2026-11-16 - Tooling & CI: Ruff Bump to 0.17.4 and Shared Ruff Config HA Core Alignment
+
+### Summary
+
+Bumped the inline Ruff pin in the shared validation workflow to `0.17.4` and synced the shared Ruff configuration from `dev-workbench` (`v307`, `v310`) to align with Home Assistant Core. Removing `PLC0415` from the global ignore list enforces top-level imports outside test suites while setting `required-version = ">=0.17.4"` and matching `isort` and exclusion settings.
+
+### Bumps
+
+- **Validate Bump**: Update `ruff` from 0.17.3 to 0.17.4 in `.github/workflows/validate-specific.yaml`.
+
+### Changed
+
+- **Shared Ruff Configuration (`.validate/pyproject_common.toml`)**: Synced HA Core alignment from `dev-workbench` (`v310`), adding `required-version = ">=0.17.4"`, `known-third-party = ["hassfest"]` under `[lint.isort]`, and `extend-exclude` for `tests/components/marketplace/fixtures/proxy`, and removing `PLC0415` from the global `[lint].ignore` list.
 
 ## [2.0.19-dev2] - 2026-11-10 - Host Tooling Shared Local CI Updates
 
