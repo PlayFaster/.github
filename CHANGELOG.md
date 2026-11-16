@@ -6,12 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ## [2.0.19] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment
 
-Routine maintenance update refining shared CI validation pins and Ruff configuration; safe to skip until you are next updating workflows.
+Routine maintenance update refining shared CI validation pins, Ruff configuration and online CodeQL.
 
 ### Bumps
 
 - **Validate Bump**: Update `zizmor` from 1.31.1 to 1.32.0 in `.github/workflows/validate-specific.yaml`.
 - **Validate Bump**: Update `ruff` from 0.17.3 to 0.17.4 in `.github/workflows/validate-specific.yaml`.
+
+### Dependabot Bumps
+
+- Bump github/codeql-action/analyze from 4.39.1 to 4.39.3 (#85)
+- Bump github/codeql-action/init from 4.39.1 to 4.39.3 (#86)
 
 ### Changed
 

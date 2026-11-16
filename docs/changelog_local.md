@@ -5,6 +5,8 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.19\] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment](#2019---2026-11-16---maintenance-shared-ci-tool-bumps-and-ruff-ha-core-alignment)
+  - [\[2.0.19-dev4\] - 2026-11-16 - Dependabot Bump CodeQL](#2019-dev4---2026-11-16---dependabot-bump-codeql)
   - [\[2.0.19-dev3\] - 2026-11-16 - Tooling \& CI: Ruff Bump to 0.17.4 and Shared Ruff Config HA Core Alignment](#2019-dev3---2026-11-16---tooling--ci-ruff-bump-to-0174-and-shared-ruff-config-ha-core-alignment)
   - [\[2.0.19-dev2\] - 2026-11-10 - Host Tooling Shared Local CI Updates](#2019-dev2---2026-11-10---host-tooling-shared-local-ci-updates)
   - [\[2.0.19-dev1\] - 2026-11-10 - CI Bump zizmor](#2019-dev1---2026-11-10---ci-bump-zizmor)
@@ -86,6 +88,33 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.19] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment
+
+Routine maintenance update refining shared CI validation pins, Ruff configuration and online CodeQL.
+
+### Bumps
+
+- **Validate Bump**: Update `zizmor` from 1.31.1 to 1.32.0 in `.github/workflows/validate-specific.yaml`.
+- **Validate Bump**: Update `ruff` from 0.17.3 to 0.17.4 in `.github/workflows/validate-specific.yaml`.
+
+### Dependabot Bumps
+
+- Bump github/codeql-action/analyze from 4.39.1 to 4.39.3 (#85)
+- Bump github/codeql-action/init from 4.39.1 to 4.39.3 (#86)
+
+### Changed
+
+- **Shared Ruff Configuration (`.validate/pyproject_common.toml`)**: Aligned with Home Assistant Core by requiring Ruff `>=0.17.4`, enforcing `PLC0415` outside test suites (removed from global `ignore`), adding `known-third-party = ["hassfest"]` under `[lint.isort]`, and adding `tests/components/marketplace/fixtures/proxy` to `extend-exclude`.
+
+*Full technical detail for every change in this release is in [`docs/changelog_local.md`](docs/changelog_local.md).*
+
+## [2.0.19-dev4] - 2026-11-16 - Dependabot Bump CodeQL
+
+### Dependabot Bumps
+
+- Bump github/codeql-action/analyze from 4.39.1 to 4.39.3 (#85)
+- Bump github/codeql-action/init from 4.39.1 to 4.39.3 (#86)
 
 ## [2.0.19-dev3] - 2026-11-16 - Tooling & CI: Ruff Bump to 0.17.4 and Shared Ruff Config HA Core Alignment
 
