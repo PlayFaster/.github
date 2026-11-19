@@ -145,6 +145,19 @@
       "type": "shell"
     },
     {
+      "command": "mkdir -Force .reports | Out-Null; $targets = @('workbench', 'scripts') | Where-Object { Test-Path $_ }; if ($targets.Count -gt 0) { uv run -q --with ruff python .workbench/check_mccabe_complexity.py --target $targets } else { Set-Content .reports/mccabe_complexity.txt '–  Skipped: no workbench/ or scripts/ directory'; Write-Host '–  Skipped: no workbench/ or scripts/ directory' -ForegroundColor Cyan }; exit 0",
+      "group": "build",
+      "label": "Complexity: Check McCabe",
+      "presentation": {
+        "clear": true,
+        "panel": "dedicated",
+        "reveal": "always",
+        "echo": false
+      },
+      "problemMatcher": [],
+      "type": "shell"
+    },
+    {
       "command": "if (Test-Path scripts/check_queue_format.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_queue_format.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/queue_format.txt } else { Set-Content .reports/queue_format.txt 'Queue Format: PASSED' }; $passed = Select-String -Quiet 'Queue Format: PASSED' .reports/queue_format.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^\\(Advisory:' } | ForEach-Object { Write-Host $_ -ForegroundColor Yellow } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/queue_format.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  Queue Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Queue Format: FINDINGS (report-only)' -ForegroundColor Yellow } } else { Set-Content .reports/queue_format.txt '–  Skipped: no scripts/check_queue_format.py'; Write-Host '–  Skipped: no scripts/check_queue_format.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "detail": "Validates the cross-project x_project/ queue and, with --project, one project's .notes/tasks/. Checks the status vocabulary, the Verified date, the Start here line, evidence on settled cells and stamps on archived ones. Report-only: prints a yellow banner on findings and always exits 0, so it never aborts Validate All.",
@@ -336,12 +349,13 @@
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",
         "Env: Check Sensor Manifest",
-        "Env: Check Local Leaks",
         "Env: Check Suppressions",
         "Env: Check Host Tools",
         "Validate: Zizmor",
         "Validate: PSScriptAnalyzer",
+        "Env: Check Local Leaks",
         "Validate: Pytest Coverage",
+        "Complexity: Check McCabe",
         "Show: Summary Statistics (Validate All)",
         "Show: Results Summary (Validate All)"
       ],
@@ -591,12 +605,13 @@
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",
         "Env: Check Sensor Manifest",
-        "Env: Check Local Leaks",
         "Env: Check Suppressions",
         "Env: Check Host Tools",
         "Validate: Zizmor",
         "Validate: PSScriptAnalyzer",
+        "Env: Check Local Leaks",
         "Validate: Pytest Coverage",
+        "Complexity: Check McCabe",
         "Show: Summary Statistics",
         "Show: Results Summary"
       ],

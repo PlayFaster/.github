@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.20] - 2026-11-19 - Profile README plus tasks.json
+
+### Added
+
+- **Profile README**: Added `profile/README.md` to act as the PlayFaster profile.
+
+### Changed
+
+- **Local Validation**: Updated local validation via `tasks.json`to allow complexity checking to run on host/toolings repos as well as integration projects.
+
 ## [2.0.19] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment
 
 Routine maintenance update refining shared CI validation pins, Ruff configuration and online CodeQL.
@@ -363,6 +373,7 @@ Four inline CI pins in `validate-specific.yaml` move to the dev-workbench versio
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.20\] - 2026-11-19 - Profile README plus tasks.json](#2020---2026-11-19---profile-readme-plus-tasksjson)
   - [\[2.0.19\] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment](#2019---2026-11-16---maintenance-shared-ci-tool-bumps-and-ruff-ha-core-alignment)
   - [\[2.0.18\] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---release---2026-11-09---ci-bumps-dependabot-ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)
   - [\[2.0.17\] - 2026-10-04 - CI Bump ruff, mypy, zizmor, jsonschema. Dependabot Bump CodeQL](#2017---2026-10-04---ci-bump-ruff-mypy-zizmor-jsonschema-dependabot-bump-codeql)

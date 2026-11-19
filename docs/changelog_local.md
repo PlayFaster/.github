@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.20\] - 2026-11-19 - Profile README plus tasks.json](#2020---2026-11-19---profile-readme-plus-tasksjson)
   - [\[2.0.19\] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment](#2019---2026-11-16---maintenance-shared-ci-tool-bumps-and-ruff-ha-core-alignment)
   - [\[2.0.19-dev4\] - 2026-11-16 - Dependabot Bump CodeQL](#2019-dev4---2026-11-16---dependabot-bump-codeql)
   - [\[2.0.19-dev3\] - 2026-11-16 - Tooling \& CI: Ruff Bump to 0.17.4 and Shared Ruff Config HA Core Alignment](#2019-dev3---2026-11-16---tooling--ci-ruff-bump-to-0174-and-shared-ruff-config-ha-core-alignment)
@@ -88,6 +89,16 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.20] - 2026-11-19 - Profile README plus tasks.json
+
+### Added
+
+- **Profile README**: Added `profile/README.md` to act as the PlayFaster profile.
+
+### Changed
+
+- **Local Validation**: Updated local validation via `tasks.json`to allow complexity checking to run on host/toolings repos as well as integration projects.
 
 ## [2.0.19] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment
 
