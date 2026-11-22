@@ -4,6 +4,21 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [2.0.21] - 2026-11-22 - Tooling & CI: Ruff and Prettier Bumps, Queue Format Task, and Profile Copy
+
+### Summary
+
+Synced host validation task updates from `dev-workbench` v324, bumped `ruff` and `prettier` validation pins, and updated the PlayFaster organization profile copy.
+
+### Bumps
+
+- **CI Bump**: Update `ruff` from `0.17.4` to `0.17.5`
+- **Validate Bump**: Update `prettier` from `3.9.10` to `3.10.1`
+
+### Changed
+
+- **Profile README (`profile/README.md`)**: Reordered the availability text from `HACS / Home Assistant Marketplace` to `Home Assistant Marketplace / HACS`.
+
 ## [2.0.20] - 2026-11-19 - Profile README plus tasks.json
 
 ### Added
@@ -373,6 +388,7 @@ Four inline CI pins in `validate-specific.yaml` move to the dev-workbench versio
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - [Changelog .github Repo](#changelog-github-repo)
+  - [\[2.0.21\] - 2026-11-22 - Tooling \& CI: Ruff and Prettier Bumps, Queue Format Task, and Profile Copy](#2021---2026-11-22---tooling--ci-ruff-and-prettier-bumps-queue-format-task-and-profile-copy)
   - [\[2.0.20\] - 2026-11-19 - Profile README plus tasks.json](#2020---2026-11-19---profile-readme-plus-tasksjson)
   - [\[2.0.19\] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment](#2019---2026-11-16---maintenance-shared-ci-tool-bumps-and-ruff-ha-core-alignment)
   - [\[2.0.18\] - Release - 2026-11-09 - CI Bumps; Dependabot CI Bumps; Host-Tooling Sync With a 7-Day Release Wait; CI Test Harness Now pytest-homeassistant](#2018---release---2026-11-09---ci-bumps-dependabot-ci-bumps-host-tooling-sync-with-a-7-day-release-wait-ci-test-harness-now-pytest-homeassistant)

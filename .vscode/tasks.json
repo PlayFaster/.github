@@ -158,10 +158,10 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path scripts/check_queue_format.py) { mkdir -Force .reports | Out-Null; $out = uv run python scripts/check_queue_format.py 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/queue_format.txt } else { Set-Content .reports/queue_format.txt 'Queue Format: PASSED' }; $passed = Select-String -Quiet 'Queue Format: PASSED' .reports/queue_format.txt -ErrorAction SilentlyContinue; if ($out) { if ($passed) { $out | Where-Object { $_ -match '^\\(Advisory:' } | ForEach-Object { Write-Host $_ -ForegroundColor Yellow } } else { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/queue_format.txt)') } } } }; Write-Host; if ($passed) { Write-Host '✔  Queue Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Queue Format: FINDINGS (report-only)' -ForegroundColor Yellow } } else { Set-Content .reports/queue_format.txt '–  Skipped: no scripts/check_queue_format.py'; Write-Host '–  Skipped: no scripts/check_queue_format.py' -ForegroundColor Cyan }; exit 0",
+      "command": "$qf = @(@('workbench/check_queue_format.py', 'dev-workbench/workbench/check_queue_format.py', '../dev-workbench/workbench/check_queue_format.py') | Where-Object { Test-Path $_ })[0]; if ($qf) { mkdir -Force .reports | Out-Null; $out = uv run python $qf 2>&1; $ec = $LASTEXITCODE; if ($out) { $out | Set-Content .reports/queue_format.txt } else { Set-Content .reports/queue_format.txt 'Queue Format: PASSED' }; $passed = Select-String -Quiet 'Queue Format: PASSED' .reports/queue_format.txt -ErrorAction SilentlyContinue; if ($out -and -not $passed) { $errs = @($out | Out-String -Stream | Where-Object { $_.Trim() }); if ($errs) { $errs | Select-Object -First 20 | ForEach-Object { Write-Host ('  ' + $_) }; if ($errs.Count -gt 20) { Write-Host ('  ... and ' + ($errs.Count - 20) + ' more lines (see .reports/queue_format.txt)') } } }; Write-Host; if ($passed) { Write-Host '✔  Queue Format: PASSED' -ForegroundColor Green } else { Write-Host '✖  Queue Format: FAILED' -ForegroundColor Red } } else { Set-Content .reports/queue_format.txt '–  Skipped: no check_queue_format.py'; Write-Host '–  Skipped: no check_queue_format.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "detail": "Validates the cross-project x_project/ queue and, with --project, one project's .notes/tasks/. Checks the status vocabulary, the Verified date, the Start here line, evidence on settled cells and stamps on archived ones. Report-only: prints a yellow banner on findings and always exits 0, so it never aborts Validate All.",
-      "label": "Env: Check Queue Format",
+      "label": "Validate: Queue Format",
       "presentation": {
         "clear": true,
         "panel": "dedicated",
@@ -240,7 +240,7 @@
       "type": "shell"
     },
     {
-      "command": "if (Test-Path workbench/check_sensor_manifest.py) { mkdir -Force .reports | Out-Null; Remove-Item -Force -ErrorAction SilentlyContinue .reports/sensor_manifest.txt; $failed = $false; foreach ($proj in @('huawei', 'zte', 'unifi', 'wifi')) { $out = uv run python workbench/check_sensor_manifest.py $proj --check 2>&1; if ($out) { $out | Add-Content .reports/sensor_manifest.txt; Write-Host $out }; if ($LASTEXITCODE -ne 0) { $failed = $true } }; Write-Host; if (-not $failed) { Write-Host '✔  Sensor Manifest: PASSED' -ForegroundColor Green } else { Write-Host '✖  Sensor Manifest: FAILED' -ForegroundColor Red } } else { Set-Content .reports/sensor_manifest.txt '–  Skipped: no workbench/check_sensor_manifest.py'; Write-Host '–  Skipped: no workbench/check_sensor_manifest.py' -ForegroundColor Cyan }; exit 0",
+      "command": "if (Test-Path workbench/check_sensor_manifest.py) { mkdir -Force .reports | Out-Null; Remove-Item -Force -ErrorAction SilentlyContinue .reports/sensor_manifest.txt; $failed = $false; foreach ($proj in @('huawei', 'zte', 'unifi', 'wifi')) { $out = uv run python workbench/check_sensor_manifest.py $proj --check 2>&1; if ($out) { $out | Add-Content .reports/sensor_manifest.txt; Write-Host $out }; if ($LASTEXITCODE -ne 0) { $failed = $true } }; Write-Host; if (-not $failed) { Add-Content .reports/sensor_manifest.txt '✔  Sensor Manifest: PASSED'; Write-Host '✔  Sensor Manifest: PASSED' -ForegroundColor Green } else { Add-Content .reports/sensor_manifest.txt '✖  Sensor Manifest: FAILED'; Write-Host '✖  Sensor Manifest: FAILED' -ForegroundColor Red } } else { Set-Content .reports/sensor_manifest.txt '–  Skipped: no workbench/check_sensor_manifest.py'; Write-Host '–  Skipped: no workbench/check_sensor_manifest.py' -ForegroundColor Cyan }; exit 0",
       "group": "build",
       "label": "Env: Check Sensor Manifest",
       "presentation": {
@@ -344,7 +344,7 @@
         "Env: Check Tasks Conformance",
         "Env: Check Shared Prompts",
         "Env: Check Prompt Cadence",
-        "Env: Check Queue Format",
+        "Validate: Queue Format",
         "Env: Check Release Plans",
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",
@@ -457,7 +457,7 @@
         "Validate: YAML Style",
         "Env: Check Tasks Conformance",
         "Env: Check Shared Prompts",
-        "Env: Check Queue Format",
+        "Validate: Queue Format",
         "Env: Check Release Plans",
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",
@@ -564,7 +564,7 @@
         "Validate: YAML Style",
         "Env: Check Tasks Conformance",
         "Env: Check Shared Prompts",
-        "Env: Check Queue Format",
+        "Validate: Queue Format",
         "Env: Check Release Plans",
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",
@@ -600,7 +600,7 @@
         "Env: Check Tasks Conformance",
         "Env: Check Shared Prompts",
         "Env: Check Prompt Cadence",
-        "Env: Check Queue Format",
+        "Validate: Queue Format",
         "Env: Check Release Plans",
         "Env: Check Changelog Headers",
         "Env: Check AGENTS.md",

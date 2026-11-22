@@ -5,6 +5,7 @@ All changes to this project will be documented in this file. This is the detaile
 ---
 
 - [Internal Detailed Changelog: .github Repo](#internal-detailed-changelog-github-repo)
+  - [\[2.0.21\] - 2026-11-22 - Tooling \& CI: Ruff and Prettier Bumps, Queue Format Task, and Profile Copy](#2021---2026-11-22---tooling--ci-ruff-and-prettier-bumps-queue-format-task-and-profile-copy)
   - [\[2.0.20\] - 2026-11-19 - Profile README plus tasks.json](#2020---2026-11-19---profile-readme-plus-tasksjson)
   - [\[2.0.19\] - 2026-11-16 - Maintenance: Shared CI Tool Bumps and Ruff HA Core Alignment](#2019---2026-11-16---maintenance-shared-ci-tool-bumps-and-ruff-ha-core-alignment)
   - [\[2.0.19-dev4\] - 2026-11-16 - Dependabot Bump CodeQL](#2019-dev4---2026-11-16---dependabot-bump-codeql)
@@ -89,6 +90,22 @@ All changes to this project will be documented in this file. This is the detaile
   - [\[1.0.1\] - 2026-05-09 - Initial Release](#101---2026-05-09---initial-release)
 
 ---
+
+## [2.0.21] - 2026-11-22 - Tooling & CI: Ruff and Prettier Bumps, Queue Format Task, and Profile Copy
+
+### Summary
+
+Synced host validation task updates from `dev-workbench` v324, bumped `ruff` and `prettier` validation pins, and updated the PlayFaster organization profile copy.
+
+### Bumps
+
+- **CI Bump**: Update `ruff` from `0.17.4` to `0.17.5` in `.github/workflows/validate-specific.yaml`.
+- **Validate Bump**: Update `prettier` from `3.9.10` to `3.10.1` in `package-lock.json`.
+
+### Changed
+
+- **Validation Tasks (`.vscode/tasks.json`)**: Renamed `Env: Check Queue Format` to `Validate: Queue Format` resolving `workbench/check_queue_format.py` and failing on findings (`Queue Format: FAILED`), and updated `Env: Check Sensor Manifest` to append `Sensor Manifest: PASSED`/`FAILED` to `.reports/sensor_manifest.txt` (`dev-workbench` v324 sync).
+- **Profile README (`profile/README.md`)**: Reordered the availability text from `HACS / Home Assistant Marketplace` to `Home Assistant Marketplace / HACS`.
 
 ## [2.0.20] - 2026-11-19 - Profile README plus tasks.json
 

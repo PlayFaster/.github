@@ -12,4 +12,4 @@ I build open-source **Home Assistant** integrations and themes focused on networ
 | [WiFi SSID Monitor](https://github.com/PlayFaster/ha-wifi-ssid-monitor) | Scan nearby WiFi SSIDs via HAOS/Supervised, detect rogue APs, and spot smart devices in setup mode | [![Release](https://img.shields.io/github/v/release/PlayFaster/ha-wifi-ssid-monitor?label=Release)](https://github.com/PlayFaster/ha-wifi-ssid-monitor/releases) |
 | [Very Dark Black HA Theme](https://github.com/PlayFaster/very-dark-black-ha-theme) | Pure-black / AMOLED dark mode theme for Home Assistant with bold accent color variants | [![Release](https://img.shields.io/github/v/release/PlayFaster/very-dark-black-ha-theme?label=Release)](https://github.com/PlayFaster/very-dark-black-ha-theme/releases) |
 
-All projects are available via **HACS / Home Assistant Marketplace** (see each repository's README for one-click install badges and setup guides).
+All projects are available via **Home Assistant Marketplace / HACS** (see each repository's README for one-click install badges and setup guides).
